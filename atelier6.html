@@ -640,7 +640,56 @@
             opacity: 0.5;
         }
 
-
+        /* TEST PLAN & PV RECETTE STYLES */
+        .prio-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            text-align: center;
+        }
+        .prio-1 {
+            background-color: rgba(239, 68, 68, 0.08);
+            color: var(--danger);
+            border: 1px solid var(--danger-border);
+        }
+        .prio-2 {
+            background-color: rgba(245, 158, 11, 0.08);
+            color: var(--secondary);
+            border: 1px solid var(--secondary-border);
+        }
+        .prio-3 {
+            background-color: rgba(99, 102, 241, 0.08);
+            color: var(--accent-lavender);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+        .prio-4 {
+            background-color: rgba(59, 130, 246, 0.08);
+            color: var(--blue-horizon);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        .prio-6 {
+            background-color: #F1F5F9;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+        
+        .test-plan-table td {
+            vertical-align: top;
+        }
+        
+        .signature-card {
+            transition: var(--transition);
+        }
+        
+        .signature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+            border-color: var(--border-color-hover) !important;
+        }
 
         /* RESPONSIVE LAYOUT */
         @media (max-width: 1024px) {
@@ -924,6 +973,272 @@
 
 
             </div>
+
+            <!-- SECTION: PLAN DE TEST COMPLET -->
+            <section class="card-panel">
+                <div class="card-panel-header">
+                    <div class="card-panel-title">
+                        <i class="fa-solid fa-vial-circle-check"></i> Plan de Test Multi-Niveaux
+                    </div>
+                    <div class="badge-status" style="background: rgba(59, 130, 246, 0.05); color: var(--blue-horizon); border-color: rgba(59, 130, 246, 0.25);">
+                        <i class="fa-solid fa-list-check"></i> 3 Niveaux de Recette
+                    </div>
+                </div>
+                
+                <p class="paragraph-text" style="margin-top: -6px; font-size: 15px; color: var(--text-muted); line-height: 1.6;">
+                    Pour garantir la robustesse et la conformité de <strong>PAY TO CHANGE</strong>, notre stratégie de recette s'articule autour de trois niveaux de tests distincts. Ce plan cible la sécurité de l'infrastructure, l'exactitude des calculs financiers d'arbitrage et la fluidité de l'expérience utilisateur.
+                </p>
+
+                <div class="table-responsive">
+                    <table class="matrix-table test-plan-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%; text-align: center;">Niveau</th>
+                                <th style="width: 25%;">Type de Test &amp; Périmètre</th>
+                                <th style="width: 15%;">Priorité</th>
+                                <th style="width: 25%;">Responsables / Intervenants</th>
+                                <th style="width: 20%;">Outils &amp; Méthodologie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Level 1 -->
+                            <tr>
+                                <td rowspan="2" style="font-weight: 800; color: var(--danger); vertical-align: middle; border-right: 1px solid var(--border-color); text-align: center; background: #FFFDFD;">
+                                    <span style="font-size: 11px; text-transform: uppercase; display: block; color: var(--text-dark);">Niveau</span>
+                                    <span style="font-size: 24px; display: block; margin: 4px 0;">1</span>
+                                    <span style="font-size: 9px; padding: 2px 6px; background: rgba(239, 68, 68, 0.1); color: var(--danger); border-radius: 4px; font-weight: 700;">CRITIQUE</span>
+                                </td>
+                                <td>
+                                    <strong>Cyber &amp; Infrastructure</strong>
+                                    <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 4px;">Tests d'intrusion, audit de sécurité cloud, prévention des fuites de données.</p>
+                                </td>
+                                <td>
+                                    <span class="prio-badge prio-1">Prio 1 (Haute)</span>
+                                </td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                                        <div class="owner-badge">
+                                            <div class="owner-avatar avatar-al">AL</div>
+                                            <span class="owner-name">Alex Bègue <span style="font-size:11px; font-weight:normal; color:var(--text-dark);">(Lead Dev)</span></span>
+                                        </div>
+                                        <div class="owner-badge">
+                                            <div class="owner-avatar avatar-ra">RA</div>
+                                            <span class="owner-name">Romain Allard <span style="font-size:11px; font-weight:normal; color:var(--text-dark);">(SecOps)</span></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="font-size: 13.5px; color: var(--text-muted);">
+                                    AWS GuardDuty, Logs SIEM, Audit de vulnérabilités OWASP
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Investissements &amp; Services Bancaires</strong>
+                                    <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 4px;">Validation des flux financiers de cautionnement et de déblocage.</p>
+                                </td>
+                                <td>
+                                    <span class="prio-badge prio-1">Prio 1 (Haute)</span>
+                                </td>
+                                <td>
+                                    <div class="owner-badge">
+                                        <div class="owner-avatar" style="background-color: #475569; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #FFFFFF;"><i class="fa-solid fa-building-columns" style="font-size:11px;"></i></div>
+                                        <span class="owner-name">Partenaire Bancaire</span>
+                                    </div>
+                                </td>
+                                <td style="font-size: 13.5px; color: var(--text-muted);">
+                                    Stripe Sandbox, API Banking, Double validation cryptographique
+                                </td>
+                            </tr>
+
+                            <!-- Level 2 -->
+                            <tr>
+                                <td rowspan="2" style="font-weight: 800; color: var(--secondary); vertical-align: middle; border-right: 1px solid var(--border-color); text-align: center; background: #FFFDF6;">
+                                    <span style="font-size: 11px; text-transform: uppercase; display: block; color: var(--text-dark);">Niveau</span>
+                                    <span style="font-size: 24px; display: block; margin: 4px 0;">2</span>
+                                    <span style="font-size: 9px; padding: 2px 6px; background: rgba(245, 158, 11, 0.1); color: var(--secondary); border-radius: 4px; font-weight: 700;">TACTIQUE</span>
+                                </td>
+                                <td>
+                                    <strong>Arbitrages &amp; Règles de Validation</strong>
+                                    <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 4px;">Tests unitaires et fonctionnels des algorithmes de pénalisation et remboursement.</p>
+                                </td>
+                                <td>
+                                    <span class="prio-badge prio-2">Prio 2 (Moyenne)</span>
+                                </td>
+                                <td>
+                                    <div class="owner-badge">
+                                        <div class="owner-avatar avatar-ra">RA</div>
+                                        <span class="owner-name">Romain Allard <span style="font-size:11px; font-weight:normal; color:var(--text-dark);">(Arbitrages)</span></span>
+                                    </div>
+                                </td>
+                                <td style="font-size: 13.5px; color: var(--text-muted);">
+                                    Jest, Assertions fonctionnelles, Mocks d'arbitrage
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Opérations CRUD Complètes</strong>
+                                    <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 4px;">Vérification de l'intégrité des bases de données et cycle de vie des objectifs.</p>
+                                </td>
+                                <td>
+                                    <span class="prio-badge prio-4">Prio 4 (Moyenne-Basse)</span>
+                                </td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                                        <div class="owner-badge">
+                                            <div class="owner-avatar avatar-al">AL</div>
+                                            <span class="owner-name">Alex Bègue <span style="font-size:11px; font-weight:normal; color:var(--text-dark);">(Lead Dev)</span></span>
+                                        </div>
+                                        <div class="owner-badge">
+                                            <div class="owner-avatar avatar-rb">RB</div>
+                                            <span class="owner-name">Romain Bottero <span style="font-size:11px; font-weight:normal; color:var(--text-dark);">(Chef de Projet)</span></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="font-size: 13.5px; color: var(--text-muted);">
+                                    Postman / Insomnia API tests, Validation de Schéma DB
+                                </td>
+                            </tr>
+
+                            <!-- Level 3 -->
+                            <tr>
+                                <td rowspan="2" style="font-weight: 800; color: var(--primary); vertical-align: middle; border-right: 1px solid var(--border-color); text-align: center; background: #F6FDF9;">
+                                    <span style="font-size: 11px; text-transform: uppercase; display: block; color: var(--text-dark);">Niveau</span>
+                                    <span style="font-size: 24px; display: block; margin: 4px 0;">3</span>
+                                    <span style="font-size: 9px; padding: 2px 6px; background: rgba(16, 185, 129, 0.1); color: var(--primary); border-radius: 4px; font-weight: 700;">VISUEL &amp; UX</span>
+                                </td>
+                                <td>
+                                    <strong>Parcours Utilisateurs Bout-en-Bout</strong>
+                                    <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 4px;">Tests d'intégration end-to-end de l'onboarding au retrait des gains.</p>
+                                </td>
+                                <td>
+                                    <span class="prio-badge prio-3">Prio 3 (Moyenne-Haute)</span>
+                                </td>
+                                <td>
+                                    <div class="owner-badge">
+                                        <div class="owner-avatar avatar-rb">RB</div>
+                                        <span class="owner-name">Romain Bottero <span style="font-size:11px; font-weight:normal; color:var(--text-dark);">(Chef de Projet)</span></span>
+                                    </div>
+                                </td>
+                                <td style="font-size: 13.5px; color: var(--text-muted);">
+                                    Playwright E2E Automation, CI/CD integrations
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Design, UX/UI &amp; Accessibilité</strong>
+                                    <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 4px;">Ajustements esthétiques, lisibilité des polices, contrastes et réactivité mobile.</p>
+                                </td>
+                                <td>
+                                    <span class="prio-badge prio-6">Prio 6 (Basse)</span>
+                                </td>
+                                <td>
+                                    <div class="owner-badge">
+                                        <div class="owner-avatar avatar-bi">BI</div>
+                                        <span class="owner-name">Bilal <span style="font-size:11px; font-weight:normal; color:var(--text-dark);">(Directeur Artistique)</span></span>
+                                    </div>
+                                </td>
+                                <td style="font-size: 13.5px; color: var(--text-muted);">
+                                    Figma Mirror, Revue responsive Chrome, Accessibilité WCAG
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION: PV DE RECETTE SIGNE -->
+            <section class="card-panel" style="background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%); position: relative; overflow: hidden; border: 1.5px dashed var(--primary-border); gap: 20px;">
+                <div style="position: absolute; top: -20px; right: -20px; font-size: 140px; color: var(--primary); opacity: 0.03; pointer-events: none; transform: rotate(15deg);">
+                    <i class="fa-solid fa-signature"></i>
+                </div>
+                
+                <div class="card-panel-header" style="border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding-bottom: 14px;">
+                    <div class="card-panel-title" style="color: var(--primary);">
+                        <i class="fa-solid fa-file-signature"></i> Procès-Verbal (PV) de Validation de la Stratégie de Recette
+                    </div>
+                    <div class="badge-status" style="background: rgba(16, 185, 129, 0.08); color: var(--primary); border-color: rgba(16, 185, 129, 0.25);">
+                        <i class="fa-solid fa-circle-check"></i> Statut : Approuvé &amp; Signé
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+                    <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14.5px; line-height: 1.6; color: var(--text-muted);">
+                        <p>
+                            Par le présent procès-verbal, l'équipe projet <strong>PAY TO CHANGE (PTC)</strong> atteste et valide la stratégie de recette de test multi-niveaux décrite ci-dessus.
+                        </p>
+                        <p>
+                            Cette validation certifie que l'intégralité des périmètres critiques (en particulier la cybersécurité de niveau 1, les flux d'arbitrage de niveau 2, et la couverture des parcours critiques de niveau 3) a été planifiée, assignée et approuvée par toutes les parties prenantes avant le lancement de la phase d'exécution finale.
+                        </p>
+                        <div style="margin-top: 8px; font-size: 12px; background: #FFFFFF; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); display: inline-flex; align-items: center; gap: 8px; width: fit-content; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <i class="fa-solid fa-key" style="color: var(--secondary);"></i>
+                            <span>Empreinte cryptographique de validation : <code style="font-family: var(--font-mono); color: var(--text-main); font-weight: 600;">SHA256: 4e8b1d9c...3f0a1e2d</code></span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: center; gap: 8px; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);">
+                        <div style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: var(--text-dark); letter-spacing: 0.05em;">Date de Signature</div>
+                        <div style="font-size: 18px; font-weight: 700; color: var(--text-main); font-family: var(--font-display);">10 Juin 2026</div>
+                        <div style="width: 40px; height: 1px; background: var(--border-color); margin: 6px auto;"></div>
+                        <div style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: var(--text-dark); letter-spacing: 0.05em;">Lieu</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-muted);">Paris (Bureau PTC)</div>
+                    </div>
+                </div>
+
+                <!-- Signatures Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 8px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                    <!-- Romain Bottero -->
+                    <div class="signature-card" style="background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; position: relative;">
+                        <div style="position: absolute; top: 12px; right: 12px; color: var(--primary); font-size: 14px;">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <span style="font-size: 9px; text-transform: uppercase; font-weight: 800; color: var(--avatar-romain); letter-spacing: 0.05em;">Chef de Projet (CPI)</span>
+                        <strong style="font-size: 14.5px; color: var(--text-main);">Romain Bottero</strong>
+                        <div style="font-family: var(--font-display); font-style: italic; font-size: 22px; color: #1e3a8a; padding: 14px 0 6px 0; border-bottom: 1px dashed var(--border-color); text-align: center; user-select: none;">
+                            R. Bottero
+                        </div>
+                        <span style="font-size: 10px; color: var(--primary); font-weight: 700; text-align: center;"><i class="fa-solid fa-stamp"></i> Signé électroniquement</span>
+                    </div>
+
+                    <!-- Alex Bègue -->
+                    <div class="signature-card" style="background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; position: relative;">
+                        <div style="position: absolute; top: 12px; right: 12px; color: var(--primary); font-size: 14px;">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <span style="font-size: 9px; text-transform: uppercase; font-weight: 800; color: var(--avatar-alex); letter-spacing: 0.05em;">Lead Developer / SecOps</span>
+                        <strong style="font-size: 14.5px; color: var(--text-main);">Alex Bègue</strong>
+                        <div style="font-family: var(--font-display); font-style: italic; font-size: 22px; color: #0f766e; padding: 14px 0 6px 0; border-bottom: 1px dashed var(--border-color); text-align: center; user-select: none;">
+                            A. Bègue
+                        </div>
+                        <span style="font-size: 10px; color: var(--primary); font-weight: 700; text-align: center;"><i class="fa-solid fa-stamp"></i> Signé électroniquement</span>
+                    </div>
+
+                    <!-- Romain Allard -->
+                    <div class="signature-card" style="background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; position: relative;">
+                        <div style="position: absolute; top: 12px; right: 12px; color: var(--primary); font-size: 14px;">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <span style="font-size: 9px; text-transform: uppercase; font-weight: 800; color: var(--avatar-romain-a); letter-spacing: 0.05em;">Expert Arbitrages &amp; SecOps</span>
+                        <strong style="font-size: 14.5px; color: var(--text-main);">Romain Allard</strong>
+                        <div style="font-family: var(--font-display); font-style: italic; font-size: 22px; color: #6d28d9; padding: 14px 0 6px 0; border-bottom: 1px dashed var(--border-color); text-align: center; user-select: none;">
+                            R. Allard
+                        </div>
+                        <span style="font-size: 10px; color: var(--primary); font-weight: 700; text-align: center;"><i class="fa-solid fa-stamp"></i> Signé électroniquement</span>
+                    </div>
+
+                    <!-- Bilal -->
+                    <div class="signature-card" style="background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; position: relative;">
+                        <div style="position: absolute; top: 12px; right: 12px; color: var(--primary); font-size: 14px;">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <span style="font-size: 9px; text-transform: uppercase; font-weight: 800; color: var(--avatar-bilal); letter-spacing: 0.05em;">Directeur Artistique / UX</span>
+                        <strong style="font-size: 14.5px; color: var(--text-main);">Bilal</strong>
+                        <div style="font-family: var(--font-display); font-style: italic; font-size: 22px; color: #b45309; padding: 14px 0 6px 0; border-bottom: 1px dashed var(--border-color); text-align: center; user-select: none;">
+                            Bilal
+                        </div>
+                        <span style="font-size: 10px; color: var(--primary); font-weight: 700; text-align: center;"><i class="fa-solid fa-stamp"></i> Signé électroniquement</span>
+                    </div>
+                </div>
+            </section>
 
         </div>
     </div>
