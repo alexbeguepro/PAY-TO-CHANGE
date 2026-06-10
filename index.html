@@ -984,6 +984,41 @@
             font-size: 9px;
         }
 
+        /* VIDEO SECTION */
+        .section-video {
+            max-width: 1200px;
+            margin: 0 auto 100px auto;
+            padding: 0 48px;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .section-video h2 {
+            font-family: var(--font-display);
+            font-size: 28px;
+            color: #fff;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .video-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            background: var(--bg-card);
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            display: block;
+        }
+
         /* FOOTER */
         footer {
             border-top: 1px solid var(--border-color);
@@ -1043,6 +1078,9 @@
                 <a href="atelier1.html" class="btn-large btn-primary">
                     Découvrir les Ateliers <i class="fa-solid fa-arrow-right"></i>
                 </a>
+                <a href="#presentation-video" class="btn-large btn-secondary">
+                    <i class="fa-solid fa-circle-play"></i> Présentation Vidéo
+                </a>
             </div>
         </div>
         <div class="hero-right">
@@ -1094,6 +1132,14 @@
                     <i class="fa-solid fa-lock"></i> Mon coffre-fort
                 </button>
             </div>
+        </div>
+    </section>
+
+    <!-- VIDEO PRESENTATION SECTION -->
+    <section class="section-video" id="presentation-video">
+        <h2>Démo & Présentation en 10 secondes</h2>
+        <div class="video-wrapper">
+            <video src="vidéo.mp4" controls muted loop playsinline></video>
         </div>
     </section>
 
