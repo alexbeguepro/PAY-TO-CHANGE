@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atelier 6 du projet PAY TO CHANGE (PTC) — Pilotage stratégique : KPIs, KRIs et OCRIs. Matrice d'indicateurs interactive et simulateur de pilotage.">
+    <title>PAY TO CHANGE - Atelier 6 : KPIs, KRIs & OCRIs</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Palette Variables - Clean Light Theme */
+            --bg-darker: #F1F5F9;        /* Light Slate Background */
+            --bg-dark: #FFFFFF;          /* Pure White Cards */
+            --bg-card: #FFFFFF;
+            --border-color: #E2E8F0;     /* Light Gray Border */
+            --border-color-hover: #CBD5E1;
+            
+            --primary: #10B981;          /* Emerald / Green (KPI) */
+            --primary-glow: rgba(16, 185, 129, 0.08);
+            --primary-border: rgba(16, 185, 129, 0.25);
+            
+            --secondary: #F59E0B;        /* Amber (Warning / Support) */
+            --secondary-glow: rgba(245, 158, 11, 0.08);
+            --secondary-border: rgba(245, 158, 11, 0.25);
+            
+            --accent-lavender: #6366F1;  /* Indigo / Purple (OCRI) */
+            --accent-lavender-glow: rgba(99, 102, 241, 0.08);
+            
+            --blue-horizon: #3B82F6;     /* Bright Horizon Blue */
+            
+            --danger: #EF4444;           /* Danger Red (KRI) */
+            --danger-glow: rgba(239, 68, 68, 0.08);
+            --danger-border: rgba(239, 68, 68, 0.25);
+            
+            --text-main: #0F172A;        /* Dark Navy Text */
+            --text-muted: #475569;       /* Slate Gray Text */
+            --text-dark: #64748B;        /* Muted Steel Gray */
+            
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --font-display: 'Playfair Display', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+
+            /* Avatar/Owner Colors */
+            --avatar-romain: #3B82F6;    /* Blue for Romain Bottero */
+            --avatar-bilal: #F59E0B;     /* Orange for Bilal */
+            --avatar-alex: #06B6D4;      /* Teal for Alex */
+            --avatar-romain-a: #8B5CF6;  /* Purple for Romain A. */
+            --avatar-armand: #10B981;    /* Green for Armand */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-sans);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.08) var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            color: var(--text-main);
+            min-height: 100vh;
+            font-size: 13.5px;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* AMBIENT GLOWS */
+        .ambient-glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(120px);
+            opacity: 0.04;
+        }
+        .glow-1 {
+            top: -100px;
+            right: 10%;
+            background: var(--primary);
+        }
+        .glow-2 {
+            bottom: -100px;
+            left: 10%;
+            background: var(--accent-lavender);
+        }
+
+        /* MAIN CONTENT LAYOUT */
+        .main-content {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at 50% 0%, rgba(226, 232, 240, 0.3), transparent 50%), var(--bg-darker);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 1;
+            min-width: 0;
+        }
+
+        .header-divider {
+            height: 40px;
+            width: 1px;
+            background-color: var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-info h2 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .brand-info span {
+            font-size: 9px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .page-title {
+            min-width: 0;
+        }
+
+        .page-title h1 {
+            font-family: var(--font-display);
+            font-size: 19px;
+            font-weight: 500;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .page-title p {
+            font-size: 10px;
+            color: var(--text-dark);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+            flex-shrink: 0;
+        }
+
+        .badge-status {
+            background: rgba(16, 185, 129, 0.05);
+            color: var(--primary);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 6px 9px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-main);
+            border-color: var(--secondary);
+            background: rgba(245, 158, 11, 0.03);
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.08);
+        }
+
+        .nav-btn.active-nav {
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.02);
+            color: var(--primary);
+        }
+
+        /* CONTENT CONTAINER */
+        .content-wrapper {
+            padding: 24px 32px 32px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* THEORY PANEL */
+        .grid-intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        .card-theory {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-theory:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-color-hover);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-theory::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .theory-kpi::before { background: var(--primary); }
+        .theory-kri::before { background: var(--danger); }
+        .theory-ocri::before { background: var(--accent-lavender); }
+
+        .theory-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .theory-kpi .theory-badge { background: rgba(16, 185, 129, 0.1); color: var(--primary); }
+        .theory-kri .theory-badge { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+        .theory-ocri .theory-badge { background: rgba(99, 102, 241, 0.1); color: var(--accent-lavender); }
+
+        .theory-title {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .theory-text {
+            color: var(--text-muted);
+            font-size: 12.5px;
+            line-height: 1.5;
+        }
+
+        /* CARD PANEL */
+        .card-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .card-panel-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-panel-title i {
+            color: var(--blue-horizon);
+            font-size: 16px;
+        }
+
+        /* FILTER BUTTONS */
+        .filter-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            border: 1px solid var(--border-color);
+            background: #FFFFFF;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--border-color-hover);
+            color: var(--text-main);
+        }
+
+        .filter-btn.active {
+            background: var(--text-main);
+            color: #FFFFFF;
+            border-color: var(--text-main);
+        }
+
+        .filter-btn .badge-count {
+            background: rgba(0, 0, 0, 0.06);
+            padding: 1px 6px;
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .filter-btn.active .badge-count {
+            background: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+        }
+
+        /* TABLE STYLING */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: #FFFFFF;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .matrix-table th, .matrix-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .matrix-table th {
+            background: #F8FAFC;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+            font-size: 10.5px;
+            letter-spacing: 0.05em;
+        }
+
+        .matrix-table tbody tr {
+            cursor: pointer;
+        }
+
+        .matrix-table tbody tr:hover {
+            background: #F8FAFC;
+        }
+
+        .matrix-table tbody tr.selected-row {
+            background: rgba(59, 130, 246, 0.03);
+            border-left: 3px solid var(--blue-horizon);
+        }
+
+        .matrix-table tbody tr.selected-row td {
+            font-weight: 500;
+        }
+
+        /* BADGES FOR TYPES */
+        .badge-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .badge-kpi { background: rgba(16, 185, 129, 0.08); color: var(--primary); border: 1px solid rgba(16, 185, 129, 0.15); }
+        .badge-kri { background: rgba(239, 68, 68, 0.08); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.15); }
+        .badge-ocri { background: rgba(99, 102, 241, 0.08); color: var(--accent-lavender); border: 1px solid rgba(99, 102, 241, 0.15); }
+
+        /* AVATARS FOR RESPONSIBLES */
+        .owner-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .owner-avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-size: 10.5px;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .avatar-rb { background-color: var(--avatar-romain); }
+        .avatar-bi { background-color: var(--avatar-bilal); }
+        .avatar-al { background-color: var(--avatar-alex); }
+        .avatar-ra { background-color: var(--avatar-romain-a); }
+        .avatar-ar { background-color: var(--avatar-armand); }
+
+        .owner-name {
+            font-weight: 600;
+            font-size: 12.5px;
+            color: var(--text-main);
+        }
+
+        /* GRID FOR DETAILED VIEW & SIMULATOR */
+        .grid-details-sim {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 24px;
+        }
+
+        /* DETAILS CARD */
+        .detail-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: 100%;
+        }
+
+        .detail-header-tag {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            color: var(--text-dark);
+            margin-bottom: 2px;
+        }
+
+        .detail-indicator-name {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .detail-item {
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .detail-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .detail-label i {
+            color: var(--blue-horizon);
+        }
+
+        .detail-value {
+            font-size: 12.5px;
+            color: var(--text-main);
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .detail-item-full {
+            grid-column: 1 / span 2;
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+        }
+
+        .detail-item-full.warning-alert {
+            background: rgba(239, 68, 68, 0.02);
+            border-color: var(--danger-border);
+        }
+
+        .detail-item-full.warning-alert .detail-label i {
+            color: var(--danger);
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            text-align: center;
+            border: 2px dashed var(--border-color);
+            border-radius: 14px;
+            gap: 12px;
+            background: rgba(248, 250, 252, 0.5);
+            height: 100%;
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            color: var(--text-dark);
+            opacity: 0.5;
+        }
+
+        /* SIMULATOR STYLING */
+        .simulator-panel {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sim-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .sim-title span {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--blue-horizon);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-family: var(--font-sans);
+        }
+
+        .sim-intro {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .sim-control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .sim-slider-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .sim-slider-card:hover {
+            border-color: var(--border-color-hover);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .sim-slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sim-slider-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sim-slider-value {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--blue-horizon);
+            background: rgba(59, 130, 246, 0.05);
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .sim-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 5px;
+            background: #E2E8F0;
+            outline: none;
+            transition: opacity .2s;
+        }
+
+        .sim-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--blue-horizon);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .sim-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* SIMULATOR STATUS & DIAGNOSTIC */
+        .sim-status-card {
+            margin-top: 10px;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: var(--transition);
+        }
+
+        .status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 700;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .status-indicator-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        .status-green { background-color: var(--primary); border-color: rgba(16, 185, 129, 0.2); color: var(--primary); }
+        .status-green .status-indicator-dot { background-color: var(--primary); box-shadow: 0 0 8px var(--primary); }
+
+        .status-orange { background-color: var(--secondary); border-color: rgba(245, 158, 11, 0.2); color: var(--secondary); }
+        .status-orange .status-indicator-dot { background-color: var(--secondary); box-shadow: 0 0 8px var(--secondary); }
+
+        .status-red { background-color: var(--danger); border-color: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        .status-red .status-indicator-dot { background-color: var(--danger); box-shadow: 0 0 8px var(--danger); }
+
+        .status-message {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .status-action-box {
+            font-size: 11.5px;
+            padding: 10px 12px;
+            background: #FFFFFF;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .status-action-box .action-title {
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-action-box .action-desc {
+            color: var(--text-muted);
+        }
+
+        /* RESPONSIVE LAYOUT */
+        @media (max-width: 1024px) {
+            .grid-details-sim {
+                grid-template-columns: 1fr;
+            }
+            .grid-intro {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 16px;
+            }
+            .header-right {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+            .header-divider {
+                display: none;
+            }
+            .content-wrapper {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Ambient Glow Backgrounds -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <div class="main-content">
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <div class="header-left">
+                <a href="index.html" class="brand">
+                    <div class="brand-logo">
+                        <img src="savelock_ptc_pay_logo.jpg" alt="PTC Logo">
+                    </div>
+                    <div class="brand-info">
+                        <h2>PAY TO CHANGE</h2>
+                        <span>Toutes les excuses ont un prix</span>
+                    </div>
+                </a>
+                <div class="header-divider"></div>
+                <div class="page-title">
+                    <h1>Atelier 6 : KPIs, KRIs & OCRIs</h1>
+                    <p>Système de Pilotage Stratégique de PAY TO CHANGE</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="index.html" class="nav-btn">
+                    <i class="fa-solid fa-house"></i> Accueil
+                </a>
+                <a href="atelier1.html" class="nav-btn">
+                    <i class="fa-solid fa-circle-info"></i> Atelier 1
+                </a>
+                <a href="atelier2.html" class="nav-btn">
+                    <i class="fa-solid fa-chart-line"></i> Atelier 2
+                </a>
+                <a href="atelier3.html" class="nav-btn">
+                    <i class="fa-solid fa-sitemap"></i> Atelier 3
+                </a>
+                <a href="atelier4.html" class="nav-btn">
+                    <i class="fa-solid fa-table-cells"></i> Atelier 4
+                </a>
+                <a href="atelier5.html" class="nav-btn">
+                    <i class="fa-solid fa-chart-gantt"></i> Atelier 5
+                </a>
+                <a href="atelier6.html" class="nav-btn active-nav">
+                    <i class="fa-solid fa-gauge"></i> Atelier 6
+                </a>
+                <a href="app/index.html" class="nav-btn" style="background: var(--primary); color: #FFFFFF; border-color: var(--primary); font-weight: 700;">
+                    <i class="fa-solid fa-mobile-screen-button"></i> Application
+                </a>
+                <div class="badge-status">
+                    <i class="fa-solid fa-shield-halved"></i> Pilotage Activé
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTAINER FOR WRAPPER -->
+        <div class="content-wrapper">
+
+            <!-- THEORY SECTION -->
+            <section class="grid-intro">
+                <!-- KPI -->
+                <div class="card-theory theory-kpi">
+                    <span class="theory-badge">KPI</span>
+                    <h3 class="theory-title">Key Performance Indicator</h3>
+                    <p class="theory-text">
+                        Indicateur orienté <strong>performance et business</strong>. Il mesure l'efficacité commerciale, financière ou d'acquisition pour vérifier si l'application atteint ses objectifs de croissance (ex: volume de téléchargement, valeur d'engagement).
+                    </p>
+                </div>
+                <!-- KRI -->
+                <div class="card-theory theory-kri">
+                    <span class="theory-badge">KRI</span>
+                    <h3 class="theory-title">Key Risk Indicator</h3>
+                    <p class="theory-text">
+                        Indicateur orienté <strong>prévention des risques</strong>. Il mesure l'exposition à un risque opérationnel, technique, cyber ou de réputation avant qu'il n'impacte gravement l'organisation (ex: fuite de données, taux de litiges).
+                    </p>
+                </div>
+                <!-- OCRI -->
+                <div class="card-theory theory-ocri">
+                    <span class="theory-badge">OCRI</span>
+                    <h3 class="theory-title">Objectif Clé de Résultat (KR)</h3>
+                    <p class="theory-text">
+                        Indicateur orienté <strong>innovation et qualité produit</strong> (OKR). Il évalue la réussite d'une initiative structurante pour le produit, souvent qualitative à la base mais mesurée quantitativement (ex: refonte complète de la DA).
+                    </p>
+                </div>
+            </section>
+
+            <!-- MAIN PANEL: THE MATRIX -->
+            <section class="card-panel">
+                <div class="card-panel-header">
+                    <div class="card-panel-title">
+                        <i class="fa-solid fa-table"></i> Matrice des Indicateurs Strategiques
+                    </div>
+                    <div class="filter-container">
+                        <button class="filter-btn active" onclick="filterTable('all', this)">
+                            Tous <span class="badge-count" id="count-all">5</span>
+                        </button>
+                        <button class="filter-btn" onclick="filterTable('KPI', this)">
+                            KPI <span class="badge-count" id="count-kpi">2</span>
+                        </button>
+                        <button class="filter-btn" onclick="filterTable('KRI', this)">
+                            KRI <span class="badge-count" id="count-kri-sub">2</span>
+                        </button>
+                        <button class="filter-btn" onclick="filterTable('OCRI', this)">
+                            OCRI <span class="badge-count" id="count-ocri">1</span>
+                        </button>
+                    </div>
+                </div>
+
+                <p class="paragraph-text" style="margin-top: -6px;">
+                    Cette matrice synthétise les indicateurs indispensables au pilotage de PAY TO CHANGE. <strong>Cliquez sur une ligne</strong> pour afficher le détail stratégique complet, les seuils d'alerte et les plans d'action associés.
+                </p>
+
+                <!-- MATRIX TABLE -->
+                <div class="table-responsive">
+                    <table class="matrix-table" id="indicatorTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Nom de l'Indicateur</th>
+                                <th style="width: 12%;">Type</th>
+                                <th style="width: 22%;">Source de Données</th>
+                                <th style="width: 23%;">Formule de Représentation</th>
+                                <th style="width: 18%;">Responsable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Item 1: Downloads -->
+                            <tr data-type="KPI" data-id="downloads" onclick="selectRow('downloads', this)">
+                                <td><strong>Nombre de téléchargements</strong></td>
+                                <td><span class="badge-type badge-kpi">KPI</span></td>
+                                <td>App Store & Play Store Connect</td>
+                                <td><code>Somme des installations uniques de l'app</code></td>
+                                <td>
+                                    <div class="owner-badge">
+                                        <div class="owner-avatar avatar-bi">BI</div>
+                                        <span class="owner-name">Bilal</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Item 2: User Investment -->
+                            <tr data-type="KPI" data-id="deposits" onclick="selectRow('deposits', this)">
+                                <td><strong>Montant d'investissement utilisateur</strong></td>
+                                <td><span class="badge-type badge-kpi">KPI</span></td>
+                                <td>Core DB + Stripe API</td>
+                                <td><code>Cautions actives cumulées / Utilisateurs actifs</code></td>
+                                <td>
+                                    <div class="owner-badge">
+                                        <div class="owner-avatar avatar-rb">RB</div>
+                                        <span class="owner-name">Romain B.</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Item 3: DA Reinvention -->
+                            <tr data-type="OCRI" data-id="da_redesign" onclick="selectRow('da_redesign', this)">
+                                <td><strong>Réinvention de la DA dév. personnel</strong></td>
+                                <td><span class="badge-type badge-ocri">OCRI</span></td>
+                                <td>Enquêtes in-app + Figma Metrics</td>
+                                <td><code>(Avis favorables ≥ 4/5 / Total avis) * 100</code></td>
+                                <td>
+                                    <div class="owner-badge">
+                                        <div class="owner-avatar avatar-bi">BI</div>
+                                        <span class="owner-name">Bilal</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Item 4: Data Breach -->
+                            <tr data-type="KRI" data-id="data_breach" onclick="selectRow('data_breach', this)">
+                                <td><strong>0 fuite de données</strong></td>
+                                <td><span class="badge-type badge-kri">KRI</span></td>
+                                <td>AWS GuardDuty + Logs SIEM</td>
+                                <td><code>Incidents de fuite de données confirmés</code></td>
+                                <td>
+                                    <div class="owner-badge">
+                                        <div class="owner-avatar avatar-al">AL</div>
+                                        <span class="owner-name">Alex</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Item 5: Dispute Rate (KRI Supplémentaire) -->
+                            <tr data-type="KRI" data-id="validation_dispute" onclick="selectRow('validation_dispute', this)">
+                                <td><strong>Taux de litiges de validation</strong></td>
+                                <td><span class="badge-type badge-kri">KRI</span></td>
+                                <td>Zendesk API + Analytics DB</td>
+                                <td><code>(Contestations d'échec / Échecs total) * 100</code></td>
+                                <td>
+                                    <div class="owner-badge">
+                                        <div class="owner-avatar avatar-rb">RB</div>
+                                        <span class="owner-name">Romain B.</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SPLIT SECTION: DETAILS PANEL & DYNAMIC SIMULATOR -->
+            <div class="grid-details-sim">
+                
+                <!-- LEFT PANEL: DETAILS CARD -->
+                <div class="card-panel" style="justify-content: flex-start;">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-circle-info"></i> Fiche de Détail de l'Indicateur
+                        </div>
+                    </div>
+
+                    <!-- EMPTY STATE -->
+                    <div id="details-empty" class="empty-state">
+                        <i class="fa-solid fa-hand-pointer"></i>
+                        <p>Sélectionnez un indicateur dans la matrice ci-dessus pour afficher sa fiche de pilotage opérationnelle.</p>
+                    </div>
+
+                    <!-- DETAIL CONTENT -->
+                    <div id="details-content" class="detail-panel" style="display: none;">
+                        <div>
+                            <div class="detail-header-tag" id="detail-indicator-type">KPI - Indicateur Clé</div>
+                            <h2 class="detail-indicator-name" id="detail-indicator-name">Nom de l'indicateur</h2>
+                        </div>
+
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <div class="detail-label"><i class="fa-solid fa-bullseye"></i> Résultat Visé</div>
+                                <div class="detail-value" id="detail-target">50k téléchargements</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label"><i class="fa-solid fa-clock"></i> Fréquence de Revue</div>
+                                <div class="detail-value" id="detail-frequency">Hebdomadaire</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label"><i class="fa-solid fa-user-tie"></i> Responsable Principal</div>
+                                <div class="detail-value" id="detail-owner">Bilal (Com/DA)</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label"><i class="fa-solid fa-triangle-exclamation"></i> Seuil d'Alerte</div>
+                                <div class="detail-value" style="color: var(--danger);" id="detail-alert-threshold">< 3k / mois</div>
+                            </div>
+                            <div class="detail-item-full">
+                                <div class="detail-label"><i class="fa-solid fa-lightbulb"></i> Enjeu & Justification pour PTC</div>
+                                <div class="detail-value" id="detail-rationale" style="font-weight: normal; font-size: 12.5px;">Justification...</div>
+                            </div>
+                            <div class="detail-item-full warning-alert">
+                                <div class="detail-label"><i class="fa-solid fa-kit-medical"></i> Plan d'Action Correctif (Si Alerte déclenchée)</div>
+                                <div class="detail-value" id="detail-action-plan" style="font-weight: normal; font-size: 12.5px; color: var(--danger);">Plan d'action...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT PANEL: LIVE SIMULATOR -->
+                <div class="simulator-panel">
+                    <div class="sim-title">
+                        <div>
+                            <i class="fa-solid fa-sliders"></i> Simulateur de Pilotage
+                        </div>
+                        <span>Temps Réel</span>
+                    </div>
+
+                    <p class="sim-intro">
+                        Faites glisser les valeurs ci-dessous pour simuler les données d'exploitation réelles et observer en temps réel la réaction des KRIs et des KPIs de l'application.
+                    </p>
+
+                    <div class="sim-control-group">
+                        <!-- Control 1: Downloads -->
+                        <div class="sim-slider-card">
+                            <div class="sim-slider-header">
+                                <span class="sim-slider-label"><i class="fa-solid fa-download" style="color: var(--primary);"></i> Téléchargements / an</span>
+                                <span class="sim-slider-value" id="val-downloads">35 000</span>
+                            </div>
+                            <input type="range" class="sim-slider" id="slider-downloads" min="1000" max="100000" step="1000" value="35000" oninput="updateSimulation()">
+                        </div>
+
+                        <!-- Control 2: Deposits -->
+                        <div class="sim-slider-card">
+                            <div class="sim-slider-header">
+                                <span class="sim-slider-label"><i class="fa-solid fa-wallet" style="color: var(--primary);"></i> Caution moyenne / user</span>
+                                <span class="sim-slider-value" id="val-deposits">120 €</span>
+                            </div>
+                            <input type="range" class="sim-slider" id="slider-deposits" min="10" max="300" step="5" value="120" oninput="updateSimulation()">
+                        </div>
+
+                        <!-- Control 3: DA Rating -->
+                        <div class="sim-slider-card">
+                            <div class="sim-slider-header">
+                                <span class="sim-slider-label"><i class="fa-solid fa-star" style="color: var(--accent-lavender);"></i> Note d'adoption de la DA</span>
+                                <span class="sim-slider-value" id="val-da">4.2 / 5</span>
+                            </div>
+                            <input type="range" class="sim-slider" id="slider-da" min="1" max="5" step="0.1" value="4.2" oninput="updateSimulation()">
+                        </div>
+
+                        <!-- Control 4: Disputes -->
+                        <div class="sim-slider-card">
+                            <div class="sim-slider-header">
+                                <span class="sim-slider-label"><i class="fa-solid fa-circle-question" style="color: var(--danger);"></i> Taux de litiges validation</span>
+                                <span class="sim-slider-value" id="val-disputes">1.5 %</span>
+                            </div>
+                            <input type="range" class="sim-slider" id="slider-disputes" min="0" max="10" step="0.1" value="1.5" oninput="updateSimulation()">
+                        </div>
+
+                        <!-- Control 5: Data Breaches -->
+                        <div class="sim-slider-card">
+                            <div class="sim-slider-header">
+                                <span class="sim-slider-label"><i class="fa-solid fa-bug" style="color: var(--danger);"></i> Fuite de données</span>
+                                <span class="sim-slider-value" id="val-breach" style="color: var(--danger); background: rgba(239, 68, 68, 0.05);">0</span>
+                            </div>
+                            <div style="display: flex; gap: 10px; margin-top: 4px;">
+                                <button class="filter-btn active" id="btn-breach-0" onclick="setBreaches(0)" style="flex: 1; justify-content: center; font-size: 11px;">Aucune fuite (Ok)</button>
+                                <button class="filter-btn" id="btn-breach-1" onclick="setBreaches(1)" style="flex: 1; justify-content: center; font-size: 11px; border-color: rgba(239, 68, 68, 0.2); color: var(--danger);">1 incident (Alerte !)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DIAGNOSTIC OUTPUT -->
+                    <div class="sim-status-card status-green" id="diagnostic-card">
+                        <div class="status-header">
+                            <span class="status-indicator">
+                                <span class="status-indicator-dot"></span> État de la Santé Projet
+                            </span>
+                            <span id="diagnostic-title" style="text-transform: uppercase; font-size: 11px; font-weight: 800; letter-spacing: 0.05em;">Nominal</span>
+                        </div>
+                        <div class="status-message" id="diagnostic-message">
+                            Tous les indicateurs clés de performance et de risque sont au vert. La direction artistique est bien adoptée, la sécurité est optimale et la traction commerciale est saine.
+                        </div>
+                        <div class="status-action-box" id="diagnostic-action-box" style="display: none;">
+                            <div class="action-title">
+                                <i class="fa-solid fa-circle-exclamation"></i> Action requise
+                            </div>
+                            <div class="action-desc" id="diagnostic-action-desc">
+                                Aucun plan d'action de crise actif.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JS CODE FOR INTERACTIVITY -->
+    <script>
+        // Indicator details database
+        const indicatorsData = {
+            'downloads': {
+                name: "Nombre de téléchargements uniques de l'application",
+                type: "KPI (Indicateur Clé de Performance)",
+                target: "50 000 téléchargements au cours de la première année",
+                frequency: "Hebdomadaire (Revue chaque lundi matin)",
+                owner: "Bilal (Responsable Com Marketing)",
+                alertThreshold: "Moins de 3 000 téléchargements par mois",
+                rationale: "Cet indicateur valide la viabilité du business model et la viralité de notre proposition de valeur. C'est le premier point d'entrée dans notre tunnel de conversion.",
+                actionPlan: "Ajustement du ciblage publicitaire (Instagram, TikTok), optimisation des mots-clés sur l'App Store / Google Play (ASO), ou organisation de campagnes d'influence basées sur des défis communautaires."
+            },
+            'deposits': {
+                name: "Montant moyen d'investissement (Caution) par utilisateur",
+                type: "KPI (Indicateur Clé de Performance)",
+                target: "150 € d'encours moyen engagé par utilisateur actif",
+                frequency: "Mensuelle (Revue lors du comité financier)",
+                owner: "Romain Bottero (Chef de Projet / Finances)",
+                alertThreshold: "Moins de 50 € de caution moyenne par utilisateur actif",
+                rationale: "PAY TO CHANGE repose sur le levier psychologique de l'aversion à la perte. Une mise trop basse limite l'aspect dissuasif de l'échec et réduit l'engagement de l'utilisateur dans son développement personnel.",
+                actionPlan: "Proposer de nouveaux paliers de mise suggérés lors de la création d'objectifs, créer des défis à forts enjeux (ex: 'Défi 30 jours sans procrastination' avec caution doublée), améliorer la pédagogie sur l'épargne forcée."
+            },
+            'da_redesign': {
+                name: "Réinvention de la direction artistique (DA) du développement personnel",
+                type: "OCRI (Objectif Clé de Résultat)",
+                target: "Note de satisfaction esthétique et ergonomique ≥ 4.5/5 auprès de la bêta",
+                frequency: "À chaque release majeure / fin de Sprint",
+                owner: "Bilal (Directeur Artistique & UX/UI Designer)",
+                alertThreshold: "Note globale inférieure à 4.0/5 ou taux d'abandon à l'onboarding supérieur à 20%",
+                rationale: "La majorité des applications de développement personnel sont froides, culpabilisantes ou ennuyeuses. Notre objectif est de réinventer ces codes avec une interface premium, des animations engageantes et un design 'anti-culpabilité'. L'adhésion visuelle est essentielle pour réduire le churn précoce.",
+                actionPlan: "Conduire des entretiens utilisateurs en direct avec les beta-testeurs mécontents, revoir le contraste et l'accessibilité des couleurs (guidelines WCAG), simplifier le parcours UX en réduisant le nombre d'étapes à l'onboarding."
+            },
+            'data_breach': {
+                name: "Intégrité et sécurité des données utilisateurs (0 fuite)",
+                type: "KRI (Indicateur Clé de Risque)",
+                target: "0 incident de sécurité ou fuite de données personnelles/financières",
+                frequency: "Temps réel (Système d'alertes SecOps 24h/7j)",
+                owner: "Alex (Lead Dev & Architecte Cyber)",
+                alertThreshold: "Au moins 1 incident de sécurité ou vulnérabilité critique non patchée sous 24h",
+                rationale: "Nous gérons des cautions financières (coordonnées bancaires via Stripe) ainsi que des habitudes privées d'utilisateurs. Une fuite de données briserait instantanément le contrat de confiance, détruirait notre réputation et nous exposerait à des sanctions massives du RGPD.",
+                actionPlan: "Révocation instantanée des clés d'accès compromises, isolation du serveur ou de la base concernée, bascule vers l'infra de secours, notification obligatoire à la CNIL sous 72h et aux utilisateurs lésés, audit externe en urgence pour correction de la faille."
+            },
+            'validation_dispute': {
+                name: "Taux de litiges et contestations sur la validation d'objectifs",
+                type: "KRI (Indicateur Clé de Risque - Supplémentaire)",
+                target: "Taux de contestations inférieur à 1% des objectifs déclarés échoués",
+                frequency: "Hebdomadaire (Revue de l'équipe support client)",
+                owner: "Romain Bottero (Product Owner) & Support Client",
+                alertThreshold: "Taux de contestations supérieur à 2.5% sur une semaine glissante",
+                rationale: "Si un utilisateur effectue sa tâche de développement personnel mais que l'application ne la valide pas (bug GPS, caméra, API de santé connectée), notre système va transférer sa caution dans l'épargne forcée. C'est une fausse punition injuste, génératrice d'un très fort ressentiment.",
+                actionPlan: "Désactiver temporairement les transferts d'argent automatiques pour les types de défis impliquant la fonctionnalité défaillante, autoriser la validation manuelle sur preuve (capture d'écran support), corriger l'API de synchronisation."
+            }
+        };
+
+        let currentBreaches = 0;
+
+        // Function to select row in matrix table
+        function selectRow(id, rowElement) {
+            // Remove active class from all rows
+            document.querySelectorAll('#indicatorTable tbody tr').forEach(row => {
+                row.classList.remove('selected-row');
+            });
+
+            // Add active class to selected row
+            rowElement.classList.add('selected-row');
+
+            // Load data into details panel
+            const data = indicatorsData[id];
+            if (!data) return;
+
+            document.getElementById('details-empty').style.display = 'none';
+            document.getElementById('details-content').style.display = 'flex';
+
+            // Fill details
+            document.getElementById('detail-indicator-name').textContent = data.name;
+            document.getElementById('detail-indicator-type').textContent = data.type;
+            
+            // Set indicator type badge styling in detail panel header
+            const typeHeader = document.getElementById('detail-indicator-type');
+            if (data.type.includes('KPI')) {
+                typeHeader.style.color = 'var(--primary)';
+            } else if (data.type.includes('KRI')) {
+                typeHeader.style.color = 'var(--danger)';
+            } else {
+                typeHeader.style.color = 'var(--accent-lavender)';
+            }
+
+            document.getElementById('detail-target').textContent = data.target;
+            document.getElementById('detail-frequency').textContent = data.frequency;
+            document.getElementById('detail-owner').textContent = data.owner;
+            document.getElementById('detail-alert-threshold').textContent = data.alertThreshold;
+            document.getElementById('detail-rationale').textContent = data.rationale;
+            document.getElementById('detail-action-plan').textContent = data.actionPlan;
+        }
+
+        // Table filters
+        function filterTable(type, btnElement) {
+            // Remove active state from filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Add active to current button
+            btnElement.classList.add('active');
+
+            const rows = document.querySelectorAll('#indicatorTable tbody tr');
+            rows.forEach(row => {
+                const rowType = row.getAttribute('data-type');
+                if (type === 'all' || rowType === type) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Set Breaches (0 or 1)
+        function setBreaches(val) {
+            currentBreaches = val;
+            document.getElementById('val-breach').textContent = val;
+            
+            // Toggle active classes on buttons
+            document.getElementById('btn-breach-0').classList.toggle('active', val === 0);
+            document.getElementById('btn-breach-1').classList.toggle('active', val === 1);
+
+            updateSimulation();
+        }
+
+        // Live Simulation logic
+        function updateSimulation() {
+            // Get values from controls
+            const downloads = parseInt(document.getElementById('slider-downloads').value);
+            const deposits = parseInt(document.getElementById('slider-deposits').value);
+            const da = parseFloat(document.getElementById('slider-da').value);
+            const disputes = parseFloat(document.getElementById('slider-disputes').value);
+
+            // Update UI value labels
+            document.getElementById('val-downloads').textContent = downloads.toLocaleString() + " / an";
+            document.getElementById('val-deposits').textContent = deposits + " €";
+            document.getElementById('val-da').textContent = da.toFixed(1) + " / 5";
+            document.getElementById('val-disputes').textContent = disputes.toFixed(1) + " %";
+
+            // Diagnostic logic
+            const diagCard = document.getElementById('diagnostic-card');
+            const diagTitle = document.getElementById('diagnostic-title');
+            const diagMsg = document.getElementById('diagnostic-message');
+            const actionBox = document.getElementById('diagnostic-action-box');
+            const actionDesc = document.getElementById('diagnostic-action-desc');
+
+            // Reset class list
+            diagCard.className = 'sim-status-card';
+            
+            let issues = [];
+            let actions = [];
+
+            // Check KRI 1: Data breaches (Critical)
+            if (currentBreaches > 0) {
+                issues.push("Fuite de données détectée");
+                actions.push("<strong>[CYBER]</strong> Protocole d'isolation réseau activé. Révocation immédiate des clés d'API AWS/Stripe compromises. Signalement en cours auprès de la CNIL par Romain A. (Juriste RGPD).");
+            }
+
+            // Check KRI 2: Disputes (Operational Risk)
+            if (disputes > 2.5) {
+                issues.push(`Taux de litiges élevé (${disputes.toFixed(1)}%)`);
+                actions.push("<strong>[SUPPORT]</strong> Suspension temporaire des débits sur validation automatique. Autorisation de la validation par screenshot manuel sous 24h. Alex (Lead Dev) enquête sur les logs API de synchronisation.");
+            }
+
+            // Check KPI 1: Downloads (Underperforming)
+            if (downloads < 36000) { // 3k/month * 12 months = 36k/year
+                issues.push(`Traction faible (${downloads.toLocaleString()} téléchargements)`);
+                actions.push("<strong>[MARKETING]</strong> Bilal doit réorienter le budget Ads vers du reciblage (retargeting) et solliciter nos partenaires d'affiliation.");
+            }
+
+            // Check KPI 2: Deposits (Engagement volume)
+            if (deposits < 50) {
+                issues.push(`Caution moyenne faible (${deposits} €)`);
+                actions.push("<strong>[FINANCES/PO]</strong> Romain Bottero doit introduire un onboarding incitant à des défis à plus forte caution ou proposer des cagnottes de groupe.");
+            }
+
+            // Check OCRI: DA Rating (Satisfaction)
+            if (da < 4.0) {
+                issues.push(`Satisfaction DA insuffisante (${da.toFixed(1)}/5)`);
+                actions.push("<strong>[DESIGN]</strong> Bilal doit réévaluer les flux UX de l'onboarding pour corriger la perte de rétention visuelle.");
+            }
+
+            // Determine State
+            if (currentBreaches > 0) {
+                // Critical state
+                diagCard.classList.add('status-red');
+                diagTitle.textContent = "CRITIQUE - DANGER SÉCURITÉ";
+                diagMsg.innerHTML = `L'application fait face à une fuite de données active ou non corrigée. <strong>La confiance des utilisateurs est en péril immédiat.</strong>`;
+                
+                actionBox.style.display = 'flex';
+                actionDesc.innerHTML = actions.join("<br><br>");
+            } else if (issues.length > 0) {
+                // Warning state
+                diagCard.classList.add('status-orange');
+                diagTitle.textContent = "ALERTE - ENQUÊTE NÉCESSAIRE";
+                diagMsg.innerHTML = `Plusieurs alertes ont été déclenchées : <br>• ${issues.join('<br>• ')}`;
+                
+                actionBox.style.display = 'flex';
+                actionDesc.innerHTML = actions.join("<br><br>");
+            } else {
+                // Nominal state
+                diagCard.classList.add('status-green');
+                diagTitle.textContent = "NOMINAL";
+                diagMsg.textContent = "Tous les indicateurs clés de performance et de risque sont au vert. La direction artistique est bien adoptée, la sécurité est optimale et la traction commerciale est saine.";
+                actionBox.style.display = 'none';
+            }
+        }
+
+        // Initialize table selection on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstRow = document.querySelector('#indicatorTable tbody tr');
+            if (firstRow) {
+                selectRow('downloads', firstRow);
+            }
+            updateSimulation();
+        });
+    </script>
+</body>
+
+</html>
