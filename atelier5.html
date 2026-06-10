@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atelier 5 du projet PAY TO CHANGE (PTC) — Planification Temporelle (PERT & GANTT). Thème clair haute lisibilité.">
+    <title>PAY TO CHANGE - Atelier 5 : Planification PERT & GANTT</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Palette Variables - Clean Light Theme */
+            --bg-darker: #F1F5F9;        /* Light Slate Background */
+            --bg-dark: #FFFFFF;          /* Pure White Cards */
+            --bg-card: #FFFFFF;
+            --border-color: #E2E8F0;     /* Light Gray Border */
+            --border-color-hover: #CBD5E1;
+            
+            --primary: #10B981;         /* Emerald / Mint Green */
+            --primary-glow: rgba(16, 185, 129, 0.08);
+            --primary-border: rgba(16, 185, 129, 0.25);
+            
+            --secondary: #F59E0B;       /* Amber */
+            --secondary-glow: rgba(245, 158, 11, 0.08);
+            --secondary-border: rgba(245, 158, 11, 0.25);
+            
+            --accent-lavender: #6366F1; /* Indigo / Purple Accent */
+            --blue-horizon: #3B82F6;    /* Bright Horizon Blue */
+            --danger: #EF4444;          /* Danger Red */
+            --danger-glow: rgba(239, 68, 68, 0.08);
+            --text-main: #0F172A;       /* Dark Navy Text */
+            --text-muted: #475569;      /* Slate Gray Text */
+            --text-dark: #64748B;       /* Muted Steel Gray */
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --font-display: 'Playfair Display', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+
+            /* GANTT & PERT Role Colors */
+            --role-cp: #3B82F6;         /* CP (Romain B.) - Blue */
+            --role-da: #F59E0B;         /* Chef DA - Orange */
+            --role-dev: #06B6D4;        /* Développeur - Teal */
+            --role-infra: #8B5CF6;      /* Architecte Infra - Purple */
+            --role-part: #10B981;       /* Chargé Partenariat - Green */
+            --role-mix: #EF4444;        /* Binôme DA + Dev - Red */
+            --role-fin: #64748B;        /* Livraison/Milestone - Slate */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-sans);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.08) var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            color: var(--text-main);
+            min-height: 100vh;
+            font-size: 13.5px;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* AMBIENT GLOWS */
+        .ambient-glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(120px);
+            opacity: 0.04;
+        }
+        .glow-1 {
+            top: -100px;
+            right: 10%;
+            background: var(--primary);
+        }
+        .glow-2 {
+            bottom: -100px;
+            left: 10%;
+            background: var(--accent-lavender);
+        }
+
+        /* MAIN CONTENT LAYOUT */
+        .main-content {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at 50% 0%, rgba(226, 232, 240, 0.3), transparent 50%), var(--bg-darker);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            gap: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header-divider {
+            height: 40px;
+            width: 1px;
+            background-color: var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-info h2 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .brand-info span {
+            font-size: 9px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .page-title h1 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .page-title p {
+            font-size: 10px;
+            color: var(--text-dark);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+
+        .badge-status {
+            background: rgba(59, 130, 246, 0.05);
+            color: var(--blue-horizon);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 7px 11px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-main);
+            border-color: var(--secondary);
+            background: rgba(245, 158, 11, 0.03);
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.08);
+        }
+
+        .nav-btn.active-nav {
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.02);
+            color: var(--primary);
+        }
+
+        /* TAB CONTROLLER */
+        .tab-bar-container {
+            padding: 20px 32px 0 32px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 12px;
+            z-index: 2;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: #FFFFFF;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            border-color: var(--border-color-hover);
+        }
+
+        .tab-btn.active-tab {
+            background: var(--text-main);
+            color: #FFFFFF;
+            border-color: var(--text-main);
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.25);
+        }
+
+        /* CONTENT CONTAINER */
+        .content-wrapper {
+            padding: 16px 32px 32px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* CARD PANEL */
+        .card-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card-panel:hover {
+            border-color: var(--border-color-hover);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .card-panel-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-panel-title i {
+            color: var(--blue-horizon);
+            font-size: 15px;
+        }
+
+        .paragraph-text {
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-size: 13px;
+        }
+
+        /* ROLE LEGEND (GANTT & PERT) */
+        .legend-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: var(--transition);
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+        }
+
+        .legend-item:hover, .legend-item.active {
+            color: #FFFFFF;
+        }
+
+        .badge-color-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Legend item color variables mapping */
+        .legend-cp .badge-color-dot { background: var(--role-cp); }
+        .legend-da .badge-color-dot { background: var(--role-da); }
+        .legend-dev .badge-color-dot { background: var(--role-dev); }
+        .legend-infra .badge-color-dot { background: var(--role-infra); }
+        .legend-part .badge-color-dot { background: var(--role-part); }
+        .legend-mix .badge-color-dot { background: var(--role-mix); }
+
+        .legend-cp:hover, .legend-cp.active { background: var(--role-cp); border-color: var(--role-cp); }
+        .legend-da:hover, .legend-da.active { background: var(--role-da); border-color: var(--role-da); }
+        .legend-dev:hover, .legend-dev.active { background: var(--role-dev); border-color: var(--role-dev); }
+        .legend-infra:hover, .legend-infra.active { background: var(--role-infra); border-color: var(--role-infra); }
+        .legend-part:hover, .legend-part.active { background: var(--role-part); border-color: var(--role-part); }
+        .legend-mix:hover, .legend-mix.active { background: var(--role-mix); border-color: var(--role-mix); }
+
+        /* GANTT TABLE TIMELINE */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: #FFFFFF;
+        }
+
+        .gantt-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 12.5px;
+        }
+
+        .gantt-table th, .gantt-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .gantt-table th {
+            background: #F8FAFC;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .gantt-table th.col-task {
+            text-align: left;
+        }
+
+        .gantt-table tbody tr:hover td {
+            background: #F8FAFC;
+        }
+
+        /* Gantt timeline cells */
+        .gantt-cell {
+            text-align: center;
+            width: 7%;
+            min-width: 45px;
+            padding: 8px 4px !important;
+        }
+
+        /* Gantt badges (bars inside cells) */
+        .gantt-bar {
+            height: 30px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: 10px;
+            color: #FFFFFF;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        .gantt-bar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+        }
+
+        .gantt-bar.bar-cp { background: var(--role-cp); }
+        .gantt-bar.bar-da { background: var(--role-da); }
+        .gantt-bar.bar-dev { background: var(--role-dev); }
+        .gantt-bar.bar-infra { background: var(--role-infra); }
+        .gantt-bar.bar-part { background: var(--role-part); }
+        .gantt-bar.bar-mix { background: var(--role-mix); }
+        .gantt-bar.bar-fin { background: var(--role-fin); }
+
+        /* Marge specific style (Task E S7) */
+        .gantt-bar.bar-marge {
+            background: rgba(16, 185, 129, 0.03);
+            border: 2px dashed rgba(16, 185, 129, 0.5);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        .gantt-bar.bar-marge:hover {
+            background: rgba(16, 185, 129, 0.08);
+            transform: scale(1.05);
+        }
+
+        /* Tooltip styles */
+        .tooltip-trigger {
+            position: relative;
+        }
+
+        /* Dynamic classes for interactivity */
+        .dimmed {
+            opacity: 0.15;
+            filter: grayscale(40%);
+        }
+
+        /* PERT SPLIT SECTION */
+        .pert-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .pert-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pert-canvas-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: auto;
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        /* PERT SVGs and Nodes */
+        .pert-svg {
+            display: block;
+            max-width: 100%;
+        }
+
+        .pert-node {
+            background: #FFFFFF;
+            border: 2px solid #CBD5E1;
+            border-radius: 12px;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .pert-node.critical {
+            border-color: var(--danger);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.08);
+        }
+
+        .pert-node.parallel {
+            border-color: var(--blue-horizon);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+        }
+
+        .pert-node.milestone {
+            border-radius: 50%;
+            border-color: var(--text-dark);
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.08);
+        }
+
+        .pert-node:hover, .pert-node.active-node {
+            transform: scale(1.03);
+            z-index: 10;
+        }
+
+        .pert-node.critical:hover, .pert-node.critical.active-node {
+            box-shadow: 0 6px 18px rgba(239, 68, 68, 0.22);
+            border-color: var(--danger);
+        }
+
+        .pert-node.parallel:hover, .pert-node.parallel.active-node {
+            box-shadow: 0 6px 18px rgba(59, 130, 246, 0.22);
+            border-color: var(--blue-horizon);
+        }
+
+        .node-header, .node-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 8px;
+            font-family: var(--font-mono);
+            font-size: 9.5px;
+            font-weight: 500;
+            background: #F8FAFC;
+            color: var(--text-muted);
+        }
+
+        .node-header {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .node-footer {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .node-body {
+            flex-grow: 1;
+            padding: 6px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .slack-badge {
+            font-size: 8px;
+            font-weight: 800;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        .slack-badge.zero {
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--primary);
+        }
+
+        .slack-badge.has-slack {
+            background: rgba(245, 158, 11, 0.08);
+            color: var(--secondary);
+        }
+
+        /* Circle milestone inner */
+        .milestone-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .milestone-content strong {
+            font-size: 16px;
+            color: var(--danger);
+            display: block;
+        }
+
+        .milestone-content span {
+            font-size: 9px;
+            color: var(--text-main);
+            line-height: 1.1;
+            margin: 2px 0;
+            font-weight: 600;
+        }
+
+        .milestone-content small {
+            font-family: var(--font-mono);
+            font-size: 8px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* SVG Paths and arrows */
+        .pert-path {
+            stroke-width: 2px;
+            fill: none;
+            transition: var(--transition);
+        }
+
+        .pert-path.path-critique {
+            stroke: var(--danger);
+        }
+
+        .pert-path.path-parallele {
+            stroke: var(--text-dark);
+            stroke-dasharray: 4,4;
+        }
+
+        .pert-path.path-highlight {
+            stroke-width: 4px;
+        }
+
+        .arrow-badge {
+            font-family: var(--font-sans);
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .arrow-badge-bg {
+            stroke-width: 1px;
+            rx: 4px;
+            ry: 4px;
+        }
+
+        .arrow-badge-critique {
+            fill: var(--danger-glow);
+            stroke: var(--danger);
+        }
+
+        .arrow-badge-critique + text {
+            fill: var(--danger);
+        }
+
+        .arrow-badge-parallele {
+            fill: #F1F5F9;
+            stroke: var(--text-dark);
+        }
+
+        .arrow-badge-parallele + text {
+            fill: var(--text-dark);
+        }
+
+        /* PERT DETAILS PANEL */
+        .details-panel {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .details-panel-header {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .details-panel-header i {
+            color: var(--primary);
+        }
+
+        .details-empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 10px;
+            color: var(--text-dark);
+            gap: 12px;
+        }
+
+        .details-empty-state i {
+            font-size: 32px;
+            color: var(--border-color-hover);
+        }
+
+        .details-empty-state p {
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .details-card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .details-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .details-badge-critique {
+            font-size: 9px;
+            text-transform: uppercase;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 30px;
+            background: rgba(239, 68, 68, 0.08);
+            color: var(--danger);
+            border: 1.5px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .details-badge-parallele {
+            font-size: 9px;
+            text-transform: uppercase;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 30px;
+            background: rgba(59, 130, 246, 0.08);
+            color: var(--blue-horizon);
+            border: 1.5px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .details-label {
+            font-size: 9.5px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+        }
+
+        .details-value {
+            font-size: 12.5px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .details-times-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        .details-time-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .details-time-item span {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* PDF TAB VIEW */
+        .pdf-section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .pdf-section-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pdf-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 550px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: #F1F5F9;
+        }
+
+        .pdf-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pdf-title {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pdf-title i {
+            color: var(--secondary);
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Ambient Glow Backgrounds -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <div class="header-left">
+                <a href="index.html" class="brand">
+                    <div class="brand-logo">
+                        <img src="savelock_ptc_pay_logo.jpg" alt="PTC Logo">
+                    </div>
+                    <div class="brand-info">
+                        <h2>PTC</h2>
+                        <span>PAY TO CHANGE</span>
+                    </div>
+                </a>
+                <div class="header-divider"></div>
+                <div class="page-title">
+                    <h1>Atelier 5 : Planification Temporelle</h1>
+                    <p>Diagramme PERT, Chemin Critique et GANTT de PAY TO CHANGE</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="index.html" class="nav-btn">
+                    <i class="fa-solid fa-house"></i> Accueil
+                </a>
+                <a href="atelier1.html" class="nav-btn">
+                    <i class="fa-solid fa-circle-info"></i> Atelier 1
+                </a>
+                <a href="atelier2.html" class="nav-btn">
+                    <i class="fa-solid fa-chart-line"></i> Atelier 2
+                </a>
+                <a href="atelier3.html" class="nav-btn">
+                    <i class="fa-solid fa-sitemap"></i> Atelier 3
+                </a>
+                <a href="atelier4.html" class="nav-btn">
+                    <i class="fa-solid fa-table-cells"></i> Atelier 4
+                </a>
+                <a href="atelier5.html" class="nav-btn active-nav">
+                    <i class="fa-solid fa-chart-gantt"></i> Atelier 5
+                </a>
+                <div class="badge-status">
+                    <i class="fa-solid fa-calendar-check"></i> Planification validée
+                </div>
+            </div>
+        </header>
+
+        <!-- TAB BAR CONTROLLER -->
+        <div class="tab-bar-container">
+            <button class="tab-btn active-tab" onclick="switchTab('interactive')">
+                <i class="fa-solid fa-eye"></i> Vue Interactive
+            </button>
+            <button class="tab-btn" onclick="switchTab('original-pdf')">
+                <i class="fa-solid fa-file-pdf"></i> Captures PDF Originales
+            </button>
+        </div>
+
+        <!-- CONTAINER FOR WRAPPER -->
+        <div class="content-wrapper">
+
+            <!-- ===================== TAB 1: INTERACTIVE VIEW ===================== -->
+            <div id="tab-interactive" class="tab-content active-content">
+                
+                <!-- GANTT PANEL -->
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-chart-simple"></i> Planning de GANTT Optimisé
+                        </div>
+                    </div>
+                    
+                    <p class="paragraph-text">
+                        Ce planning temporel détaille la répartition des 8 macro-tâches du projet sur une durée cible de 10 semaines. Cliquez sur un rôle dans la légende pour filtrer ses interventions et mettre en relief sa charge de travail hebdomadaire.
+                    </p>
+
+                    <!-- ROLE LEGEND / FILTERS -->
+                    <div class="legend-container">
+                        <div class="legend-item legend-cp" onclick="toggleRoleFilter('CP', this)" title="Cliquer pour filtrer">
+                            <span class="badge-color-dot"></span> CP (Romain Bottero)
+                        </div>
+                        <div class="legend-item legend-da" onclick="toggleRoleFilter('DA', this)" title="Cliquer pour filtrer">
+                            <span class="badge-color-dot"></span> Direction Artistique
+                        </div>
+                        <div class="legend-item legend-dev" onclick="toggleRoleFilter('DEV', this)" title="Cliquer pour filtrer">
+                            <span class="badge-color-dot"></span> Développeur
+                        </div>
+                        <div class="legend-item legend-infra" onclick="toggleRoleFilter('INFRA', this)" title="Cliquer pour filtrer">
+                            <span class="badge-color-dot"></span> Architecte Infra & Cyber
+                        </div>
+                        <div class="legend-item legend-part" onclick="toggleRoleFilter('PART', this)" title="Cliquer pour filtrer">
+                            <span class="badge-color-dot"></span> Chargé de Partenariat
+                        </div>
+                        <div class="legend-item legend-mix" onclick="toggleRoleFilter('MIX', this)" title="Cliquer pour filtrer">
+                            <span class="badge-color-dot"></span> Binôme (DA + Dev)
+                        </div>
+                    </div>
+
+                    <!-- GANTT TABLE TIMELINE -->
+                    <div class="table-responsive">
+                        <table class="gantt-table" id="ganttTable">
+                            <thead>
+                                <tr>
+                                    <th class="col-task" style="width: 28%;">Macro-Tâche</th>
+                                    <th style="width: 17%;">Acteur(s) Responsable(s)</th>
+                                    <th>S1</th>
+                                    <th>S2</th>
+                                    <th>S3</th>
+                                    <th>S4</th>
+                                    <th>S5</th>
+                                    <th>S6</th>
+                                    <th>S7</th>
+                                    <th>S8</th>
+                                    <th>S9</th>
+                                    <th>S10</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- A. Cadrage du projet -->
+                                <tr data-task="A">
+                                    <td><strong>A. Cadrage du projet</strong></td>
+                                    <td><span style="font-size: 11px; font-weight: 600;">Chef de Projet</span></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-cp tooltip-trigger" data-role="CP" data-desc="Tâche A - Semaine 1 : Cadrage du projet par le CP.">CP</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-cp tooltip-trigger" data-role="CP" data-desc="Tâche A - Semaine 2 : Cadrage du projet par le CP.">CP</div></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                </tr>
+                                <!-- B. Maquettage UX/UI -->
+                                <tr data-task="B">
+                                    <td><strong>B. Maquettage UX/UI</strong></td>
+                                    <td><span style="font-size: 11px; font-weight: 600; color: var(--danger);">DA + Dev (Binôme)</span></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-mix tooltip-trigger" data-role="MIX" data-desc="Tâche B - Semaine 2 : Travail collaboratif en binôme (UX/UI).">MIX</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-mix tooltip-trigger" data-role="MIX" data-desc="Tâche B - Semaine 3 : Travail collaboratif en binôme (UX/UI).">MIX</div></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                </tr>
+                                <!-- C. Architecture & Cyber -->
+                                <tr data-task="C">
+                                    <td><strong>C. Architecture & Cyber</strong></td>
+                                    <td><span style="font-size: 11px; font-weight: 600;">Architecte Infra & Cyber</span></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-infra tooltip-trigger" data-role="INFRA" data-desc="Tâche C - Semaine 2 : Mise en place de l'infra & cyber.">INFRA</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-infra tooltip-trigger" data-role="INFRA" data-desc="Tâche C - Semaine 3 : Mise en place de l'infra & cyber.">INFRA</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-infra tooltip-trigger" data-role="INFRA" data-desc="Tâche C - Semaine 4 : Mise en place de l'infra & cyber.">INFRA</div></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                </tr>
+                                <!-- D. Développement applicatif -->
+                                <tr data-task="D">
+                                    <td><strong>D. Développement applicatif</strong></td>
+                                    <td><span style="font-size: 11px; font-weight: 600;">Développeur</span></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-dev tooltip-trigger" data-role="DEV" data-desc="Tâche D - Semaine 3 : Développement technique du MVP.">DEV</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-dev tooltip-trigger" data-role="DEV" data-desc="Tâche D - Semaine 4 : Développement technique du MVP.">DEV</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-dev tooltip-trigger" data-role="DEV" data-desc="Tâche D - Semaine 5 : Développement technique du MVP.">DEV</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-dev tooltip-trigger" data-role="DEV" data-desc="Tâche D - Semaine 6 : Développement technique du MVP.">DEV</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-dev tooltip-trigger" data-role="DEV" data-desc="Tâche D - Semaine 7 : Développement technique du MVP.">DEV</div></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                </tr>
+                                <!-- E. Partenariats bancaires -->
+                                <tr data-task="E">
+                                    <td><strong>E. Partenariats bancaires</strong></td>
+                                    <td><span style="font-size: 11px; font-weight: 600;">Chargé de Partenariat</span></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-part tooltip-trigger" data-role="PART" data-desc="Tâche E - Semaine 3 : Négociations BaaS et banques partenaires.">PART</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-part tooltip-trigger" data-role="PART" data-desc="Tâche E - Semaine 4 : Négociations BaaS et banques partenaires.">PART</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-part tooltip-trigger" data-role="PART" data-desc="Tâche E - Semaine 5 : Négociations BaaS et banques partenaires.">PART</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-part tooltip-trigger" data-role="PART" data-desc="Tâche E - Semaine 6 : Négociations BaaS et banques partenaires.">PART</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-marge tooltip-trigger" data-role="PART" data-desc="Tâche E - Semaine 7 : Marge temporelle disponible (non critique).">Marge</div></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                </tr>
+                                <!-- F. Tests & Validation -->
+                                <tr data-task="F">
+                                    <td><strong>F. Tests & Validation</strong></td>
+                                    <td><span style="font-size: 11px; font-weight: 600;">Chef de Projet + Développeur</span></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-cp tooltip-trigger" data-role="CP" data-desc="Tâche F - Semaine 6 : Lancement et suivi des tests par le CP.">CP</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-dev tooltip-trigger" data-role="DEV" data-desc="Tâche F - Semaine 7 : Résolution de bugs et validation par le Dev.">DEV</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-cp tooltip-trigger" data-role="CP" data-desc="Tâche F - Semaine 8 : Validation finale du livrable par le CP.">CP</div></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                </tr>
+                                <!-- G. Communication & Lancement -->
+                                <tr data-task="G">
+                                    <td><strong>G. Communication & Lancement</strong></td>
+                                    <td><span style="font-size: 11px; font-weight: 600;">Chef de Direction Artistique</span></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-da tooltip-trigger" data-role="DA" data-desc="Tâche G - Semaine 7 : Préparation de la campagne et kit com.">DA</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-da tooltip-trigger" data-role="DA" data-desc="Tâche G - Semaine 8 : Préparation de la campagne et kit com.">DA</div></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-da tooltip-trigger" data-role="DA" data-desc="Tâche G - Semaine 9 : Lancement marketing ciblé.">DA</div></td>
+                                    <td class="gantt-cell"></td>
+                                </tr>
+                                <!-- H. Livraison finale -->
+                                <tr data-task="H">
+                                    <td><strong>H. Livraison finale</strong></td>
+                                    <td><span style="font-size: 11px; font-weight: 600;">Équipe complète (Lead CP)</span></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"></td>
+                                    <td class="gantt-cell"><div class="gantt-bar bar-fin tooltip-trigger" data-role="FIN" data-desc="Tâche H - Semaine 10 : Jalons et livraison finale de l'application.">FIN</div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- PERT SPLIT VIEW -->
+                <div class="pert-grid">
+                    <!-- LEFT COLUMN: SVG PERT CANVAS -->
+                    <div class="card-panel">
+                        <div class="card-panel-header">
+                            <div class="card-panel-title">
+                                <i class="fa-solid fa-diagram-project"></i> Réseau PERT & Chemin Critique
+                            </div>
+                            <span class="badge-status" style="background: rgba(239, 68, 68, 0.05); color: var(--danger); border-color: rgba(239, 68, 68, 0.2);">
+                                <i class="fa-solid fa-route"></i> Durée totale : 17 semaines
+                            </span>
+                        </div>
+                        
+                        <p class="paragraph-text">
+                            Le diagramme de flux ci-dessous représente les dépendances et l'ordonnancement des tâches. Le <strong>chemin critique</strong> (les jalons incontournables sans marge de retard) est représenté par les nœuds entourés de <strong>rouge</strong>. La tâche <strong>E</strong>, parallèle, dispose d'une marge.
+                        </p>
+
+                        <div class="pert-canvas-card">
+                            <svg class="pert-svg" viewBox="0 0 700 930" width="700" height="930">
+                                <defs>
+                                    <!-- Arrow definition critique -->
+                                    <marker id="arrow-critique" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EF4444" />
+                                    </marker>
+                                    <!-- Arrow definition parallele -->
+                                    <marker id="arrow-parallele" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748B" />
+                                    </marker>
+                                </defs>
+
+                                <!-- EDGES / PATHS -->
+                                <!-- A -> B (Critique) -->
+                                <path id="path-AB" class="pert-path path-critique" d="M 350,90 L 350,128" marker-end="url(#arrow-critique)" data-from="A" data-to="B" />
+                                
+                                <!-- B -> C (Critique) -->
+                                <path id="path-BC" class="pert-path path-critique" d="M 350,200 L 350,238" marker-end="url(#arrow-critique)" data-from="B" data-to="C" />
+
+                                <!-- C -> D (Critique) -->
+                                <path id="path-CD" class="pert-path path-critique" d="M 310,310 L 220,388" marker-end="url(#arrow-critique)" data-from="C" data-to="D" />
+
+                                <!-- C -> E (Parallele) -->
+                                <path id="path-CE" class="pert-path path-parallele" d="M 390,310 L 480,388" marker-end="url(#arrow-parallele)" data-from="C" data-to="E" />
+
+                                <!-- D -> F (Critique) -->
+                                <path id="path-DF" class="pert-path path-critique" d="M 220,460 L 310,538" marker-end="url(#arrow-critique)" data-from="D" data-to="F" />
+
+                                <!-- E -> F (Parallele) -->
+                                <path id="path-EF" class="pert-path path-parallele" d="M 480,460 L 390,538" marker-end="url(#arrow-parallele)" data-from="E" data-to="F" />
+
+                                <!-- F -> G (Critique) -->
+                                <path id="path-FG" class="pert-path path-critique" d="M 350,610 L 350,648" marker-end="url(#arrow-critique)" data-from="F" data-to="G" />
+
+                                <!-- G -> H (Critique) -->
+                                <path id="path-GH" class="pert-path path-critique" d="M 350,720 L 350,763" marker-end="url(#arrow-critique)" data-from="G" data-to="H" />
+
+
+                                <!-- EDGE BADGES BACKGROUNDS & TEXTS -->
+                                <!-- A -> B Badge -->
+                                <g>
+                                    <rect class="arrow-badge-bg arrow-badge-critique" x="323" y="99" width="54" height="18" />
+                                    <text class="arrow-badge" x="350" y="111" text-anchor="middle">Critique</text>
+                                </g>
+
+                                <!-- B -> C Badge -->
+                                <g>
+                                    <rect class="arrow-badge-bg arrow-badge-critique" x="323" y="209" width="54" height="18" />
+                                    <text class="arrow-badge" x="350" y="221" text-anchor="middle">Critique</text>
+                                </g>
+
+                                <!-- C -> D Badge -->
+                                <g>
+                                    <rect class="arrow-badge-bg arrow-badge-critique" x="238" y="340" width="54" height="18" />
+                                    <text class="arrow-badge" x="265" y="352" text-anchor="middle">Critique</text>
+                                </g>
+
+                                <!-- C -> E Badge -->
+                                <g>
+                                    <rect class="arrow-badge-bg arrow-badge-parallele" x="408" y="340" width="56" height="18" />
+                                    <text class="arrow-badge" x="436" y="352" text-anchor="middle">Parallèle</text>
+                                </g>
+
+                                <!-- D -> F Badge -->
+                                <g>
+                                    <rect class="arrow-badge-bg arrow-badge-critique" x="238" y="490" width="54" height="18" />
+                                    <text class="arrow-badge" x="265" y="502" text-anchor="middle">Critique</text>
+                                </g>
+
+                                <!-- F -> G Badge -->
+                                <g>
+                                    <rect class="arrow-badge-bg arrow-badge-critique" x="323" y="619" width="54" height="18" />
+                                    <text class="arrow-badge" x="350" y="631" text-anchor="middle">Critique</text>
+                                </g>
+
+                                <!-- G -> H Badge -->
+                                <g>
+                                    <rect class="arrow-badge-bg arrow-badge-critique" x="323" y="732" width="54" height="18" />
+                                    <text class="arrow-badge" x="350" y="744" text-anchor="middle">Critique</text>
+                                </g>
+
+
+                                <!-- NODES / FOREIGNOBJECTS -->
+                                <!-- Node A -->
+                                <foreignObject x="240" y="20" width="220" height="70">
+                                    <div class="pert-node critical" onclick="selectPertNode('A', this)">
+                                        <div class="node-header">
+                                            <span title="Début au plus tôt">ES: 0</span>
+                                            <span style="font-weight:700;" title="Durée">2 sem</span>
+                                            <span title="Fin au plus tôt">EF: 2</span>
+                                        </div>
+                                        <div class="node-body">
+                                            A. Cadrage du projet
+                                        </div>
+                                        <div class="node-footer">
+                                            <span title="Début au plus tard">LS: 0</span>
+                                            <span class="slack-badge zero">Marge: 0</span>
+                                            <span title="Fin au plus tard">LF: 2</span>
+                                        </div>
+                                    </div>
+                                </foreignObject>
+
+                                <!-- Node B -->
+                                <foreignObject x="240" y="130" width="220" height="70">
+                                    <div class="pert-node critical" onclick="selectPertNode('B', this)">
+                                        <div class="node-header">
+                                            <span title="Début au plus tôt">ES: 2</span>
+                                            <span style="font-weight:700;" title="Durée">2 sem</span>
+                                            <span title="Fin au plus tôt">EF: 4</span>
+                                        </div>
+                                        <div class="node-body">
+                                            B. Maquettage UX/UI
+                                        </div>
+                                        <div class="node-footer">
+                                            <span title="Début au plus tard">LS: 2</span>
+                                            <span class="slack-badge zero">Marge: 0</span>
+                                            <span title="Fin au plus tard">LF: 4</span>
+                                        </div>
+                                    </div>
+                                </foreignObject>
+
+                                <!-- Node C -->
+                                <foreignObject x="240" y="240" width="220" height="70">
+                                    <div class="pert-node critical" onclick="selectPertNode('C', this)">
+                                        <div class="node-header">
+                                            <span title="Début au plus tôt">ES: 4</span>
+                                            <span style="font-weight:700;" title="Durée">2 sem</span>
+                                            <span title="Fin au plus tôt">EF: 6</span>
+                                        </div>
+                                        <div class="node-body">
+                                            C. Architecture & Cyber
+                                        </div>
+                                        <div class="node-footer">
+                                            <span title="Début au plus tard">LS: 4</span>
+                                            <span class="slack-badge zero">Marge: 0</span>
+                                            <span title="Fin au plus tard">LF: 6</span>
+                                        </div>
+                                    </div>
+                                </foreignObject>
+
+                                <!-- Node D (Left) -->
+                                <foreignObject x="40" y="390" width="220" height="70">
+                                    <div class="pert-node critical" onclick="selectPertNode('D', this)">
+                                        <div class="node-header">
+                                            <span title="Début au plus tôt">ES: 6</span>
+                                            <span style="font-weight:700;" title="Durée">5 sem</span>
+                                            <span title="Fin au plus tôt">EF: 11</span>
+                                        </div>
+                                        <div class="node-body">
+                                            D. Développement applicatif
+                                        </div>
+                                        <div class="node-footer">
+                                            <span title="Début au plus tard">LS: 6</span>
+                                            <span class="slack-badge zero">Marge: 0</span>
+                                            <span title="Fin au plus tard">LF: 11</span>
+                                        </div>
+                                    </div>
+                                </foreignObject>
+
+                                <!-- Node E (Right) -->
+                                <foreignObject x="440" y="390" width="220" height="70">
+                                    <div class="pert-node parallel" onclick="selectPertNode('E', this)">
+                                        <div class="node-header">
+                                            <span title="Début au plus tôt">ES: 6</span>
+                                            <span style="font-weight:700;" title="Durée">4 sem</span>
+                                            <span title="Fin au plus tôt">EF: 10</span>
+                                        </div>
+                                        <div class="node-body">
+                                            E. Partenariats bancaires
+                                        </div>
+                                        <div class="node-footer">
+                                            <span title="Début au plus tard">LS: 7</span>
+                                            <span class="slack-badge has-slack">Marge: 1</span>
+                                            <span title="Fin au plus tard">LF: 11</span>
+                                        </div>
+                                    </div>
+                                </foreignObject>
+
+                                <!-- Node F -->
+                                <foreignObject x="240" y="540" width="220" height="70">
+                                    <div class="pert-node critical" onclick="selectPertNode('F', this)">
+                                        <div class="node-header">
+                                            <span title="Début au plus tôt">ES: 11</span>
+                                            <span style="font-weight:700;" title="Durée">3 sem</span>
+                                            <span title="Fin au plus tôt">EF: 14</span>
+                                        </div>
+                                        <div class="node-body">
+                                            F. Tests & Validation
+                                        </div>
+                                        <div class="node-footer">
+                                            <span title="Début au plus tard">LS: 11</span>
+                                            <span class="slack-badge zero">Marge: 0</span>
+                                            <span title="Fin au plus tard">LF: 14</span>
+                                        </div>
+                                    </div>
+                                </foreignObject>
+
+                                <!-- Node G -->
+                                <foreignObject x="240" y="650" width="220" height="70">
+                                    <div class="pert-node critical" onclick="selectPertNode('G', this)">
+                                        <div class="node-header">
+                                            <span title="Début au plus tôt">ES: 14</span>
+                                            <span style="font-weight:700;" title="Durée">3 sem</span>
+                                            <span title="Fin au plus tôt">EF: 17</span>
+                                        </div>
+                                        <div class="node-body">
+                                            G. Com. & Lancement
+                                        </div>
+                                        <div class="node-footer">
+                                            <span title="Début au plus tard">LS: 14</span>
+                                            <span class="slack-badge zero">Marge: 0</span>
+                                            <span title="Fin au plus tard">LF: 17</span>
+                                        </div>
+                                    </div>
+                                </foreignObject>
+
+                                <!-- Node H (Milestone Circle) -->
+                                <foreignObject x="295" y="765" width="110" height="110">
+                                    <div class="pert-node milestone critical" onclick="selectPertNode('H', this)">
+                                        <div class="milestone-content">
+                                            <strong>H</strong>
+                                            <span>Livraison finale</span>
+                                            <small>Semaine 17</small>
+                                        </div>
+                                    </div>
+                                </foreignObject>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: INTERACTIVE NODE DETAILS -->
+                    <div class="sidebar-container">
+                        <div class="details-panel" id="pert-details-panel">
+                            <div class="details-panel-header">
+                                <i class="fa-solid fa-circle-info"></i> Détails de la Tâche
+                            </div>
+                            
+                            <!-- Initial Empty State -->
+                            <div class="details-empty-state" id="details-empty">
+                                <i class="fa-solid fa-hand-pointer"></i>
+                                <p>Cliquez sur un nœud du diagramme PERT pour afficher ses caractéristiques temporelles, ses marges et ses acteurs associés.</p>
+                            </div>
+
+                            <!-- Dynamic Details Content (Hidden initially) -->
+                            <div class="details-card-content" id="details-content" style="display: none;">
+                                <div class="details-title-row">
+                                    <h3 id="detail-task-name" style="font-family: var(--font-display); font-size: 16px; color: var(--text-main);">A. Cadrage du projet</h3>
+                                    <span id="detail-task-path" class="details-badge-critique">Critique</span>
+                                </div>
+
+                                <div style="margin-top: 6px;">
+                                    <div class="details-label">Rôle Responsable</div>
+                                    <div class="details-value" id="detail-task-role">Chef de Projet</div>
+                                </div>
+
+                                <div>
+                                    <div class="details-label">Durée Estimée</div>
+                                    <div class="details-value" id="detail-task-duration">2 semaines</div>
+                                </div>
+
+                                <div>
+                                    <div class="details-label">Dates au plus tôt</div>
+                                    <div class="details-times-grid">
+                                        <div class="details-time-item">
+                                            <span style="font-size: 9px; color: var(--text-dark); text-transform: uppercase;">Début</span>
+                                            <span id="detail-task-es">S0</span>
+                                        </div>
+                                        <div class="details-time-item">
+                                            <span style="font-size: 9px; color: var(--text-dark); text-transform: uppercase;">Fin</span>
+                                            <span id="detail-task-ef">S2</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="details-label">Dates au plus tard</div>
+                                    <div class="details-times-grid">
+                                        <div class="details-time-item">
+                                            <span style="font-size: 9px; color: var(--text-dark); text-transform: uppercase;">Début</span>
+                                            <span id="detail-task-ls">S0</span>
+                                        </div>
+                                        <div class="details-time-item">
+                                            <span style="font-size: 9px; color: var(--text-dark); text-transform: uppercase;">Fin</span>
+                                            <span id="detail-task-lf">S2</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="details-label">Marge de retard (Slack)</div>
+                                    <div class="details-value" id="detail-task-slack">0 semaine</div>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-top: 1px solid var(--border-color); padding-top: 12px; margin-top: 6px;">
+                                    <div>
+                                        <div class="details-label">Prédécesseurs</div>
+                                        <div class="details-value" id="detail-task-preds">Aucun</div>
+                                    </div>
+                                    <div>
+                                        <div class="details-label">Successeurs</div>
+                                        <div class="details-value" id="detail-task-succs">B, C</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ACADEMIC RULES CHECKSUM -->
+                        <div class="card-panel" style="gap: 12px; padding: 18px;">
+                            <div style="font-size: 12px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Règles de Planification PERT
+                            </div>
+                            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 11.5px;">
+                                <li style="display: flex; gap: 8px; align-items: flex-start; color: var(--text-muted);">
+                                    <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 2px;"></i>
+                                    <div><strong>Chemin critique unique</strong> (14 semaines actives + 3 de validation/lancement)</div>
+                                </li>
+                                <li style="display: flex; gap: 8px; align-items: flex-start; color: var(--text-muted);">
+                                    <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 2px;"></i>
+                                    <div><strong>Calcul des marges conforme</strong> (Tâche E = 1 semaine de battement, matérialisée en S7 du GANTT)</div>
+                                </li>
+                                <li style="display: flex; gap: 8px; align-items: flex-start; color: var(--text-muted);">
+                                    <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 2px;"></i>
+                                    <div><strong>Zéro marge</strong> sur les nœuds critiques (A, B, C, D, F, G, H)</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ===================== TAB 2: ORIGINAL PDF VIEW ===================== -->
+            <div id="tab-original-pdf" class="tab-content">
+                
+                <div class="pdf-section-grid">
+                    <!-- GANTT PDF CARD -->
+                    <div class="pdf-card">
+                        <div class="pdf-header-row">
+                            <div class="pdf-title">
+                                <i class="fa-solid fa-table-list"></i> Capture GANTT : Planning de Gantt Optimisé
+                            </div>
+                            <a href="gantt_savelock_roles.pdf" download class="nav-btn" style="padding: 6px 12px; font-size: 10px;">
+                                <i class="fa-solid fa-download"></i> Télécharger
+                            </a>
+                        </div>
+                        <p class="paragraph-text" style="margin-bottom: 0;">
+                            Document officiel de planification nominative sur 10 semaines, avec affectation des rôles par code couleur.
+                        </p>
+                        <iframe src="gantt_savelock_roles.pdf" class="pdf-viewer" title="Visualisateur Gantt PDF"></iframe>
+                    </div>
+
+                    <!-- PERT PDF CARD -->
+                    <div class="pdf-card">
+                        <div class="pdf-header-row">
+                            <div class="pdf-title">
+                                <i class="fa-solid fa-circle-nodes"></i> Capture PERT : Ordonnancement & Dépendances
+                            </div>
+                            <a href="Untitled diagram-2026-06-10-100653.pdf" download class="nav-btn" style="padding: 6px 12px; font-size: 10px;">
+                                <i class="fa-solid fa-download"></i> Télécharger
+                            </a>
+                        </div>
+                        <p class="paragraph-text" style="margin-bottom: 0;">
+                            Graphe d'ordonnancement PERT identifiant les liaisons parallèles et le chemin critique menant au livrable final.
+                        </p>
+                        <iframe src="Untitled diagram-2026-06-10-100653.pdf" class="pdf-viewer" title="Visualisateur PERT PDF"></iframe>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // TAB SWITCHER
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active-tab'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active-content'));
+
+            if (tabName === 'interactive') {
+                document.querySelector('.tab-btn:nth-child(1)').classList.add('active-tab');
+                document.getElementById('tab-interactive').classList.add('active-content');
+            } else {
+                document.querySelector('.tab-btn:nth-child(2)').classList.add('active-tab');
+                document.getElementById('tab-original-pdf').classList.add('active-content');
+            }
+        }
+
+        // GANTT ROLE FILTERING
+        let activeRoleFilter = null;
+
+        function toggleRoleFilter(role, element) {
+            const legendItems = document.querySelectorAll('.legend-item');
+            const ganttBars = document.querySelectorAll('.gantt-bar');
+
+            if (activeRoleFilter === role) {
+                // Deselect filter
+                activeRoleFilter = null;
+                legendItems.forEach(item => item.classList.remove('active'));
+                ganttBars.forEach(bar => bar.classList.remove('dimmed'));
+            } else {
+                // Select new filter
+                activeRoleFilter = role;
+                legendItems.forEach(item => {
+                    if (item.classList.contains(`legend-${role.toLowerCase()}`)) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+
+                ganttBars.forEach(bar => {
+                    if (bar.getAttribute('data-role') === role) {
+                        bar.classList.remove('dimmed');
+                    } else {
+                        bar.classList.add('dimmed');
+                    }
+                });
+            }
+        }
+
+        // PERT DATA & DETAILS INTERACTIVITY
+        const pertTasksData = {
+            'A': {
+                name: 'A. Cadrage du projet',
+                critical: true,
+                role: 'Chef de Projet (Romain B.)',
+                duration: '2 semaines',
+                es: '0', ef: '2',
+                ls: '0', lf: '2',
+                slack: '0 semaine',
+                preds: 'Aucun',
+                succs: 'B (Maquettage)'
+            },
+            'B': {
+                name: 'B. Maquettage UX/UI',
+                critical: true,
+                role: 'DA + Développeur (Binôme)',
+                duration: '2 semaines',
+                es: '2', ef: '4',
+                ls: '2', lf: '4',
+                slack: '0 semaine',
+                preds: 'A (Cadrage)',
+                succs: 'C (Architecture)'
+            },
+            'C': {
+                name: 'C. Architecture & Cybersécurité',
+                critical: true,
+                role: 'Architecte Infra & Cyber',
+                duration: '2 semaines',
+                es: '4', ef: '6',
+                ls: '4', lf: '6',
+                slack: '0 semaine',
+                preds: 'B (Maquettage)',
+                succs: 'D (Dev Applicatif), E (Partenariats)'
+            },
+            'D': {
+                name: 'D. Développement applicatif',
+                critical: true,
+                role: 'Développeur (Alex)',
+                duration: '5 semaines',
+                es: '6', ef: '11',
+                ls: '6', lf: '11',
+                slack: '0 semaine',
+                preds: 'C (Architecture)',
+                succs: 'F (Tests & Validation)'
+            },
+            'E': {
+                name: 'E. Partenariats bancaires',
+                critical: false,
+                role: 'Chargé de Partenariat (Armand)',
+                duration: '4 semaines',
+                es: '6', ef: '10',
+                ls: '7', lf: '11',
+                slack: '1 semaine (Semaine 7 du GANTT)',
+                preds: 'C (Architecture)',
+                succs: 'F (Tests & Validation)'
+            },
+            'F': {
+                name: 'F. Tests & Validation',
+                critical: true,
+                role: 'Chef de Projet + Développeur (Romain B. / Alex)',
+                duration: '3 semaines',
+                es: '11', ef: '14',
+                ls: '11', lf: '14',
+                slack: '0 semaine',
+                preds: 'D (Dev Applicatif), E (Partenariats)',
+                succs: 'G (Com. & Lancement)'
+            },
+            'G': {
+                name: 'G. Communication & Lancement',
+                critical: true,
+                role: 'Chef de Direction Artistique (Bilal)',
+                duration: '3 semaines',
+                es: '14', ef: '17',
+                ls: '14', lf: '17',
+                slack: '0 semaine',
+                preds: 'F (Tests & Validation)',
+                succs: 'H (Livraison finale)'
+            },
+            'H': {
+                name: 'H. Livraison finale (Milestone)',
+                critical: true,
+                role: 'Équipe complète (Animateur : Romain B.)',
+                duration: '0 semaine (Jalon)',
+                es: '17', ef: '17',
+                ls: '17', lf: '17',
+                slack: '0 semaine',
+                preds: 'G (Com. & Lancement)',
+                succs: 'Aucun'
+            }
+        };
+
+        function selectPertNode(taskLetter, nodeElement) {
+            // Remove active style from all nodes
+            document.querySelectorAll('.pert-node').forEach(node => node.classList.remove('active-node'));
+
+            // Add active style to selected node
+            nodeElement.classList.add('active-node');
+
+            // Get node task data
+            const data = pertTasksData[taskLetter];
+            if (!data) return;
+
+            // Show details panel content and hide empty state
+            document.getElementById('details-empty').style.display = 'none';
+            document.getElementById('details-content').style.display = 'flex';
+
+            // Fill details values
+            document.getElementById('detail-task-name').textContent = data.name;
+            document.getElementById('detail-task-role').textContent = data.role;
+            document.getElementById('detail-task-duration').textContent = data.duration;
+            document.getElementById('detail-task-es').textContent = 'Semaine ' + data.es;
+            document.getElementById('detail-task-ef').textContent = 'Semaine ' + data.ef;
+            document.getElementById('detail-task-ls').textContent = 'Semaine ' + data.ls;
+            document.getElementById('detail-task-lf').textContent = 'Semaine ' + data.lf;
+            document.getElementById('detail-task-slack').textContent = data.slack;
+            document.getElementById('detail-task-preds').textContent = data.preds;
+            document.getElementById('detail-task-succs').textContent = data.succs;
+
+            // Set badge status
+            const pathBadge = document.getElementById('detail-task-path');
+            if (data.critical) {
+                pathBadge.className = 'details-badge-critique';
+                pathBadge.textContent = 'Critique';
+            } else {
+                pathBadge.className = 'details-badge-parallele';
+                pathBadge.textContent = 'Parallèle';
+            }
+
+            // Highlight connections in the SVG
+            highlightConnectedPaths(taskLetter);
+
+            // Highlight row in GANTT table
+            highlightGanttRow(taskLetter);
+        }
+
+        function highlightConnectedPaths(taskLetter) {
+            const paths = document.querySelectorAll('.pert-path');
+            paths.forEach(path => {
+                const from = path.getAttribute('data-from');
+                const to = path.getAttribute('data-to');
+
+                if (from === taskLetter || to === taskLetter) {
+                    path.classList.add('path-highlight');
+                    path.style.strokeWidth = '4px';
+                } else {
+                    path.classList.remove('path-highlight');
+                    path.style.strokeWidth = '2px';
+                    path.style.opacity = '0.25';
+                }
+            });
+
+            // Handle nodes opacity
+            document.querySelectorAll('.pert-node').forEach(node => {
+                // Find FO parent to check task letter
+                const fo = node.parentElement;
+                const letter = fo.getAttribute('data-task') || taskLetter; // default handle H circle
+                
+                // Circle milestone specifically is inside FO but we need to check H
+                const isMilestone = node.classList.contains('milestone');
+                const finalLetter = isMilestone ? 'H' : fo.getAttribute('data-task');
+
+                if (finalLetter === taskLetter) {
+                    node.style.opacity = '1';
+                } else {
+                    // check if direct predecessor or successor
+                    const taskData = pertTasksData[taskLetter];
+                    const isPred = taskData.preds.includes(finalLetter);
+                    const isSucc = taskData.succs.includes(finalLetter);
+
+                    if (isPred || isSucc) {
+                        node.style.opacity = '0.85';
+                    } else {
+                        node.style.opacity = '0.35';
+                    }
+                }
+            });
+        }
+
+        function highlightGanttRow(taskLetter) {
+            const rows = document.querySelectorAll('#ganttTable tbody tr');
+            rows.forEach(row => {
+                if (row.getAttribute('data-task') === taskLetter) {
+                    row.style.background = 'rgba(59, 130, 246, 0.05)';
+                    row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    row.style.background = '';
+                }
+            });
+        }
+
+        // Initialize tooltips / titles dynamically for Gantt bars
+        document.addEventListener('DOMContentLoaded', () => {
+            const triggers = document.querySelectorAll('.tooltip-trigger');
+            triggers.forEach(trigger => {
+                const desc = trigger.getAttribute('data-desc');
+                if (desc) {
+                    trigger.setAttribute('title', desc);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

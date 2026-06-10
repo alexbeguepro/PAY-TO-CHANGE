@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atelier 4 du projet PAY TO CHANGE (PTC) — Matrice RACI (Responsabilités). Thème clair haute lisibilité et conformité.">
+    <title>PAY TO CHANGE - Atelier 4 : Matrice RACI</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Palette Variables - Clean Light Theme */
+            --bg-darker: #F1F5F9;        /* Light Slate Background */
+            --bg-dark: #FFFFFF;          /* Pure White Cards */
+            --bg-card: #FFFFFF;
+            --border-color: #E2E8F0;     /* Light Gray Border */
+            --border-color-hover: #CBD5E1;
+            
+            --primary: #10B981;         /* Emerald / Mint Green (R) */
+            --primary-glow: rgba(16, 185, 129, 0.08);
+            --primary-border: rgba(16, 185, 129, 0.25);
+            
+            --secondary: #F59E0B;       /* Amber (A) */
+            --secondary-glow: rgba(245, 158, 11, 0.08);
+            --secondary-border: rgba(245, 158, 11, 0.25);
+            
+            --accent-lavender: #6366F1; /* Indigo / Purple Accent (C) */
+            --accent-lavender-glow: rgba(99, 102, 241, 0.08);
+            
+            --blue-horizon: #3B82F6;    /* Bright Horizon Blue (I) */
+            --blue-horizon-glow: rgba(59, 130, 246, 0.08);
+            
+            --danger: #EF4444;          /* Danger Red */
+            --text-main: #0F172A;       /* Dark Navy Text */
+            --text-muted: #475569;      /* Slate Gray Text */
+            --text-dark: #64748B;       /* Muted Steel Gray */
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --font-display: 'Playfair Display', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-sans);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.08) var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            color: var(--text-main);
+            min-height: 100vh;
+            font-size: 13.5px;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* AMBIENT GLOWS */
+        .ambient-glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(120px);
+            opacity: 0.04;
+        }
+        .glow-1 {
+            top: -100px;
+            right: 10%;
+            background: var(--primary);
+        }
+        .glow-2 {
+            bottom: -100px;
+            left: 10%;
+            background: var(--accent-lavender);
+        }
+
+        /* MAIN CONTENT LAYOUT */
+        .main-content {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at 50% 0%, rgba(226, 232, 240, 0.3), transparent 50%), var(--bg-darker);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            gap: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header-divider {
+            height: 40px;
+            width: 1px;
+            background-color: var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-info h2 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .brand-info span {
+            font-size: 9px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .page-title h1 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .page-title p {
+            font-size: 10px;
+            color: var(--text-dark);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+
+        .badge-status {
+            background: rgba(16, 185, 129, 0.05);
+            color: var(--primary);
+            border: 1px solid var(--primary-border);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 7px 11px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-main);
+            border-color: var(--secondary);
+            background: rgba(245, 158, 11, 0.03);
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.08);
+        }
+
+        .nav-btn.active-nav {
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.02);
+            color: var(--primary);
+        }
+
+        /* GRID CONTENT */
+        .content-container {
+            padding: 24px 32px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 20px;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 1024px) {
+            .content-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 20px 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card-panel:hover {
+            border-color: var(--border-color-hover);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .card-panel-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-panel-title i {
+            color: var(--primary);
+            font-size: 15px;
+        }
+
+        .paragraph-text {
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-size: 13px;
+        }
+
+        /* LEGEND CARD */
+        .legend-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 10px;
+            border-radius: 6px;
+            transition: var(--transition);
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+        }
+
+        .legend-item.legend-r { color: var(--primary); border-color: var(--primary-border); }
+        .legend-item.legend-a { color: var(--secondary); border-color: var(--secondary-border); }
+        .legend-item.legend-c { color: var(--accent-lavender); border-color: rgba(99, 102, 241, 0.25); }
+        .legend-item.legend-i { color: var(--blue-horizon); border-color: rgba(59, 130, 246, 0.25); }
+
+        .legend-item.legend-r:hover, .legend-item.legend-r.active { background: var(--primary); color: #FFFFFF; }
+        .legend-item.legend-a:hover, .legend-item.legend-a.active { background: var(--secondary); color: #FFFFFF; }
+        .legend-item.legend-c:hover, .legend-item.legend-c.active { background: var(--accent-lavender); color: #FFFFFF; }
+        .legend-item.legend-i:hover, .legend-item.legend-i.active { background: var(--blue-horizon); color: #FFFFFF; }
+
+        .badge-raci {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 10px;
+            color: #FFFFFF;
+        }
+        .badge-raci.r { background: var(--primary); }
+        .badge-raci.a { background: var(--secondary); }
+        .badge-raci.c { background: var(--accent-lavender); }
+        .badge-raci.i { background: var(--blue-horizon); }
+
+        /* RACI TABLE */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: #FFFFFF;
+        }
+
+        .raci-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 12.5px;
+        }
+
+        .raci-table th, .raci-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .raci-table th {
+            background: #F8FAFC;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        .raci-table th.col-role {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .raci-table th.col-role:hover {
+            background: #F1F5F9;
+            color: var(--secondary);
+        }
+
+        .raci-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .raci-table tbody tr:hover td {
+            background: #F8FAFC;
+        }
+
+        .raci-cell {
+            text-align: center;
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        /* RACI Specific styling inside cells */
+        .raci-val {
+            display: inline-flex;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            transition: var(--transition);
+            background: #F1F5F9;
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+        }
+
+        .raci-val.r-active { background: var(--primary); color: #FFFFFF; border-color: var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2); }
+        .raci-val.a-active { background: var(--secondary); color: #FFFFFF; border-color: var(--secondary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2); }
+        .raci-val.c-active { background: var(--accent-lavender); color: #FFFFFF; border-color: var(--accent-lavender); transform: scale(1.1); box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2); }
+        .raci-val.i-active { background: var(--blue-horizon); color: #FFFFFF; border-color: var(--blue-horizon); transform: scale(1.1); box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2); }
+
+        /* Dimmed class when filters are applied */
+        .dimmed {
+            opacity: 0.15;
+            transform: scale(0.9);
+        }
+
+        .row-highlight td {
+            background: rgba(16, 185, 129, 0.02) !important;
+        }
+
+        .col-highlight {
+            background: rgba(245, 158, 11, 0.02) !important;
+        }
+
+        /* ALERT BOX offline comm */
+        .alert-box {
+            background: rgba(99, 102, 241, 0.03);
+            border: 1.5px dashed rgba(99, 102, 241, 0.25);
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .alert-box i {
+            color: var(--accent-lavender);
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .alert-box-content h4 {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .alert-box-content p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* COMPLIANCE SIDEBAR CARD */
+        .sidebar-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .compliance-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .compliance-header {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .compliance-header i {
+            color: var(--primary);
+        }
+
+        .compliance-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .compliance-item {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: 12px;
+        }
+
+        .compliance-item i {
+            margin-top: 2px;
+            font-size: 12px;
+        }
+
+        .compliance-item.success i { color: var(--primary); }
+        .compliance-item.error i { color: var(--danger); }
+        .compliance-item.success { color: var(--text-main); }
+        .compliance-item.error { color: var(--text-muted); text-decoration: line-through; }
+
+        .compliance-desc {
+            font-size: 11px;
+            color: var(--text-dark);
+            margin-top: 2px;
+        }
+
+        /* COPIL MEMBRES HIGHLIGHT WIDGET */
+        .copil-widget {
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .copil-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .copil-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .copil-badge-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 11.5px;
+        }
+
+        .copil-name {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .copil-count {
+            font-size: 9.5px;
+            font-weight: 800;
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--primary);
+            border: 1px solid var(--primary-border);
+            padding: 2px 8px;
+            border-radius: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Ambient Glow Backgrounds -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <div class="header-left">
+                <a href="index.html" class="brand">
+                    <div class="brand-logo">
+                        <img src="savelock_ptc_pay_logo.jpg" alt="PTC Logo">
+                    </div>
+                    <div class="brand-info">
+                        <h2>PTC</h2>
+                        <span>PAY TO CHANGE</span>
+                    </div>
+                </a>
+                <div class="header-divider"></div>
+                <div class="page-title">
+                    <h1>Atelier 4 : Gouvernance & Matrice RACI</h1>
+                    <p>Matrice de Responsabilités et Cadrage du Pilotage</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="index.html" class="nav-btn">
+                    <i class="fa-solid fa-house"></i> Accueil
+                </a>
+                <a href="atelier1.html" class="nav-btn">
+                    <i class="fa-solid fa-circle-info"></i> Atelier 1
+                </a>
+                <a href="atelier2.html" class="nav-btn">
+                    <i class="fa-solid fa-chart-line"></i> Atelier 2
+                </a>
+                <a href="atelier3.html" class="nav-btn">
+                    <i class="fa-solid fa-sitemap"></i> Atelier 3
+                </a>
+                <a href="atelier4.html" class="nav-btn active-nav">
+                    <i class="fa-solid fa-table-cells"></i> Atelier 4
+                </a>
+                <a href="atelier5.html" class="nav-btn">
+                    <i class="fa-solid fa-chart-gantt"></i> Atelier 5
+                </a>
+                <div class="badge-status">
+                    <i class="fa-solid fa-check-double"></i> Conforme RACI
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTAINER FOR GRID -->
+        <div class="content-container">
+            <!-- MAIN CARD: RACI TABLE -->
+            <div class="card-panel">
+                <div class="card-panel-header">
+                    <div class="card-panel-title">
+                        <i class="fa-solid fa-table-cells"></i> Matrice des Responsabilités (RACI)
+                    </div>
+                </div>
+                
+                <p class="paragraph-text">
+                    La matrice ci-dessous définit l'implication de chaque membre de l'équipe et partenaire stratégique dans les 8 activités clés du projet. Cliquez sur un rôle pour filtrer ses attributions, ou survolez la légende pour repérer les affectations.
+                </p>
+
+                <!-- LEGEND -->
+                <div class="legend-container">
+                    <div class="legend-item legend-r" onmouseenter="highlightLetter('R')" onmouseleave="clearHighlight()">
+                        <span class="badge-raci r">R</span> Responsible (Réalise)
+                    </div>
+                    <div class="legend-item legend-a" onmouseenter="highlightLetter('A')" onmouseleave="clearHighlight()">
+                        <span class="badge-raci a">A</span> Accountable (Valide / Approuve)
+                    </div>
+                    <div class="legend-item legend-c" onmouseenter="highlightLetter('C')" onmouseleave="clearHighlight()">
+                        <span class="badge-raci c">C</span> Consulted (Consulté)
+                    </div>
+                    <div class="legend-item legend-i" onmouseenter="highlightLetter('I')" onmouseleave="clearHighlight()">
+                        <span class="badge-raci i">I</span> Informed (Informé)
+                    </div>
+                </div>
+
+                <!-- TABLE -->
+                <div class="table-responsive">
+                    <table class="raci-table" id="raciTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 35%;">Activités du Projet (8)</th>
+                                <th class="col-role" onclick="toggleRoleColumn(1)">Romain Bottero<br><span style="font-size: 8px; color: var(--text-dark);">Animateur [COPIL]</span></th>
+                                <th class="col-role" onclick="toggleRoleColumn(2)">Armand<br><span style="font-size: 8px; color: var(--text-dark);">Sponsoring [COPIL]</span></th>
+                                <th class="col-role" onclick="toggleRoleColumn(3)">Sponsor Ext.<br><span style="font-size: 8px; color: var(--text-dark);">Financier [COPIL]</span></th>
+                                <th class="col-role" onclick="toggleRoleColumn(4)">Alex<br><span style="font-size: 8px; color: var(--text-dark);">Lead Dev</span></th>
+                                <th class="col-role" onclick="toggleRoleColumn(5)">Bilal<br><span style="font-size: 8px; color: var(--text-dark);">Communication</span></th>
+                                <th class="col-role" onclick="toggleRoleColumn(6)">Romain A.<br><span style="font-size: 8px; color: var(--text-dark);">Juriste RGPD</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-row="1">
+                                <td><strong>1. Cadrage stratégique & Planification globale</strong></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="R">R</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="C">C</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="A">A</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="C">C</span></td>
+                            </tr>
+                            <tr data-row="2">
+                                <td><strong>2. Négociation & contractualisation BaaS (séquestre)</strong></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="A">A</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="R">R</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="C">C</span></td>
+                            </tr>
+                            <tr data-row="3">
+                                <td><strong>3. Analyse de conformité RGPD & Données de santé</strong></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="A">A</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="C">C</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="R">R</span></td>
+                            </tr>
+                            <tr data-row="4">
+                                <td><strong>4. Spécifications & Moteur de validation anti-fraude</strong></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="A">A</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="R">R</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="C">C</span></td>
+                            </tr>
+                            <tr data-row="5">
+                                <td><strong>5. Développement technique & Intégration APIs</strong></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="A">A</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="C">C</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="R">R</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                            </tr>
+                            <tr data-row="6">
+                                <td><strong>6. Conception de la campagne d'acquisition (MVP)</strong></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="A">A</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="C">C</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="R">R</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                            </tr>
+                            <tr data-row="7">
+                                <td><strong>7. Campagne de tests bêta-testeurs & feedback</strong></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="A">A</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="C">C</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="R">R</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="R">R</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                            </tr>
+                            <tr data-row="8">
+                                <td><strong>8. Validation finale & Lancement officiel du MVP</strong></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="R">R</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="C">C</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="A">A</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="I">I</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="R">R</span></td>
+                                <td class="raci-cell"><span class="raci-val" data-type="C">C</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ALERT OFFLINE COMMUNICATION PLAN -->
+                <div class="alert-box">
+                    <i class="fa-solid fa-clipboard-question"></i>
+                    <div class="alert-box-content">
+                        <h4>Note concernant le Plan de Communication</h4>
+                        <p>
+                            Conformément à la décision d'équipe, le volet <strong>Plan de Communication</strong> associé à cet atelier est géré exclusivement de façon physique/papier (tableau mural dans notre espace de travail commun) pour faciliter sa mise à jour agile au quotidien.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIDEBAR: COMPLIANCE STATUS & DETAILS -->
+            <div class="sidebar-container">
+                <!-- COMPLIANCE CHECK CARD -->
+                <div class="compliance-card">
+                    <div class="compliance-header">
+                        <i class="fa-solid fa-shield-halved"></i> Règles Académiques RACI
+                    </div>
+                    <ul class="compliance-list">
+                        <li class="compliance-item success" id="rule-activities">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>8 Activités minimum</strong>
+                                <div class="compliance-desc">8 activités clés définies et assignées.</div>
+                            </div>
+                        </li>
+                        <li class="compliance-item success" id="rule-roles">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>6 Rôles minimum</strong>
+                                <div class="compliance-desc">6 profils d'intervenants configurés.</div>
+                            </div>
+                        </li>
+                        <li class="compliance-item success" id="rule-single-a">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>1 seul 'A' par ligne</strong>
+                                <div class="compliance-desc">Responsable final unique pour chaque tâche.</div>
+                            </div>
+                        </li>
+                        <li class="compliance-item success" id="rule-has-r">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>Au moins un 'R' par ligne</strong>
+                                <div class="compliance-desc">Pas d'activité orpheline sans réalisateur.</div>
+                            </div>
+                        </li>
+                        <li class="compliance-item success" id="rule-copil">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>Membres COPIL >= 2 présences</strong>
+                                <div class="compliance-desc">Présence active de la gouvernance validée.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- ROLES PRESENCE CARD -->
+                <div class="copil-widget">
+                    <div class="copil-title">Présence des rôles dans la matrice</div>
+                    <div class="copil-badges">
+                        <div class="copil-badge-row">
+                            <span class="copil-name">Romain Bottero (Animateur)</span>
+                            <span class="copil-count">8 activités</span>
+                        </div>
+                        <div class="copil-badge-row">
+                            <span class="copil-name">Armand (Sponsoring)</span>
+                            <span class="copil-count">8 activités</span>
+                        </div>
+                        <div class="copil-badge-row">
+                            <span class="copil-name">Sponsor Externe</span>
+                            <span class="copil-count">8 activités</span>
+                        </div>
+                        <div class="copil-badge-row">
+                            <span class="copil-name">Alex (Lead Dev)</span>
+                            <span class="copil-count">8 activités</span>
+                        </div>
+                        <div class="copil-badge-row">
+                            <span class="copil-name">Bilal (Communication)</span>
+                            <span class="copil-count">8 activités</span>
+                        </div>
+                        <div class="copil-badge-row">
+                            <span class="copil-name">Romain A. (Juriste RGPD)</span>
+                            <span class="copil-count">8 activités</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // Store current states
+        let selectedRoleCol = null;
+        let selectedLegendLetter = null;
+
+        // Auto color the active RACI letters inside table on startup
+        document.addEventListener("DOMContentLoaded", () => {
+            const vals = document.querySelectorAll(".raci-val");
+            vals.forEach(val => {
+                const type = val.getAttribute("data-type").toLowerCase();
+                if (type === 'r') val.classList.add('r-active');
+                if (type === 'a') val.classList.add('a-active');
+                if (type === 'c') val.classList.add('c-active');
+                if (type === 'i') val.classList.add('i-active');
+            });
+        });
+
+        // Highlight cells matching letter on hover in legend
+        function highlightLetter(letter) {
+            clearHighlight();
+            selectedLegendLetter = letter;
+            
+            // Highlight legend item
+            const legendItems = document.querySelectorAll(".legend-item");
+            legendItems.forEach(item => {
+                if (item.classList.contains(`legend-${letter.toLowerCase()}`)) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Fade non-matching cells in the table
+            const vals = document.querySelectorAll(".raci-val");
+            vals.forEach(val => {
+                const type = val.getAttribute("data-type");
+                if (type !== letter) {
+                    val.classList.add('dimmed');
+                }
+            });
+        }
+
+        // Clear all highlights
+        function clearHighlight() {
+            selectedLegendLetter = null;
+            document.querySelectorAll(".legend-item").forEach(item => item.classList.remove('active'));
+            document.querySelectorAll(".raci-val").forEach(val => val.classList.remove('dimmed'));
+            
+            if (selectedRoleCol !== null) {
+                highlightRole(selectedRoleCol);
+            }
+        }
+
+        // Toggle highlight for role column on click
+        function toggleRoleColumn(colIndex) {
+            if (selectedRoleCol === colIndex) {
+                // Deselect
+                selectedRoleCol = null;
+                clearColumnHighlight();
+            } else {
+                // Select new column
+                selectedRoleCol = colIndex;
+                highlightRole(colIndex);
+            }
+        }
+
+        function highlightRole(colIndex) {
+            clearColumnHighlight();
+            
+            // Highlight column header
+            const headers = document.querySelectorAll(".raci-table th");
+            if (headers[colIndex]) {
+                headers[colIndex].classList.add("col-highlight");
+            }
+
+            // Dim everything else, highlight cells in this column
+            const rows = document.querySelectorAll(".raci-table tbody tr");
+            rows.forEach(row => {
+                const cells = row.querySelectorAll("td");
+                cells.forEach((cell, idx) => {
+                    // colIndex is 1-indexed for columns (0 is the activity name, 1 is Romain, etc.)
+                    if (idx === colIndex) {
+                        cell.classList.add("col-highlight");
+                    } else if (idx > 0) {
+                        // Dim only the RACI badge in other columns
+                        const val = cell.querySelector(".raci-val");
+                        if (val) val.classList.add('dimmed');
+                    }
+                });
+            });
+        }
+
+        function clearColumnHighlight() {
+            document.querySelectorAll(".raci-table th").forEach(th => th.classList.remove("col-highlight"));
+            document.querySelectorAll(".raci-table td").forEach(td => td.classList.remove("col-highlight"));
+            document.querySelectorAll(".raci-val").forEach(val => val.classList.remove('dimmed'));
+        }
+    </script>
+</body>
+
+</html>

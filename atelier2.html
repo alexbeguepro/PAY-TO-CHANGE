@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atelier 2 du projet PAY TO CHANGE (PTC) — Diagnostic d'Opportunité, SWOT & Rentabilité. Thème clair haute lisibilité.">
+    <title>PAY TO CHANGE - Atelier 2 : Diagnostic & Rentabilité</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Palette Variables - Clean Light Theme */
+            --bg-darker: #F1F5F9;        /* Light Slate Background */
+            --bg-dark: #FFFFFF;          /* Pure White Cards */
+            --bg-card: #FFFFFF;
+            --border-color: #E2E8F0;     /* Light Gray Border */
+            --border-color-hover: #CBD5E1;
+            
+            --primary: #10B981;         /* Emerald / Mint Green */
+            --primary-glow: rgba(16, 185, 129, 0.08);
+            --primary-border: rgba(16, 185, 129, 0.25);
+            
+            --secondary: #F59E0B;       /* Amber */
+            --secondary-glow: rgba(245, 158, 11, 0.08);
+            --secondary-border: rgba(245, 158, 11, 0.25);
+            
+            --accent-lavender: #6366F1; /* Indigo / Purple Accent */
+            --blue-horizon: #3B82F6;    /* Bright Horizon Blue */
+            --danger: #EF4444;          /* Danger Red */
+            --danger-glow: rgba(239, 68, 68, 0.08);
+            --text-main: #0F172A;       /* Dark Navy Text */
+            --text-muted: #475569;      /* Slate Gray Text */
+            --text-dark: #64748B;       /* Muted Steel Gray */
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --font-display: 'Playfair Display', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-sans);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.08) var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            color: var(--text-main);
+            min-height: 100vh;
+            font-size: 13.5px;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* AMBIENT GLOWS */
+        .ambient-glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(120px);
+            opacity: 0.04;
+        }
+        .glow-1 {
+            top: -100px;
+            right: 10%;
+            background: var(--primary);
+        }
+        .glow-2 {
+            bottom: -100px;
+            left: 10%;
+            background: var(--accent-lavender);
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            gap: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header-divider {
+            height: 40px;
+            width: 1px;
+            background-color: var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-info h2 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .brand-info span {
+            font-size: 9px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .page-title h1 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .page-title p {
+            font-size: 10px;
+            color: var(--text-dark);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+
+        .badge-status {
+            background: rgba(245, 158, 11, 0.05);
+            color: var(--secondary);
+            border: 1px solid var(--secondary-border);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 7px 11px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-main);
+            border-color: var(--secondary);
+            background: rgba(245, 158, 11, 0.03);
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.08);
+        }
+
+        .nav-btn.active-nav {
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.02);
+            color: var(--primary);
+        }
+
+        /* GRID CONTENT */
+        .content-container {
+            padding: 24px 32px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .content-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card-panel:hover {
+            border-color: var(--border-color-hover);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .card-panel-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-panel-title i {
+            color: var(--secondary);
+            font-size: 15px;
+        }
+
+        .paragraph-text {
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-size: 13px;
+        }
+
+        /* DIAGNOSTIC OPPORTUNITE */
+        .diag-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .diag-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .diag-card {
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .diag-card.problems {
+            background: rgba(239, 68, 68, 0.01);
+            border-color: rgba(239, 68, 68, 0.12);
+        }
+
+        .diag-card.benefits {
+            background: rgba(16, 185, 129, 0.01);
+            border-color: rgba(16, 185, 129, 0.12);
+        }
+
+        .diag-card h4 {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diag-card.problems h4 { color: var(--danger); }
+        .diag-card.benefits h4 { color: var(--primary); }
+
+        .diag-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .diag-item {
+            display: flex;
+            gap: 8px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .diag-item i {
+            margin-top: 3px;
+            font-size: 10px;
+        }
+
+        .diag-card.problems .diag-item i { color: var(--danger); }
+        .diag-card.benefits .diag-item i { color: var(--primary); }
+
+        .diag-item strong {
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* SWOT GRID */
+        .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 576px) {
+            .swot-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+        }
+
+        .swot-box {
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .swot-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .swot-s { background: rgba(16, 185, 129, 0.01); border-color: rgba(16, 185, 129, 0.15); }
+        .swot-w { background: rgba(245, 158, 11, 0.01); border-color: rgba(245, 158, 11, 0.15); }
+        .swot-o { background: rgba(59, 130, 246, 0.01); border-color: rgba(59, 130, 246, 0.15); }
+        .swot-t { background: rgba(239, 68, 68, 0.01); border-color: rgba(239, 68, 68, 0.15); }
+
+        .swot-s:hover { border-color: var(--primary); background: rgba(16, 185, 129, 0.03); }
+        .swot-w:hover { border-color: var(--secondary); background: rgba(245, 158, 11, 0.03); }
+        .swot-o:hover { border-color: var(--blue-horizon); background: rgba(59, 130, 246, 0.03); }
+        .swot-t:hover { border-color: var(--danger); background: rgba(239, 68, 68, 0.03); }
+
+        .swot-title {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .swot-s .swot-title { color: var(--primary); }
+        .swot-w .swot-title { color: var(--secondary); }
+        .swot-o .swot-title { color: var(--blue-horizon); }
+        .swot-t .swot-title { color: var(--danger); }
+
+        .swot-bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 11.5px;
+            line-height: 1.4;
+            color: var(--text-muted);
+        }
+
+        .swot-bullet-list li {
+            position: relative;
+            padding-left: 14px;
+        }
+
+        .swot-bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .swot-s .swot-bullet-list li::before { color: var(--primary); }
+        .swot-w .swot-bullet-list li::before { color: var(--secondary); }
+        .swot-o .swot-bullet-list li::before { color: var(--blue-horizon); }
+        .swot-t .swot-bullet-list li::before { color: var(--danger); }
+
+        /* SIMULATOR LAYOUT */
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .sim-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sim-params {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sim-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sim-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sim-val-display {
+            font-family: var(--font-mono);
+            color: var(--blue-horizon);
+            font-weight: 700;
+        }
+
+        /* Range input styling */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #E2E8F0;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--blue-horizon);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 3px solid #FFFFFF;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            background: var(--accent-lavender);
+        }
+
+        /* SIMULATOR RESULTS CARD */
+        .sim-results-card {
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .metrics-summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .metric-block {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .metric-block.highlight {
+            border-color: var(--primary-border);
+            background: rgba(16, 185, 129, 0.01);
+        }
+
+        .metric-lbl {
+            font-size: 9.5px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .metric-val {
+            font-family: var(--font-mono);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .metric-block.highlight .metric-val {
+            color: var(--primary);
+        }
+
+        /* REACTION CHART (HTML/CSS BARS) */
+        .chart-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border: 1px solid var(--border-color);
+            background: #FFFFFF;
+            border-radius: 10px;
+            padding: 12px;
+            height: 160px;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .chart-title {
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            font-size: 9.5px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: 0.03em;
+        }
+
+        .chart-bars-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 110px;
+            width: 100%;
+        }
+
+        .chart-bar-group {
+            display: flex;
+            gap: 4px;
+            align-items: flex-end;
+            width: 20%;
+            height: 100%;
+        }
+
+        .chart-bar {
+            width: 14px;
+            border-radius: 3px 3px 0 0;
+            transition: height 0.4s ease, background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            min-height: 2px;
+        }
+
+        .chart-bar.bar-invest { background: var(--danger); }
+        .chart-bar.bar-revenue { background: var(--primary); }
+
+        .chart-labels-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .legend-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+        }
+
+        .legend-dot.dot-invest { background: var(--danger); }
+        .legend-dot.dot-revenue { background: var(--primary); }
+
+        /* RECOMMENDATIONS */
+        .recomm-card {
+            background: rgba(16, 185, 129, 0.01);
+            border: 1.5px solid var(--primary-border);
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .recomm-header {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .recomm-quote {
+            font-family: var(--font-sans);
+            font-style: italic;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: var(--text-main);
+            position: relative;
+            padding-left: 16px;
+            border-left: 2px solid var(--primary);
+        }
+
+        /* ALTERNATIVES TABLE */
+        .alt-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .alt-table th, .alt-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .alt-table th {
+            background: #F8FAFC;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            font-size: 9px;
+            letter-spacing: 0.03em;
+        }
+
+        .badge-decision {
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge-decision.badge-retenu {
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--primary);
+        }
+
+        .badge-decision.badge-rejete {
+            background: rgba(239, 68, 68, 0.08);
+            color: var(--danger);
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Ambient Glow Backgrounds -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <div class="header-left">
+                <a href="index.html" class="brand">
+                    <div class="brand-logo">
+                        <img src="savelock_ptc_pay_logo.jpg" alt="PTC Logo">
+                    </div>
+                    <div class="brand-info">
+                        <h2>PTC</h2>
+                        <span>PAY TO CHANGE</span>
+                    </div>
+                </a>
+                <div class="header-divider"></div>
+                <div class="page-title">
+                    <h1>Atelier 2 : Diagnostic & Rentabilité</h1>
+                    <p>Opportunité, SWOT, Modèle financier et Alternatives</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="index.html" class="nav-btn">
+                    <i class="fa-solid fa-house"></i> Accueil
+                </a>
+                <a href="atelier1.html" class="nav-btn">
+                    <i class="fa-solid fa-circle-info"></i> Atelier 1
+                </a>
+                <a href="atelier2.html" class="nav-btn active-nav">
+                    <i class="fa-solid fa-chart-line"></i> Atelier 2
+                </a>
+                <a href="atelier3.html" class="nav-btn">
+                    <i class="fa-solid fa-sitemap"></i> Atelier 3
+                </a>
+                <a href="atelier4.html" class="nav-btn">
+                    <i class="fa-solid fa-table-cells"></i> Atelier 4
+                </a>
+                <a href="atelier5.html" class="nav-btn">
+                    <i class="fa-solid fa-chart-gantt"></i> Atelier 5
+                </a>
+                <div class="badge-status">
+                    <i class="fa-solid fa-square-poll-vertical"></i> ROI validé : +77%
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTAINER FOR GRID -->
+        <div class="content-container">
+            
+            <!-- LEFT COLUMN: DIAGNOSTIC & FINANCIALS -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                
+                <!-- DIAGNOSTIC OPPORTUNITE -->
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-scale-balanced"></i> Diagnostic de l'opportunité
+                        </div>
+                    </div>
+                    
+                    <p class="paragraph-text">
+                        PAY TO CHANGE repose sur une convergence inédite entre les outils de productivité comportementale et la micro-épargne fintech, résolvant un problème chronique d'engagement chez l'utilisateur.
+                    </p>
+
+                    <div class="diag-grid">
+                        <!-- Problems -->
+                        <div class="diag-card problems">
+                            <h4><i class="fa-solid fa-circle-exclamation"></i> Problèmes à Résoudre</h4>
+                            <ul class="diag-list">
+                                <li class="diag-item">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    <div>
+                                        <strong>Faible maintien des habitudes dans le temps</strong>
+                                        Plus de 80% des utilisateurs abandonnent leurs résolutions dès les premières semaines faute de contrainte externe rigide.
+                                    </div>
+                                </li>
+                                <li class="diag-item">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    <div>
+                                        <strong>Absence de conséquences réelles lors d'échecs</strong>
+                                        Les applications classiques n'imposent aucune friction concrète en cas de renoncement, ce qui facilite l'abandon rapide.
+                                    </div>
+                                </li>
+                                <li class="diag-item">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    <div>
+                                        <strong>Difficulté à épargner régulièrement</strong>
+                                        La majorité des particuliers peinent à mettre de l'argent de côté au quotidien faute de automatisme d'épargne engageant.
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Benefits -->
+                        <div class="diag-card benefits">
+                            <h4><i class="fa-solid fa-circle-check"></i> Bénéfices Attendus</h4>
+                            <ul class="diag-list">
+                                <li class="diag-item">
+                                    <i class="fa-solid fa-check"></i>
+                                    <div>
+                                        <strong>Forte viralité & engagement (Qualitatif)</strong>
+                                        Le levier de la caution financière stimule directement la responsabilisation de l'utilisateur tout en favorisant le bouche-à-oreille.
+                                    </div>
+                                </li>
+                                <li class="diag-item">
+                                    <i class="fa-solid fa-check"></i>
+                                    <div>
+                                        <strong>Base d'utilisateurs qualifiés (Quantitatif)</strong>
+                                        Cible de 50 000 utilisateurs sous 3 ans, avec une croissance organique solide portée par l'aspect disruptif du produit.
+                                    </div>
+                                </li>
+                                <li class="diag-item">
+                                    <i class="fa-solid fa-check"></i>
+                                    <div>
+                                        <strong>Modèle économique pérenne (Quantitatif)</strong>
+                                        Frais de gestion sur les flux d'épargne séquestrés et partage d'intérêts, visant 450 000 € de chiffre d'affaires annuel à l'an 3.
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIMULATEUR DE RENTABILITE -->
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-calculator"></i> Simulateur financier de rentabilité (3 ans)
+                        </div>
+                    </div>
+                    
+                    <p class="paragraph-text">
+                        Ajustez les curseurs ci-dessous pour recalculer la rentabilité prévisionnelle du projet sur 3 ans. Le modèle intègre une courbe de croissance organique progressive des utilisateurs (Y1: 23%, Y2: 84%, Y3: 100%).
+                    </p>
+
+                    <div class="sim-grid">
+                        <!-- Sliders -->
+                        <div class="sim-params">
+                            <div class="sim-input-group">
+                                <label class="sim-label">
+                                    <span>Nombre d'utilisateurs (An 3)</span>
+                                    <span class="sim-val-display" id="val-users">50 000</span>
+                                </label>
+                                <input type="range" id="param-users" min="5000" max="150000" step="5000" value="50000" oninput="recalculateModel()">
+                            </div>
+
+                            <div class="sim-input-group">
+                                <label class="sim-label">
+                                    <span>Taux d'utilisateurs actifs épargnants</span>
+                                    <span class="sim-val-display" id="val-rate">15 %</span>
+                                </label>
+                                <input type="range" id="param-rate" min="5" max="40" step="1" value="15" oninput="recalculateModel()">
+                            </div>
+
+                            <div class="sim-input-group">
+                                <label class="sim-label">
+                                    <span>Revenu annuel par épargnant actif</span>
+                                    <span class="sim-val-display" id="val-revenue">60 €</span>
+                                </label>
+                                <input type="range" id="param-revenue" min="10" max="150" step="5" value="60" oninput="recalculateModel()">
+                            </div>
+
+                            <div class="sim-input-group">
+                                <label class="sim-label">
+                                    <span>Investissement CAPEX (Lancement)</span>
+                                    <span class="sim-val-display" id="val-capex">165 000 €</span>
+                                </label>
+                                <input type="range" id="param-capex" min="50000" max="350000" step="5000" value="165000" oninput="recalculateModel()">
+                            </div>
+
+                            <div class="sim-input-group">
+                                <label class="sim-label">
+                                    <span>Coût d'exploitation OPEX (Annuel)</span>
+                                    <span class="sim-val-display" id="val-opex">120 000 €</span>
+                                </label>
+                                <input type="range" id="param-opex" min="30000" max="250000" step="5000" value="120000" oninput="recalculateModel()">
+                            </div>
+                        </div>
+
+                        <!-- Results & Live Chart -->
+                        <div class="sim-results-card">
+                            <div class="metrics-summary-grid">
+                                <div class="metric-block">
+                                    <div class="metric-lbl">Investissement total</div>
+                                    <div class="metric-val" id="res-invest">525 000 €</div>
+                                </div>
+                                <div class="metric-block">
+                                    <div class="metric-lbl">C.A. Cumulé (3 ans)</div>
+                                    <div class="metric-val" id="res-revenue">931 500 €</div>
+                                </div>
+                                <div class="metric-block highlight">
+                                    <div class="metric-lbl">Gain Net</div>
+                                    <div class="metric-val" id="res-net">406 500 €</div>
+                                </div>
+                                <div class="metric-block highlight">
+                                    <div class="metric-lbl">ROI Prévisionnel</div>
+                                    <div class="metric-val" id="res-roi">+77 %</div>
+                                </div>
+                            </div>
+
+                            <!-- Bar Chart Visual -->
+                            <div class="chart-box">
+                                <div class="chart-title">Évolution cumulée (3 ans)</div>
+                                <div class="chart-bars-container">
+                                    <!-- Lancement -->
+                                    <div class="chart-bar-group">
+                                        <div class="chart-bar bar-invest" id="bar-i-launch" style="height: 20%;"></div>
+                                        <div class="chart-bar bar-revenue" id="bar-r-launch" style="height: 0%;"></div>
+                                    </div>
+                                    <!-- Année 1 -->
+                                    <div class="chart-bar-group">
+                                        <div class="chart-bar bar-invest" id="bar-i-y1" style="height: 40%;"></div>
+                                        <div class="chart-bar bar-revenue" id="bar-r-y1" style="height: 10%;"></div>
+                                    </div>
+                                    <!-- Année 2 -->
+                                    <div class="chart-bar-group">
+                                        <div class="chart-bar bar-invest" id="bar-i-y2" style="height: 60%;"></div>
+                                        <div class="chart-bar bar-revenue" id="bar-r-y2" style="height: 30%;"></div>
+                                    </div>
+                                    <!-- Année 3 -->
+                                    <div class="chart-bar-group">
+                                        <div class="chart-bar bar-invest" id="bar-i-y3" style="height: 80%;"></div>
+                                        <div class="chart-bar bar-revenue" id="bar-r-y3" style="height: 100%;"></div>
+                                    </div>
+                                </div>
+                                <div class="chart-labels-container">
+                                    <span>Lancement</span>
+                                    <span>Année 1</span>
+                                    <span>Année 2</span>
+                                    <span>Année 3</span>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="legend-indicator">
+                                        <span class="legend-dot dot-invest"></span> Investissements
+                                    </div>
+                                    <div class="legend-indicator">
+                                        <span class="legend-dot dot-revenue"></span> Chiffre d'Affaires
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: SWOT & ALTERNATIVES -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                
+                <!-- SWOT GRID CARD -->
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-table-cells-large"></i> Analyse SWOT
+                        </div>
+                    </div>
+                    
+                    <p class="paragraph-text">
+                        Ce cadre stratégique positionne PAY TO CHANGE par rapport à l'environnement fintech externe et ses capacités techniques opérationnelles internes.
+                    </p>
+
+                    <div class="swot-grid">
+                        <!-- Forces -->
+                        <div class="swot-box swot-s">
+                            <div class="swot-title"><i class="fa-solid fa-plus-circle"></i> Forces (Strengths)</div>
+                            <ul class="swot-bullet-list">
+                                <li>Concept novateur et fortement différenciant sur le marché mobile.</li>
+                                <li>Double valeur clé : ancrage d'habitudes saines + constitution d'épargne.</li>
+                                <li>Forte viralité intrinsèque (mécanisme social et défis de responsabilisation).</li>
+                                <li>Coûts de structure opérationnelle faibles (infra légère, automatisée).</li>
+                            </ul>
+                        </div>
+
+                        <!-- Faiblesses -->
+                        <div class="swot-box swot-w">
+                            <div class="swot-title"><i class="fa-solid fa-minus-circle"></i> Faiblesses (Weaknesses)</div>
+                            <ul class="swot-bullet-list">
+                                <li>Forte dépendance à l'engagement (validation bancaire et de santé).</li>
+                                <li>Risques réglementaires élevés (séquestres, flux, KYC, gestion AMF).</li>
+                                <li>Besoin de confiance très élevé (données bancaires et santé de l'utilisateur).</li>
+                                <li>Concept disruptif non testé à grande échelle sur le long terme.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Opportunités -->
+                        <div class="swot-box swot-o">
+                            <div class="swot-title"><i class="fa-solid fa-arrow-trend-up"></i> Opportunités (Opport.)</div>
+                            <ul class="swot-bullet-list">
+                                <li>Démocratisation de l'Open Banking (API PSD2) et micro-épargne fintech.</li>
+                                <li>Tendance forte du grand public pour l'auto-discipline et le bien-être.</li>
+                                <li>Partenariats potentiels avec les banques (produit d'appel innovant).</li>
+                                <li>Essor de la gamification dans l'aide aux comportements sains.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Menaces -->
+                        <div class="swot-box swot-t">
+                            <div class="swot-title"><i class="fa-solid fa-triangle-exclamation"></i> Menaces (Threats)</div>
+                            <ul class="swot-bullet-list">
+                                <li>Concurrence : copie de l'option d'épargne forcée par une néobanque établie.</li>
+                                <li>Évolution réglementaire restrictive sur les prélèvements automatiques coercitifs.</li>
+                                <li>Perception négative possible associée à une « punition financière ».</li>
+                                <li>Clonage rapide par un géant du coaching ou du bien-être.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ALTERNATIVES & RECOMMENDATION -->
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-lightbulb"></i> Évaluation & Recommandation
+                        </div>
+                    </div>
+                    
+                    <!-- Recommandation Romain -->
+                    <div class="recomm-card">
+                        <div class="recomm-header">
+                            <i class="fa-solid fa-user-tie"></i> Recommandation du Chef de Projet
+                        </div>
+                        <p class="recomm-quote">
+                            « Après analyse des opportunités de marché, des coûts de mise en œuvre et du potentiel de différenciation, je recommande fermement le lancement du projet PAY TO CHANGE. Le concept répond simultanément à deux besoins majeurs : l'amélioration durable des habitudes de vie et la constitution d'une épargne régulière. Cette synergie crée une proposition de valeur innovante, difficile à répliquer par la concurrence et garante d'un avantage concurrentiel durable. »
+                        </p>
+                        <div style="display:flex; align-items:center; gap: 10px; font-size:11px; margin-top:4px;">
+                            <div style="width:24px; height:24px; border-radius:50%; background:rgba(16, 185, 129, 0.08); color:var(--primary); font-weight:800; display:flex; align-items:center; justify-content:center;">RB</div>
+                            <div>
+                                <strong style="color:var(--text-main); display:block; font-weight:700;">Romain Bottero</strong>
+                                <span style="color:var(--text-muted);">Chef de Projet PAY TO CHANGE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alternatives list -->
+                    <div>
+                        <div class="details-label" style="margin-bottom: 8px;">Comparatif des Alternatives Évaluées</div>
+                        <div class="table-responsive">
+                            <table class="alt-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 45%;">Alternative</th>
+                                        <th style="width: 35%;">Positionnement</th>
+                                        <th style="width: 20%; text-align: center;">Décision</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Suivi classique d'habitudes</strong></td>
+                                        <td>Visualisation pure, forte concurrence gratuite.</td>
+                                        <td style="text-align: center;"><span class="badge-decision badge-rejete">Rejeté</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Épargne auto (arrondis)</strong></td>
+                                        <td>Peu différenciant, déjà proposé par les néobanques.</td>
+                                        <td style="text-align: center;"><span class="badge-decision badge-rejete">Rejeté</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Coaching + Caution (PAY TO CHANGE)</strong></td>
+                                        <td>Contrainte financière innovante, forte proposition de valeur.</td>
+                                        <td style="text-align: center;"><span class="badge-decision badge-retenu">Retenu</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- SIMULATOR JAVASCRIPT -->
+    <script>
+        function recalculateModel() {
+            // Get input slider values
+            const U = parseInt(document.getElementById('param-users').value);
+            const T = parseInt(document.getElementById('param-rate').value) / 100;
+            const R = parseInt(document.getElementById('param-revenue').value);
+            const C = parseInt(document.getElementById('param-capex').value);
+            const O = parseInt(document.getElementById('param-opex').value);
+
+            // Update range labels on page
+            document.getElementById('val-users').textContent = formatNumber(U);
+            document.getElementById('val-rate').textContent = Math.round(T * 100) + ' %';
+            document.getElementById('val-revenue').textContent = R + ' €';
+            document.getElementById('val-capex').textContent = formatNumber(C) + ' €';
+            document.getElementById('val-opex').textContent = formatNumber(O) + ' €';
+
+            // Calculate metrics
+            // Organic growth coefficients: Y1 = 0.23, Y2 = 0.84, Y3 = 1.00
+            const revY1 = 0.23 * U * T * R;
+            const revY2 = 0.84 * U * T * R;
+            const revY3 = 1.00 * U * T * R;
+            const totalRevenue = revY1 + revY2 + revY3;
+
+            const totalInvest = C + (3 * O);
+            const netGain = totalRevenue - totalInvest;
+            const roi = Math.round((netGain / totalInvest) * 100);
+
+            // Update UI indicators
+            document.getElementById('res-invest').textContent = formatNumber(totalInvest) + ' €';
+            document.getElementById('res-revenue').textContent = formatNumber(Math.round(totalRevenue)) + ' €';
+            
+            const netGainDiv = document.getElementById('res-net');
+            netGainDiv.textContent = formatNumber(Math.round(netGain)) + ' €';
+            if (netGain >= 0) {
+                netGainDiv.style.color = 'var(--primary)';
+            } else {
+                netGainDiv.style.color = 'var(--danger)';
+            }
+
+            const roiDiv = document.getElementById('res-roi');
+            roiDiv.textContent = (roi >= 0 ? '+' : '') + roi + ' %';
+            if (roi >= 0) {
+                roiDiv.style.color = 'var(--primary)';
+            } else {
+                roiDiv.style.color = 'var(--danger)';
+            }
+
+            // Update Chart bar heights
+            // We scale heights relative to the maximum of totalInvest and totalRevenue
+            const maxVal = Math.max(totalInvest, totalRevenue);
+
+            updateBarHeight('bar-i-launch', C, maxVal);
+            updateBarHeight('bar-r-launch', 0, maxVal);
+
+            updateBarHeight('bar-i-y1', C + O, maxVal);
+            updateBarHeight('bar-r-y1', revY1, maxVal);
+
+            updateBarHeight('bar-i-y2', C + (2 * O), maxVal);
+            updateBarHeight('bar-r-y2', revY1 + revY2, maxVal);
+
+            updateBarHeight('bar-i-y3', totalInvest, maxVal);
+            updateBarHeight('bar-r-y3', totalRevenue, maxVal);
+        }
+
+        function updateBarHeight(barId, val, maxVal) {
+            const bar = document.getElementById(barId);
+            const pct = Math.max(2, Math.min(100, (val / maxVal) * 100)); // clamp between 2% and 100%
+            bar.style.height = pct + '%';
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+
+        // Initialize simulator values
+        window.addEventListener('DOMContentLoaded', () => {
+            recalculateModel();
+        });
+    </script>
+</body>
+
+</html>

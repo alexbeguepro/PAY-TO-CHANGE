@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atelier 1 du projet PAY TO CHANGE (PTC) — Fiche de Cadrage. Thème clair haute lisibilité et conformité.">
+    <title>PAY TO CHANGE - Atelier 1 : Fiche de Cadrage</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Palette Variables - Clean Light Theme */
+            --bg-darker: #F1F5F9;        /* Light Slate Background */
+            --bg-dark: #FFFFFF;          /* Pure White Cards */
+            --bg-card: #FFFFFF;
+            --border-color: #E2E8F0;     /* Light Gray Border */
+            --border-color-hover: #CBD5E1;
+            
+            --primary: #10B981;         /* Emerald / Mint Green */
+            --primary-glow: rgba(16, 185, 129, 0.08);
+            --primary-border: rgba(16, 185, 129, 0.25);
+            
+            --secondary: #F59E0B;       /* Amber */
+            --secondary-glow: rgba(245, 158, 11, 0.08);
+            --secondary-border: rgba(245, 158, 11, 0.25);
+            
+            --accent-lavender: #6366F1; /* Indigo / Purple Accent */
+            --blue-horizon: #3B82F6;    /* Bright Horizon Blue */
+            --danger: #EF4444;          /* Danger Red */
+            --danger-glow: rgba(239, 68, 68, 0.08);
+            --text-main: #0F172A;       /* Dark Navy Text */
+            --text-muted: #475569;      /* Slate Gray Text */
+            --text-dark: #64748B;       /* Muted Steel Gray */
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --font-display: 'Playfair Display', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-sans);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.08) var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            color: var(--text-main);
+            min-height: 100vh;
+            font-size: 13.5px;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* AMBIENT GLOWS */
+        .ambient-glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(120px);
+            opacity: 0.04;
+        }
+        .glow-1 {
+            top: -100px;
+            right: 10%;
+            background: var(--primary);
+        }
+        .glow-2 {
+            bottom: -100px;
+            left: 10%;
+            background: var(--accent-lavender);
+        }
+
+        /* MAIN CONTENT LAYOUT */
+        .main-content {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at 50% 0%, rgba(226, 232, 240, 0.3), transparent 50%), var(--bg-darker);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            gap: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header-divider {
+            height: 40px;
+            width: 1px;
+            background-color: var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-info h2 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .brand-info span {
+            font-size: 9px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .page-title h1 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .page-title p {
+            font-size: 10px;
+            color: var(--text-dark);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+
+        .badge-status {
+            background: rgba(16, 185, 129, 0.05);
+            color: var(--primary);
+            border: 1px solid var(--primary-border);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 7px 11px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-main);
+            border-color: var(--secondary);
+            background: rgba(245, 158, 11, 0.03);
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.08);
+        }
+
+        .nav-btn.active-nav {
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.02);
+            color: var(--primary);
+        }
+
+        /* GRID LAYOUTS */
+        .content-container {
+            padding: 24px 32px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .content-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card-panel:hover {
+            border-color: var(--border-color-hover);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .card-panel-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-panel-title i {
+            color: var(--accent-lavender);
+            font-size: 15px;
+        }
+
+        /* REFORMULATION & SMART CARD */
+        .highlight-card {
+            background: rgba(99, 102, 241, 0.02);
+            border: 1.5px dashed rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .highlight-card h4 {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent-lavender);
+            letter-spacing: 0.05em;
+        }
+
+        .highlight-card p {
+            font-size: 13.5px;
+            color: var(--text-main);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .smart-box {
+            background: rgba(16, 185, 129, 0.02);
+            border: 1.5px dashed var(--primary-border);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .smart-box h4 {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 0.05em;
+        }
+
+        .smart-box p {
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        /* TRIANGLE D'OR */
+        .triangle-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .triangle-svg {
+            width: 300px;
+            height: 260px;
+        }
+
+        .triangle-node {
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .triangle-node circle {
+            transition: var(--transition);
+        }
+
+        .triangle-node:hover circle, .triangle-node.active-node circle {
+            r: 12;
+            filter: drop-shadow(0 0 8px rgba(99,102,241,0.5));
+        }
+
+        .triangle-node.node-fixed:hover circle, .triangle-node.node-fixed.active-node circle {
+            filter: drop-shadow(0 0 8px rgba(239,68,68,0.5));
+        }
+
+        .triangle-line {
+            stroke-width: 3px;
+            stroke: #CBD5E1;
+            transition: var(--transition);
+        }
+
+        .triangle-line.fixed-line {
+            stroke: var(--danger);
+            stroke-width: 4px;
+        }
+
+        .triangle-details-box {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            width: 100%;
+            margin-top: 16px;
+            min-height: 100px;
+        }
+
+        .triangle-details-box h4 {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* PERIMETER IN & OUT cards */
+        .perimeter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .perimeter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .perimeter-card {
+            border-radius: 14px;
+            padding: 16px 20px;
+            border: 1.5px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .perimeter-card.in-card {
+            background: rgba(16, 185, 129, 0.01);
+            border-color: rgba(16, 185, 129, 0.15);
+        }
+
+        .perimeter-card.out-card {
+            background: rgba(239, 68, 68, 0.01);
+            border-color: rgba(239, 68, 68, 0.15);
+        }
+
+        .perimeter-card h3 {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .perimeter-card.in-card h3 { color: var(--primary); }
+        .perimeter-card.out-card h3 { color: var(--danger); }
+
+        .perimeter-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .perimeter-item {
+            display: flex;
+            gap: 10px;
+            font-size: 12.5px;
+            line-height: 1.4;
+        }
+
+        .perimeter-item i {
+            margin-top: 2px;
+        }
+
+        .perimeter-item.in-item i { color: var(--primary); }
+        .perimeter-item.out-item i { color: var(--danger); }
+
+        .perimeter-item strong {
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* HYPOTHESES & METRIC */
+        .hypotheses-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .hypothesis-item {
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            gap: 14px;
+            transition: var(--transition);
+        }
+
+        .hypothesis-item:hover {
+            transform: translateX(2px);
+            border-color: var(--border-color-hover);
+            background: #F1F5F9;
+        }
+
+        .hypothesis-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            color: var(--accent-lavender);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .hypothesis-text h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        .hypothesis-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* METHODE SECTION */
+        .methodology-box {
+            background: rgba(99, 102, 241, 0.02);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 14px;
+            padding: 16px 20px;
+        }
+
+        .methodology-title {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--accent-lavender);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 576px) {
+            .methodology-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .method-block {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+
+        .method-block h5 {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .method-block p {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Ambient Glow Backgrounds -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <div class="header-left">
+                <a href="index.html" class="brand">
+                    <div class="brand-logo">
+                        <img src="savelock_ptc_pay_logo.jpg" alt="PTC Logo">
+                    </div>
+                    <div class="brand-info">
+                        <h2>PTC</h2>
+                        <span>PAY TO CHANGE</span>
+                    </div>
+                </a>
+                <div class="header-divider"></div>
+                <div class="page-title">
+                    <h1>Atelier 1 : Fiche de Cadrage</h1>
+                    <p>Reformulation, Triangle d'or, Périmètre et Hypothèses</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="index.html" class="nav-btn">
+                    <i class="fa-solid fa-house"></i> Accueil
+                </a>
+                <a href="atelier1.html" class="nav-btn active-nav">
+                    <i class="fa-solid fa-circle-info"></i> Atelier 1
+                </a>
+                <a href="atelier2.html" class="nav-btn">
+                    <i class="fa-solid fa-chart-line"></i> Atelier 2
+                </a>
+                <a href="atelier3.html" class="nav-btn">
+                    <i class="fa-solid fa-sitemap"></i> Atelier 3
+                </a>
+                <a href="atelier4.html" class="nav-btn">
+                    <i class="fa-solid fa-table-cells"></i> Atelier 4
+                </a>
+                <a href="atelier5.html" class="nav-btn">
+                    <i class="fa-solid fa-chart-gantt"></i> Atelier 5
+                </a>
+                <div class="badge-status">
+                    <i class="fa-solid fa-file-signature"></i> Cadrage initial v0
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTAINER FOR GRID -->
+        <div class="content-container">
+            
+            <!-- LEFT COLUMN: CADRAGE CORE -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                
+                <!-- NEED & SMART -->
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-bullseye"></i> Reformulation du besoin & Objectif SMART
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <h4>1. Reformulation du besoin</h4>
+                        <p>
+                            Développer une application mobile de bien-être et de productivité basée sur la finance comportementale, incitant les utilisateurs à atteindre leurs objectifs personnels sous peine de voir leurs fonds séquestrés et placés sur un produit financier de long terme, créant ainsi un mécanisme d'engagement anti-abandon vertueux.
+                        </p>
+                    </div>
+
+                    <div class="smart-box">
+                        <h4>2. Objectif SMART consolidé</h4>
+                        <p>
+                            Lancer sur le marché français d'ici 9 mois un Produit Minimum Viable (MVP) de l'application mobile, sécurisé réglementairement.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- PERIMETRE IN & OUT -->
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-arrows-to-eye"></i> Périmètre du projet (IN & OUT)
+                        </div>
+                    </div>
+                    
+                    <p class="paragraph-text">
+                        Afin de respecter la contrainte de délai serrée pour le lancement du MVP, le périmètre a été scrupuleusement défini entre les fonctionnalités essentielles embarquées (IN) et les développements reportés aux versions ultérieures (OUT).
+                    </p>
+
+                    <div class="perimeter-grid">
+                        <!-- PERIMETER IN -->
+                        <div class="perimeter-card in-card">
+                            <h3><i class="fa-solid fa-circle-check"></i> Périmètre IN</h3>
+                            <ul class="perimeter-list">
+                                <li class="perimeter-item in-item">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <div>
+                                        <strong>1. Module de Fixation d'Objectifs</strong>
+                                        Interface de configuration du défi (ex: pas quotidiens, réveil) avec saisie du montant de la caution (€) engagée par l'utilisateur.
+                                    </div>
+                                </li>
+                                <li class="perimeter-item in-item">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <div>
+                                        <strong>2. Passerelle de Paiement & Séquestre</strong>
+                                        Intégration d'un SDK bancaire (ex: Stripe/MangoPay) pour encaisser, sécuriser/bloquer en séquestre et restituer les fonds.
+                                    </div>
+                                </li>
+                                <li class="perimeter-item in-item">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <div>
+                                        <strong>3. Synchronisation Données de Santé</strong>
+                                        Connexion directe aux API natives des smartphones (Apple Health Kit / Google Fit) pour un tracking de base automatisé.
+                                    </div>
+                                </li>
+                                <li class="perimeter-item in-item">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <div>
+                                        <strong>4. Algorithme d'Arbitrage Anti-Fraude</strong>
+                                        Système automatisé vérifiant la cohérence des données de santé synchronisées pour statuer objectivement sur la réussite du défi.
+                                    </div>
+                                </li>
+                                <li class="perimeter-item in-item">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <div>
+                                        <strong>5. Moteur d'Épargne Automatisée</strong>
+                                        Transfert automatique et sécurisé des cautions associées aux échecs vers un produit d'épargne partenaire (ex : Compte à Terme ou Livret).
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- PERIMETER OUT -->
+                        <div class="perimeter-card out-card">
+                            <h3><i class="fa-solid fa-circle-xmark"></i> Périmètre OUT (V2+)</h3>
+                            <ul class="perimeter-list">
+                                <li class="perimeter-item out-item">
+                                    <i class="fa-solid fa-circle-minus"></i>
+                                    <div>
+                                        <strong>1. Réseau Social Intégré</strong>
+                                        Pas de fil d'actualité, de système d'abonnés/abonnements ou de défis partagés. Focus exclusif sur l'engagement 100% individuel pour la V1.
+                                    </div>
+                                </li>
+                                <li class="perimeter-item out-item">
+                                    <i class="fa-solid fa-circle-minus"></i>
+                                    <div>
+                                        <strong>2. Multi-Placements Financiers</strong>
+                                        Aucun choix laissé à l'utilisateur sur le type de support de placement (crypto-monnaies, actions, etc.). Un seul produit d'épargne sécurisé par défaut.
+                                    </div>
+                                </li>
+                                <li class="perimeter-item out-item">
+                                    <i class="fa-solid fa-circle-minus"></i>
+                                    <div>
+                                        <strong>3. Objets Connectés Tiers</strong>
+                                        Pas de développements d'applications embarquées dédiées aux montres (Garmin, Polar, Apple Watch). Intégration centrée uniquement sur le hub du smartphone.
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: TRIANGLE D'OR & METHODE -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                
+                <!-- TRIANGLE D'OR INTERACTIF -->
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Triangle d'Or : Priorités
+                        </div>
+                    </div>
+                    
+                    <p class="paragraph-text">
+                        Cliquez sur les sommets du triangle pour explorer les priorités et les dimensions ajustables du projet.
+                    </p>
+
+                    <div class="triangle-container">
+                        <svg class="triangle-svg" viewBox="0 0 300 260">
+                            <!-- Lines -->
+                            <line class="triangle-line fixed-line" x1="150" y1="40" x2="60" y2="200" />
+                            <line class="triangle-line fixed-line" x1="150" y1="40" x2="240" y2="200" />
+                            <line class="triangle-line" x1="60" y1="200" x2="240" y2="200" />
+
+                            <!-- Vertices / Nodes -->
+                            <!-- Qualité (Fixed) -->
+                            <g class="triangle-node node-fixed active-node" onclick="selectTriangleNode('qualite', this)">
+                                <circle cx="150" cy="40" r="10" fill="var(--danger)" />
+                                <text x="150" y="25" text-anchor="middle" font-size="11" font-weight="800" fill="var(--text-main)">QUALITÉ & CONFORMITÉ</text>
+                                <text x="150" y="55" text-anchor="middle" font-size="8.5" font-weight="800" fill="var(--danger)" font-family="var(--font-mono)">[FIXE]</text>
+                            </g>
+
+                            <!-- Coût (Adjustable) -->
+                            <g class="triangle-node" onclick="selectTriangleNode('cout', this)">
+                                <circle cx="60" cy="200" r="8" fill="var(--secondary)" />
+                                <text x="40" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-main)">COÛT</text>
+                                <text x="40" y="232" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--secondary)" font-family="var(--font-mono)">[AJUSTABLE]</text>
+                            </g>
+
+                            <!-- Délai (Adjustable) -->
+                            <g class="triangle-node" onclick="selectTriangleNode('delai', this)">
+                                <circle cx="240" cy="200" r="8" fill="var(--secondary)" />
+                                <text x="260" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-main)">DÉLAI</text>
+                                <text x="260" y="232" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--secondary)" font-family="var(--font-mono)">[AJUSTABLE]</text>
+                            </g>
+                        </svg>
+
+                        <!-- Node Details Content -->
+                        <div class="triangle-details-box">
+                            <h4 id="triangle-detail-title" style="color: var(--danger);">
+                                <i class="fa-solid fa-circle-exclamation"></i> Qualité / Conformité Réglementaire
+                            </h4>
+                            <p id="triangle-detail-desc" class="paragraph-text" style="margin-bottom: 0;">
+                                <strong>Priorité absolue :</strong> Impossible de transiger sur la sécurité des flux financiers, la gestion KYC ou le cadre légal/AMF (Autorité des Marchés Financiers). Tout manquement entraînerait la fermeture immédiate de l'activité.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ASSUMPTIONS & METHODOLOGY -->
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-shield-halved"></i> Hypothèses fortes & Méthode
+                        </div>
+                    </div>
+                    
+                    <div class="hypotheses-list">
+                        <div class="hypothesis-item">
+                            <div class="hypothesis-icon"><i class="fa-solid fa-handshake"></i></div>
+                            <div class="hypothesis-text">
+                                <h4>Partenariat BaaS viable</h4>
+                                <p>Un acteur réglementé du Banking-as-a-Service acceptera de porter la responsabilité légale et de séquestrer les comptes.</p>
+                            </div>
+                        </div>
+                        <div class="hypothesis-item">
+                            <div class="hypothesis-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            <div class="hypothesis-text">
+                                <h4>API de santé gratuites</h4>
+                                <p>L'accès aux données Apple Health et Google Fit restera gratuit et ouvert pour notre volumétrie d'utilisateurs.</p>
+                            </div>
+                        </div>
+                        <div class="hypothesis-item">
+                            <div class="hypothesis-icon"><i class="fa-solid fa-brain"></i></div>
+                            <div class="hypothesis-text">
+                                <h4>Levier psychologique financier</h4>
+                                <p>L'aversion à la perte financière immédiate est un levier d'engagement supérieur à la récompense classique.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- METHODE HYBRIDE -->
+                    <div class="methodology-box">
+                        <div class="methodology-title"><i class="fa-solid fa-gears"></i> Choix de Méthode : Approche Hybride</div>
+                        <p class="paragraph-text" style="font-size: 11.5px; line-height: 1.4; margin-bottom: 0;">
+                            Pour concilier les contraintes juridiques strictes et l'ajustement continu de l'interface mobile, l'équipe a retenu un modèle hybride :
+                        </p>
+                        <div class="methodology-grid">
+                            <div class="method-block">
+                                <h5><i class="fa-solid fa-arrows-spin" style="color: var(--primary);"></i> Agile / Scrum</h5>
+                                <p>Pour la partie application mobile (UX/UI, tracking d'activité), permettant des sprints courts et des tests utilisateurs réguliers.</p>
+                            </div>
+                            <div class="method-block">
+                                <h5><i class="fa-solid fa-arrow-down-long" style="color: var(--accent-lavender);"></i> Cycle en V</h5>
+                                <p>Pour la Fintech et le volet réglementaire, exigeant une planification stricte, des livrables contractuels précis et une validation juridique rigide.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        const nodeData = {
+            'qualite': {
+                title: 'Qualité / Conformité Réglementaire (FIXE)',
+                desc: '<strong>Priorité absolue :</strong> Impossible de transiger sur la sécurité des flux financiers, la gestion KYC ou le cadre légal/AMF. Tout manquement aux directives de la Fintech partenaire entraînerait une sanction ou fermeture administrative immédiate. La rigueur technique et juridique est notre socle.',
+                color: 'var(--danger)',
+                icon: 'fa-circle-exclamation'
+            },
+            'cout': {
+                title: 'Budget / Coût (AJUSTABLE)',
+                desc: '<strong>Variable d\'ajustement :</strong> Ajustable dans la limite du budget d\'amorçage global de la start-up. Nous pouvons arbitrer et optimiser l\'enveloppe marketing initiale pour allouer davantage de budget au profit de la R&D technique si nécessaire.',
+                color: 'var(--secondary)',
+                icon: 'fa-sack-dollar'
+            },
+            'delai': {
+                title: 'Délai / Planning (AJUSTABLE)',
+                desc: '<strong>Variable d\'ajustement :</strong> Le calendrier peut être décalé de quelques semaines en cas de difficultés techniques avec les API de santé ou si les validations réglementaires de la Fintech prennent plus de temps que prévu initialement. La qualité prévaut sur la hâte.',
+                color: 'var(--secondary)',
+                icon: 'fa-clock'
+            }
+        };
+
+        function selectTriangleNode(nodeType, element) {
+            // Update active states
+            document.querySelectorAll('.triangle-node').forEach(node => node.classList.remove('active-node'));
+            element.classList.add('active-node');
+
+            // Get data
+            const data = nodeData[nodeType];
+            if (!data) return;
+
+            // Fill card
+            const titleBox = document.getElementById('triangle-detail-title');
+            const descBox = document.getElementById('triangle-detail-desc');
+
+            titleBox.style.color = data.color;
+            titleBox.innerHTML = `<i class="fa-solid ${data.icon}"></i> ${data.title}`;
+            descBox.innerHTML = data.desc;
+        }
+    </script>
+</body>
+
+</html>

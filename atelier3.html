@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atelier 3 du projet PAY TO CHANGE (PTC) — Organisation et Parties Prenantes. Thème clair haute lisibilité.">
+    <title>PAY TO CHANGE - Atelier 3 : Organisation & Parties Prenantes</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Palette Variables - Clean Light Theme */
+            --bg-darker: #F1F5F9;        /* Light Slate Background */
+            --bg-dark: #FFFFFF;          /* Pure White Cards */
+            --bg-card: #FFFFFF;
+            --border-color: #E2E8F0;     /* Light Gray Border */
+            --border-color-hover: #CBD5E1;
+            --primary: #10B981;         /* Emerald / Mint Green */
+            --primary-light: #34D399;
+            --primary-glow: rgba(16, 185, 129, 0.08);
+            --primary-border: rgba(16, 185, 129, 0.25);
+            --secondary: #F59E0B;       /* Amber */
+            --secondary-glow: rgba(245, 158, 11, 0.08);
+            --secondary-border: rgba(245, 158, 11, 0.25);
+            --accent-lavender: #6366F1; /* Indigo / Purple Accent */
+            --blue-horizon: #3B82F6;    /* Bright Horizon Blue */
+            --danger: #EF4444;          /* Danger Red */
+            --text-main: #0F172A;       /* Dark Navy Text */
+            --text-muted: #475569;      /* Slate Gray Text */
+            --text-dark: #64748B;       /* Muted Steel Gray */
+            --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            --font-display: 'Playfair Display', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-sans);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.08) var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            color: var(--text-main);
+            height: 100vh;
+            font-size: 13.5px;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* AMBIENT GLOWS */
+        .ambient-glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(120px);
+            opacity: 0.05;
+        }
+        .glow-1 {
+            top: -100px;
+            right: 10%;
+            background: var(--primary);
+        }
+        .glow-2 {
+            bottom: -100px;
+            left: 10%;
+            background: var(--accent-lavender);
+        }
+
+        /* MAIN CONTENT LAYOUT */
+        .main-content {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at 50% 0%, rgba(226, 232, 240, 0.3), transparent 50%), var(--bg-darker);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            gap: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header-divider {
+            height: 40px;
+            width: 1px;
+            background-color: var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-info h2 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .brand-info span {
+            font-size: 9px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .page-title h1 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .page-title p {
+            font-size: 10px;
+            color: var(--text-dark);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+
+        .badge-status {
+            background: rgba(245, 158, 11, 0.05);
+            color: var(--secondary);
+            border: 1px solid var(--secondary-border);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 7px 11px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-main);
+            border-color: var(--secondary);
+            background: rgba(245, 158, 11, 0.03);
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.08);
+        }
+
+        .nav-btn.active-nav {
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.02);
+            color: var(--primary);
+        }
+
+        .chef-badge-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 6px 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .chef-avatar {
+            width: 32px;
+            height: 32px;
+            background: rgba(245, 158, 11, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--secondary);
+            border: 1.5px solid var(--secondary);
+            font-size: 11px;
+        }
+
+        .chef-info h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .chef-info p {
+            font-size: 9.5px;
+            color: var(--text-dark);
+        }
+
+        /* GRID CONTENT */
+        .content-container {
+            padding: 16px 32px;
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1fr 1.25fr;
+            gap: 16px;
+            overflow: hidden;
+            box-sizing: border-box;
+            height: calc(100vh - 65px);
+        }
+
+        .left-column, .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .card-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-panel:hover {
+            border-color: var(--border-color-hover);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-panel-title {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-panel-title i {
+            color: var(--secondary);
+            font-size: 13px;
+        }
+
+        .paragraph-text {
+            color: var(--text-muted);
+            line-height: 1.45;
+            font-size: 12.5px;
+            margin-bottom: 8px;
+        }
+
+        /* ORGANIGRAMME PROJET (TREE DESIGN) */
+        .org-tree {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+            position: relative;
+            padding-left: 8px;
+        }
+
+        .org-node {
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .org-node::before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            width: 12px;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .org-node:hover {
+            background: #F1F5F9;
+            border-color: var(--border-color-hover);
+        }
+
+        .org-node.node-level-1 {
+            border-color: var(--secondary-border);
+            background: rgba(245, 158, 11, 0.03);
+            padding: 12px 16px;
+        }
+
+        .org-node.node-level-1::before {
+            display: none;
+        }
+
+        .org-node.node-level-2 {
+            border-color: var(--primary-border);
+            background: rgba(16, 185, 129, 0.03);
+            margin-left: 14px;
+        }
+
+        .org-node.node-level-3 {
+            border-color: rgba(99, 102, 241, 0.25);
+            background: rgba(99, 102, 241, 0.02);
+            margin-left: 28px;
+        }
+
+        .org-node-info h5 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .org-node-info p {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+        .org-node-freq {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 3px 8px;
+            border-radius: 30px;
+            background: #FFFFFF;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+
+        .org-node.node-level-1 .org-node-freq {
+            color: var(--secondary);
+            border-color: var(--secondary-border);
+            background: #FFFFFF;
+        }
+
+        .org-node.node-level-2 .org-node-freq {
+            color: var(--primary);
+            border-color: var(--primary-border);
+            background: #FFFFFF;
+        }
+
+        .org-node.node-level-3 .org-node-freq {
+            color: var(--accent-lavender);
+            border-color: rgba(99, 102, 241, 0.25);
+            background: #FFFFFF;
+        }
+
+        /* LIST OF CRITICAL ACTORS */
+        .critical-actors-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .critical-actor-item {
+            display: flex;
+            gap: 12px;
+            background: rgba(239, 68, 68, 0.02);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: 12px;
+            padding: 10px 14px;
+            align-items: flex-start;
+            transition: var(--transition);
+        }
+
+        .critical-actor-item:hover {
+            transform: translateX(2px);
+            background: rgba(239, 68, 68, 0.04);
+        }
+
+        .critical-actor-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(239, 68, 68, 0.08);
+            color: var(--danger);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .critical-actor-details h5 {
+            font-size: 12.5px;
+            color: var(--text-main);
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .critical-actor-details p {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        /* INTERACTIVE STAKEHOLDER MATRIX */
+        .matrix-panel {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .matrix-container {
+            width: 100%;
+            height: 300px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            background: #F8FAFC;
+            position: relative;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        /* Matrix Axes & Lines */
+        .matrix-axis-x, .matrix-axis-y {
+            position: absolute;
+            background: #CBD5E1;
+        }
+
+        .matrix-axis-x {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1.5px;
+        }
+
+        .matrix-axis-y {
+            top: 0;
+            left: 0;
+            width: 1.5px;
+            height: 100%;
+        }
+
+        .matrix-grid-line-x {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            border-top: 1.5px dashed #E2E8F0;
+            pointer-events: none;
+        }
+
+        .matrix-grid-line-y {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            border-left: 1.5px dashed #E2E8F0;
+            pointer-events: none;
+        }
+
+        /* Axis Labels */
+        .axis-label-x {
+            position: absolute;
+            bottom: 8px;
+            right: 14px;
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: 0.08em;
+        }
+
+        .axis-label-y {
+            position: absolute;
+            top: 14px;
+            left: 8px;
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: 0.08em;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+
+        /* Quadrant Titles */
+        .quadrant-title {
+            position: absolute;
+            font-size: 9.5px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: #94A3B8;
+            letter-spacing: 0.05em;
+            pointer-events: none;
+        }
+
+        .quadrant-tl { top: 12px; left: 24px; }
+        .quadrant-tr { top: 12px; right: 12px; text-align: right; }
+        .quadrant-bl { bottom: 24px; left: 24px; }
+        .quadrant-br { bottom: 24px; right: 12px; text-align: right; }
+
+        /* Stakeholder Nodes */
+        .stakeholder-node {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 2.5px solid #CBD5E1;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transform: translate(-50%, 50%); /* Center node on its coordinate */
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            z-index: 2;
+        }
+
+        .stakeholder-node:hover, .stakeholder-node.active {
+            color: #FFFFFF;
+            transform: translate(-50%, 50%) scale(1.2);
+            z-index: 3;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Specific node border/text colors based on quadrant classification */
+        .node-key-player { border-color: var(--primary); color: var(--primary); }
+        .node-keep-satisfied { border-color: var(--secondary); color: var(--secondary); }
+        .node-keep-informed { border-color: var(--accent-lavender); color: var(--accent-lavender); }
+        .node-minimal-effort { border-color: var(--blue-horizon); color: var(--blue-horizon); }
+
+        /* Filled active state styles */
+        .node-key-player.active { background-color: var(--primary); color: #FFFFFF; }
+        .node-keep-satisfied.active { background-color: var(--secondary); color: #FFFFFF; }
+        .node-keep-informed.active { background-color: var(--accent-lavender); color: #FFFFFF; }
+        .node-minimal-effort.active { background-color: var(--blue-horizon); color: #FFFFFF; }
+
+        /* DETAILS BOX */
+        .details-box {
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-top: 12px;
+            min-height: 145px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .details-actor-name {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .details-actor-quadrant {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 30px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .details-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: 0.03em;
+            margin-top: 6px;
+            margin-bottom: 2px;
+        }
+
+        .details-value {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Ambient Glow Backgrounds -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <div class="header-left">
+                <a href="index.html" class="brand">
+                    <div class="brand-logo">
+                        <img src="savelock_ptc_pay_logo.jpg" alt="PTC Logo">
+                    </div>
+                    <div class="brand-info">
+                        <h2>PTC</h2>
+                        <span>PAY TO CHANGE</span>
+                    </div>
+                </a>
+                <div class="header-divider"></div>
+                <div class="page-title">
+                    <h1>Atelier 3 : Organisation & Parties Prenantes</h1>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 2px; flex-wrap: wrap;">
+                        <p style="margin-top: 0; display: inline-block;">Membres de l'Équipe, Rôles et Matrice Pouvoir x Intérêt</p>
+                        <div class="chef-badge-header" style="display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border: 1px solid var(--border-color); border-radius: 8px; background: #FFFFFF; font-size: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); height: 20px;">
+                            <div class="chef-avatar" style="width: 14px; height: 14px; border-radius: 50%; background: rgba(245, 158, 11, 0.05); border: 1.2px solid var(--secondary); display: flex; align-items: center; justify-content: center; font-size: 7.5px; font-weight: 800; color: var(--secondary);">RB</div>
+                            <div class="chef-info" style="line-height: 1;">
+                                <h4 style="font-size: 9px; font-weight: 700; color: var(--text-main); margin: 0;">Romain Bottero</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="index.html" class="nav-btn">
+                    <i class="fa-solid fa-house"></i> Accueil
+                </a>
+                <a href="atelier1.html" class="nav-btn">
+                    <i class="fa-solid fa-circle-info"></i> Atelier 1
+                </a>
+                <a href="atelier2.html" class="nav-btn">
+                    <i class="fa-solid fa-chart-line"></i> Atelier 2
+                </a>
+                <a href="atelier3.html" class="nav-btn active-nav">
+                    <i class="fa-solid fa-sitemap"></i> Atelier 3
+                </a>
+                <a href="atelier4.html" class="nav-btn">
+                    <i class="fa-solid fa-table-cells"></i> Atelier 4
+                </a>
+                <a href="atelier5.html" class="nav-btn">
+                    <i class="fa-solid fa-chart-gantt"></i> Atelier 5
+                </a>
+                <div class="badge-status">
+                    <i class="fa-solid fa-users"></i> Matrice active
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTAINER FOR GRID -->
+        <div class="content-container">
+            <!-- COLONNE GAUCHE: GOUVERNANCE & ATTENTION CP -->
+            <div class="left-column">
+                <!-- ORGANIGRAMME PROJET -->
+                <div class="card-panel" style="flex: 1.25;">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-sitemap"></i> Organigramme de l'Équipe (5 membres)
+                        </div>
+                    </div>
+                    <p class="paragraph-text">
+                        Structure organisationnelle interne pour la gouvernance et le développement du projet mobile.
+                    </p>
+                    
+                    <div class="org-tree">
+                        <!-- Niveau 1 : Animateur de projet -->
+                        <div class="org-node node-level-1">
+                            <div class="org-node-info">
+                                <h5>Romain Bottero</h5>
+                                <p>Animateur de projet & Développeur (comme Alex)</p>
+                            </div>
+                            <span class="org-node-freq">Pilotage</span>
+                        </div>
+
+                        <!-- Niveau 2 : Juriste / Sponsoring -->
+                        <div class="org-node node-level-2">
+                            <div class="org-node-info">
+                                <h5>Romain A. & Armand</h5>
+                                <p>Juriste RGPD (Romain A) | Responsable Sponsoring & Banque (Armand)</p>
+                            </div>
+                            <span class="org-node-freq">Conformité</span>
+                        </div>
+
+                        <!-- Niveau 3 : Dev / Comm -->
+                        <div class="org-node node-level-3">
+                            <div class="org-node-info">
+                                <h5>Alex & Bilal</h5>
+                                <p>Développeur technique (Alex) | Responsable Com Marketing (Bilal)</p>
+                            </div>
+                            <span class="org-node-freq">Opérations</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ATTENTION CP (SYNTHÈSE) -->
+                <div class="card-panel" style="flex: 1.1;">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Synthèse : Attention Maximale de Romain Bottero
+                        </div>
+                    </div>
+                    <p class="paragraph-text" style="margin-bottom: 6px;">
+                        Les 3 rôles clés sur lesquels l'Animateur de Projet & Développeur (Romain Bottero) doit concentrer sa vigilance :
+                    </p>
+                    
+                    <div class="critical-actors-list">
+                        <!-- Acteur 1 -->
+                        <div class="critical-actor-item">
+                            <div class="critical-actor-icon"><i class="fa-solid fa-bank"></i></div>
+                            <div class="critical-actor-details">
+                                <h5>1. Armand (Sponsoring & Banque) & Partenaire BaaS</h5>
+                                <p>Garant du séquestre. Le branchement du SDK de paiement et la validation des flux KYC sont indispensables pour le MVP.</p>
+                            </div>
+                        </div>
+                        <!-- Acteur 2 -->
+                        <div class="critical-actor-item">
+                            <div class="critical-actor-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                            <div class="critical-actor-details">
+                                <h5>2. Romain A. (Juriste RGPD) & ACPR/AMF</h5>
+                                <p>Garant réglementaire. Assure la conformité du blocage de fonds et la protection stricte des données de santé.</p>
+                            </div>
+                        </div>
+                        <!-- Acteur 3 -->
+                        <div class="critical-actor-item">
+                            <div class="critical-actor-icon"><i class="fa-solid fa-code"></i></div>
+                            <div class="critical-actor-details">
+                                <h5>3. Alex (Développeur technique)</h5>
+                                <p>Garant technique. En charge de la liaison Health Kit / Google Fit et du moteur de validation automatique anti-fraude.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLONNE DROITE: CARTOGRAPHIE PP -->
+            <div class="right-column">
+                <div class="card-panel matrix-panel">
+                    <div class="card-panel-header">
+                        <div class="card-panel-title">
+                            <i class="fa-solid fa-users-viewfinder"></i> Cartographie des Parties Prenantes
+                        </div>
+                    </div>
+                    <p class="paragraph-text">
+                        Positionnement de nos 5 membres d'équipe et des acteurs clés externes. Cliquez sur une pastille pour consulter la fiche acteur.
+                    </p>
+
+                    <!-- MATRICE GRAPHISME -->
+                    <div class="matrix-container">
+                        <!-- Quadrant titles -->
+                        <span class="quadrant-title quadrant-tl">Garder Satisfaits (Pouvoir Fort / Intérêt Faible)</span>
+                        <span class="quadrant-title quadrant-tr">Acteurs Clés (Pouvoir Fort / Intérêt Fort)</span>
+                        <span class="quadrant-title quadrant-bl">Effort Minimal (Pouvoir Faible / Intérêt Faible)</span>
+                        <span class="quadrant-title quadrant-br">Garder Informés (Pouvoir Faible / Intérêt Fort)</span>
+
+                        <!-- Lines -->
+                        <div class="matrix-grid-line-x"></div>
+                        <div class="matrix-grid-line-y"></div>
+                        
+                        <div class="matrix-axis-x"></div>
+                        <div class="matrix-axis-y"></div>
+
+                        <!-- Labels Axes -->
+                        <span class="axis-label-x">Intérêt</span>
+                        <span class="axis-label-y">Pouvoir</span>
+
+                        <!-- ACTEUR NODES (Coordinates: left=Interest, bottom=Power) -->
+                        
+                        <!-- Romain B (RB) - Key Player -->
+                        <div class="stakeholder-node node-key-player active" style="left: 88%; bottom: 84%;" onclick="selectStakeholder('rb', this)">RB</div>
+                        
+                        <!-- Armand (AR) - Key Player -->
+                        <div class="stakeholder-node node-key-player" style="left: 84%; bottom: 78%;" onclick="selectStakeholder('armand', this)">AR</div>
+                        
+                        <!-- Romain A (RA) - Key Player -->
+                        <div class="stakeholder-node node-key-player" style="left: 78%; bottom: 72%;" onclick="selectStakeholder('romaina', this)">RA</div>
+
+                        <!-- Partenaire BaaS (BS) - Key Player -->
+                        <div class="stakeholder-node node-key-player" style="left: 82%; bottom: 90%;" onclick="selectStakeholder('baas', this)">BS</div>
+                        
+                        <!-- Régulateur ACPR/AMF (RG) - Keep Satisfied -->
+                        <div class="stakeholder-node node-keep-satisfied" style="left: 20%; bottom: 86%;" onclick="selectStakeholder('regulator', this)">RG</div>
+                        
+                        <!-- Alex (AL) - Keep Informed -->
+                        <div class="stakeholder-node node-keep-informed" style="left: 90%; bottom: 58%;" onclick="selectStakeholder('alex', this)">AL</div>
+
+                        <!-- Bilal (BI) - Keep Informed -->
+                        <div class="stakeholder-node node-keep-informed" style="left: 76%; bottom: 54%;" onclick="selectStakeholder('bilal', this)">BI</div>
+
+                        <!-- Utilisateurs (UT) - Keep Informed -->
+                        <div class="stakeholder-node node-keep-informed" style="left: 92%; bottom: 25%;" onclick="selectStakeholder('users', this)">UT</div>
+
+                        <!-- Sponsor Externe (SF) - Keep Satisfied -->
+                        <div class="stakeholder-node node-keep-satisfied" style="left: 45%; bottom: 70%;" onclick="selectStakeholder('sponsor', this)">SF</div>
+                    </div>
+
+                    <!-- DETAIL CARD -->
+                    <div class="details-box">
+                        <div class="details-header">
+                            <span class="details-actor-name" id="actor-name">Romain Bottero</span>
+                            <span class="details-actor-quadrant" id="actor-quadrant" style="border-color: var(--primary-border); color: var(--primary); background-color: rgba(16, 185, 129, 0.05);">Acteurs Clés</span>
+                        </div>
+                        
+                        <div class="details-label">Fonction & Rôle</div>
+                        <div class="details-value" id="actor-role">Animateur de projet & Développeur (comme Alex).</div>
+                        
+                        <div class="details-label">Actions principales</div>
+                        <div class="details-value" id="actor-actions">Cadrer le planning, animer les rituels de développement (sprints, standups) et assurer le codage de l'architecture backend de l'application.</div>
+                        
+                        <div class="details-label">Mode d'engagement choisi</div>
+                        <div class="details-value" id="actor-engagement">Leader interne. Coordination quotidienne avec tous les membres et rapports directs d'avancement.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- STAKEHOLDER DATA & INTERACTIVITY SCRIPT -->
+    <script>
+        const stakeholders = {
+            'rb': {
+                name: "Romain Bottero (Interne)",
+                quadrant: "Acteurs Clés",
+                quadrantType: "key-player",
+                role: "Animateur de projet & Développeur (comme Alex).",
+                actions: "Cadrer le planning, animer les rituels de développement (sprints, standups) et assurer le codage de l'architecture backend de l'application.",
+                engagement: "Leader interne. Coordination quotidienne avec tous les membres et rapports directs d'avancement."
+            },
+            'armand': {
+                name: "Armand (Interne)",
+                quadrant: "Acteurs Clés",
+                quadrantType: "key-player",
+                role: "Responsable des relations financières et sponsoring.",
+                actions: "Négocier et piloter le partenariat contractuel avec la néobanque / le fournisseur BaaS (MangoPay/Stripe) pour l'implémentation du séquestre financier.",
+                engagement: "Liaison stratégique. Réunions régulières avec le partenaire bancaire et suivi du contrat."
+            },
+            'romaina': {
+                name: "Romain A. (Interne)",
+                quadrant: "Acteurs Clés",
+                quadrantType: "key-player",
+                role: "Juriste réglementaire & RGPD.",
+                actions: "Valider la conformité juridique du stockage et du traitement des données de santé personnelles récoltées, et sécuriser le mécanisme d'engagement financier vis-à-vis de la loi.",
+                engagement: "Garant juridique. Rédaction des CGU/RGPD et revues de conformité bi-hebdomadaires."
+            },
+            'alex': {
+                name: "Alex (Interne)",
+                quadrant: "Garder Informés",
+                quadrantType: "keep-informed",
+                role: "Développeur technique frontend & API.",
+                actions: "Développer l'application mobile et intégrer les APIs de santé natives (Apple Health Kit pour iOS et Google Fit pour Android) pour le tracking des objectifs.",
+                engagement: "Membre actif de la Scrum Team. Sync quotidienne au daily standup et revues de démo de fin de sprint."
+            },
+            'bilal': {
+                name: "Bilal (Interne)",
+                quadrant: "Garder Informés",
+                quadrantType: "keep-informed",
+                role: "Responsable Communication & Marketing.",
+                actions: "Concevoir la campagne d'acquisition utilisateurs (MVP), élaborer le plan média, gérer les réseaux sociaux et l'image de marque PAY TO CHANGE.",
+                engagement: "Rapporteur marketing. Coordination hebdomadaire pour aligner les fonctionnalités avec le message marketing."
+            },
+            'baas': {
+                name: "Partenaire BaaS (MangoPay / Stripe) [Externe]",
+                quadrant: "Acteurs Clés",
+                quadrantType: "key-player",
+                role: "Fournisseur de technologie de paiement et de comptes séquestres bancaires.",
+                actions: "Fournir l'API d'encaissement et de blocage de caution, et valider les comptes utilisateurs (procédure KYC réglementaire).",
+                engagement: "Partenaire technique clé. Points de suivi hebdomadaires par Armand en phase d'intégration du SDK."
+            },
+            'regulator': {
+                name: "Régulateur ACPR / AMF [Externe]",
+                quadrant: "Garder Satisfaits",
+                quadrantType: "keep-satisfied",
+                role: "Autorité de contrôle prudentiel et de résolution / des marchés financiers.",
+                actions: "S'assurer de la régularité du blocage des fonds utilisateurs et de l'adéquation réglementaire du séquestre.",
+                engagement: "Conformité obligatoire passive. Dépôt formel des fiches de sécurité par Romain A. lors des jalons administratifs."
+            },
+            'users': {
+                name: "Utilisateurs (Bêta-testeurs) [Externe]",
+                quadrant: "Garder Informés",
+                quadrantType: "keep-informed",
+                role: "Panel d'utilisateurs bêta-testeurs et communauté.",
+                actions: "Tester l'application mobile en conditions réelles, remonter les bugs et évaluer la réassurance sur la gestion de leur caution financière.",
+                engagement: "Co-conception active. Retours en fin de sprint sur les plateformes communautaires et formulaires de feedback."
+            },
+            'sponsor': {
+                name: "Sponsor / Investisseur [Externe]",
+                quadrant: "Garder Satisfaits",
+                quadrantType: "keep-satisfied",
+                role: "Sponsor de capital-risque.",
+                actions: "Financer la phase initiale d'acquisition et s'assurer du bon suivi de l'opportunité de marché.",
+                engagement: "Rapport mensuel d'avancement stratégique par Romain Bottero lors des comités de direction."
+            }
+        };
+
+        function selectStakeholder(key, element) {
+            // Remove active class from all nodes
+            document.querySelectorAll('.stakeholder-node').forEach(node => node.classList.remove('active'));
+            
+            // Add active class
+            element.classList.add('active');
+            
+            // Get data
+            const data = stakeholders[key];
+            if (!data) return;
+            
+            // Update details box
+            document.getElementById('actor-name').textContent = data.name;
+            document.getElementById('actor-role').textContent = data.role;
+            document.getElementById('actor-actions').textContent = data.actions;
+            document.getElementById('actor-engagement').textContent = data.engagement;
+            
+            // Update quadrant label and colors
+            const quadLabel = document.getElementById('actor-quadrant');
+            quadLabel.textContent = data.quadrant;
+            
+            // Apply correct styles
+            if (data.quadrantType === 'key-player') {
+                quadLabel.style.borderColor = 'var(--primary-border)';
+                quadLabel.style.color = 'var(--primary)';
+                quadLabel.style.backgroundColor = 'rgba(16, 185, 129, 0.05)';
+            } else if (data.quadrantType === 'keep-satisfied') {
+                quadLabel.style.borderColor = 'var(--secondary-border)';
+                quadLabel.style.color = 'var(--secondary)';
+                quadLabel.style.backgroundColor = 'rgba(245, 158, 11, 0.05)';
+            } else if (data.quadrantType === 'keep-informed') {
+                quadLabel.style.borderColor = 'rgba(99, 102, 241, 0.2)';
+                quadLabel.style.color = 'var(--accent-lavender)';
+                quadLabel.style.backgroundColor = 'rgba(99, 102, 241, 0.04)';
+            } else {
+                quadLabel.style.borderColor = 'rgba(59, 130, 246, 0.2)';
+                quadLabel.style.color = 'var(--blue-horizon)';
+                quadLabel.style.backgroundColor = 'rgba(59, 130, 246, 0.04)';
+            }
+        }
+    </script>
+</body>
+
+</html>
