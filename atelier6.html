@@ -84,7 +84,7 @@
             background-color: var(--bg-darker);
             color: var(--text-main);
             min-height: 100vh;
-            font-size: 13.5px;
+            font-size: 15px;
             letter-spacing: -0.01em;
             position: relative;
             overflow-x: hidden;
@@ -349,7 +349,7 @@
 
         .theory-text {
             color: var(--text-muted);
-            font-size: 12.5px;
+            font-size: 14.5px;
             line-height: 1.5;
         }
 
@@ -449,7 +449,7 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 13px;
+            font-size: 14.5px;
         }
 
         .matrix-table th, .matrix-table td {
@@ -463,7 +463,7 @@
             font-weight: 800;
             color: var(--text-main);
             text-transform: uppercase;
-            font-size: 10.5px;
+            font-size: 12px;
             letter-spacing: 0.05em;
         }
 
@@ -491,7 +491,7 @@
             gap: 6px;
             padding: 5px 12px;
             border-radius: 20px;
-            font-size: 10.5px;
+            font-size: 11.5px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.02em;
@@ -516,7 +516,7 @@
             align-items: center;
             justify-content: center;
             color: #FFFFFF;
-            font-size: 10.5px;
+            font-size: 11.5px;
             font-weight: 700;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
@@ -529,14 +529,14 @@
 
         .owner-name {
             font-weight: 600;
-            font-size: 12.5px;
+            font-size: 14px;
             color: var(--text-main);
         }
 
         /* GRID FOR DETAILED VIEW & SIMULATOR */
         .grid-details-sim {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
+            grid-template-columns: 1fr;
             gap: 24px;
         }
 
@@ -596,7 +596,7 @@
         }
 
         .detail-value {
-            font-size: 12.5px;
+            font-size: 14px;
             color: var(--text-main);
             font-weight: 600;
             line-height: 1.4;
@@ -640,199 +640,7 @@
             opacity: 0.5;
         }
 
-        /* SIMULATOR STYLING */
-        .simulator-panel {
-            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 18px;
-            padding: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
 
-        .sim-title {
-            font-family: var(--font-display);
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
-        }
-
-        .sim-title span {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--blue-horizon);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-family: var(--font-sans);
-        }
-
-        .sim-intro {
-            font-size: 12.5px;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .sim-control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-top: 8px;
-        }
-
-        .sim-slider-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            transition: var(--transition);
-        }
-
-        .sim-slider-card:hover {
-            border-color: var(--border-color-hover);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-        }
-
-        .sim-slider-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .sim-slider-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .sim-slider-value {
-            font-family: var(--font-mono);
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--blue-horizon);
-            background: rgba(59, 130, 246, 0.05);
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
-
-        .sim-slider {
-            width: 100%;
-            -webkit-appearance: none;
-            height: 6px;
-            border-radius: 5px;
-            background: #E2E8F0;
-            outline: none;
-            transition: opacity .2s;
-        }
-
-        .sim-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--blue-horizon);
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: var(--transition);
-        }
-
-        .sim-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
-
-        /* SIMULATOR STATUS & DIAGNOSTIC */
-        .sim-status-card {
-            margin-top: 10px;
-            padding: 16px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            transition: var(--transition);
-        }
-
-        .status-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-weight: 700;
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-        }
-
-        .status-indicator-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 10px rgba(0,0,0,0.15);
-            animation: pulse-glow 2s infinite;
-        }
-
-        @keyframes pulse-glow {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.8; }
-        }
-
-        .status-green { background-color: var(--primary); border-color: rgba(16, 185, 129, 0.2); color: var(--primary); }
-        .status-green .status-indicator-dot { background-color: var(--primary); box-shadow: 0 0 8px var(--primary); }
-
-        .status-orange { background-color: var(--secondary); border-color: rgba(245, 158, 11, 0.2); color: var(--secondary); }
-        .status-orange .status-indicator-dot { background-color: var(--secondary); box-shadow: 0 0 8px var(--secondary); }
-
-        .status-red { background-color: var(--danger); border-color: rgba(239, 68, 68, 0.2); color: var(--danger); }
-        .status-red .status-indicator-dot { background-color: var(--danger); box-shadow: 0 0 8px var(--danger); }
-
-        .status-message {
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .status-action-box {
-            font-size: 11.5px;
-            padding: 10px 12px;
-            background: #FFFFFF;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .status-action-box .action-title {
-            font-weight: 700;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .status-action-box .action-desc {
-            color: var(--text-muted);
-        }
 
         /* RESPONSIVE LAYOUT */
         @media (max-width: 1024px) {
@@ -879,8 +687,8 @@
                         <img src="savelock_ptc_pay_logo.jpg" alt="PTC Logo">
                     </div>
                     <div class="brand-info">
-                        <h2>PAY TO CHANGE</h2>
-                        <span>Toutes les excuses ont un prix</span>
+                        <h2>PTC</h2>
+                        <span>PAY TO CHANGE</span>
                     </div>
                 </a>
                 <div class="header-divider"></div>
@@ -1103,100 +911,17 @@
                             </div>
                             <div class="detail-item-full">
                                 <div class="detail-label"><i class="fa-solid fa-lightbulb"></i> Enjeu & Justification pour PTC</div>
-                                <div class="detail-value" id="detail-rationale" style="font-weight: normal; font-size: 12.5px;">Justification...</div>
+                                <div class="detail-value" id="detail-rationale" style="font-weight: normal; font-size: 14px;">Justification...</div>
                             </div>
                             <div class="detail-item-full warning-alert">
                                 <div class="detail-label"><i class="fa-solid fa-kit-medical"></i> Plan d'Action Correctif (Si Alerte déclenchée)</div>
-                                <div class="detail-value" id="detail-action-plan" style="font-weight: normal; font-size: 12.5px; color: var(--danger);">Plan d'action...</div>
+                                <div class="detail-value" id="detail-action-plan" style="font-weight: normal; font-size: 14px; color: var(--danger);">Plan d'action...</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- RIGHT PANEL: LIVE SIMULATOR -->
-                <div class="simulator-panel">
-                    <div class="sim-title">
-                        <div>
-                            <i class="fa-solid fa-sliders"></i> Simulateur de Pilotage
-                        </div>
-                        <span>Temps Réel</span>
-                    </div>
 
-                    <p class="sim-intro">
-                        Faites glisser les valeurs ci-dessous pour simuler les données d'exploitation réelles et observer en temps réel la réaction des KRIs et des KPIs de l'application.
-                    </p>
-
-                    <div class="sim-control-group">
-                        <!-- Control 1: Downloads -->
-                        <div class="sim-slider-card">
-                            <div class="sim-slider-header">
-                                <span class="sim-slider-label"><i class="fa-solid fa-download" style="color: var(--primary);"></i> Téléchargements / an</span>
-                                <span class="sim-slider-value" id="val-downloads">35 000</span>
-                            </div>
-                            <input type="range" class="sim-slider" id="slider-downloads" min="1000" max="100000" step="1000" value="35000" oninput="updateSimulation()">
-                        </div>
-
-                        <!-- Control 2: Deposits -->
-                        <div class="sim-slider-card">
-                            <div class="sim-slider-header">
-                                <span class="sim-slider-label"><i class="fa-solid fa-wallet" style="color: var(--primary);"></i> Caution moyenne / user</span>
-                                <span class="sim-slider-value" id="val-deposits">120 €</span>
-                            </div>
-                            <input type="range" class="sim-slider" id="slider-deposits" min="10" max="300" step="5" value="120" oninput="updateSimulation()">
-                        </div>
-
-                        <!-- Control 3: DA Rating -->
-                        <div class="sim-slider-card">
-                            <div class="sim-slider-header">
-                                <span class="sim-slider-label"><i class="fa-solid fa-star" style="color: var(--accent-lavender);"></i> Note d'adoption de la DA</span>
-                                <span class="sim-slider-value" id="val-da">4.2 / 5</span>
-                            </div>
-                            <input type="range" class="sim-slider" id="slider-da" min="1" max="5" step="0.1" value="4.2" oninput="updateSimulation()">
-                        </div>
-
-                        <!-- Control 4: Disputes -->
-                        <div class="sim-slider-card">
-                            <div class="sim-slider-header">
-                                <span class="sim-slider-label"><i class="fa-solid fa-circle-question" style="color: var(--danger);"></i> Taux de litiges validation</span>
-                                <span class="sim-slider-value" id="val-disputes">1.5 %</span>
-                            </div>
-                            <input type="range" class="sim-slider" id="slider-disputes" min="0" max="10" step="0.1" value="1.5" oninput="updateSimulation()">
-                        </div>
-
-                        <!-- Control 5: Data Breaches -->
-                        <div class="sim-slider-card">
-                            <div class="sim-slider-header">
-                                <span class="sim-slider-label"><i class="fa-solid fa-bug" style="color: var(--danger);"></i> Fuite de données</span>
-                                <span class="sim-slider-value" id="val-breach" style="color: var(--danger); background: rgba(239, 68, 68, 0.05);">0</span>
-                            </div>
-                            <div style="display: flex; gap: 10px; margin-top: 4px;">
-                                <button class="filter-btn active" id="btn-breach-0" onclick="setBreaches(0)" style="flex: 1; justify-content: center; font-size: 11px;">Aucune fuite (Ok)</button>
-                                <button class="filter-btn" id="btn-breach-1" onclick="setBreaches(1)" style="flex: 1; justify-content: center; font-size: 11px; border-color: rgba(239, 68, 68, 0.2); color: var(--danger);">1 incident (Alerte !)</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- DIAGNOSTIC OUTPUT -->
-                    <div class="sim-status-card status-green" id="diagnostic-card">
-                        <div class="status-header">
-                            <span class="status-indicator">
-                                <span class="status-indicator-dot"></span> État de la Santé Projet
-                            </span>
-                            <span id="diagnostic-title" style="text-transform: uppercase; font-size: 11px; font-weight: 800; letter-spacing: 0.05em;">Nominal</span>
-                        </div>
-                        <div class="status-message" id="diagnostic-message">
-                            Tous les indicateurs clés de performance et de risque sont au vert. La direction artistique est bien adoptée, la sécurité est optimale et la traction commerciale est saine.
-                        </div>
-                        <div class="status-action-box" id="diagnostic-action-box" style="display: none;">
-                            <div class="action-title">
-                                <i class="fa-solid fa-circle-exclamation"></i> Action requise
-                            </div>
-                            <div class="action-desc" id="diagnostic-action-desc">
-                                Aucun plan d'action de crise actif.
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div>
 
@@ -1259,7 +984,7 @@
             }
         };
 
-        let currentBreaches = 0;
+
 
         // Function to select row in matrix table
         function selectRow(id, rowElement) {
@@ -1321,108 +1046,12 @@
             });
         }
 
-        // Set Breaches (0 or 1)
-        function setBreaches(val) {
-            currentBreaches = val;
-            document.getElementById('val-breach').textContent = val;
-            
-            // Toggle active classes on buttons
-            document.getElementById('btn-breach-0').classList.toggle('active', val === 0);
-            document.getElementById('btn-breach-1').classList.toggle('active', val === 1);
-
-            updateSimulation();
-        }
-
-        // Live Simulation logic
-        function updateSimulation() {
-            // Get values from controls
-            const downloads = parseInt(document.getElementById('slider-downloads').value);
-            const deposits = parseInt(document.getElementById('slider-deposits').value);
-            const da = parseFloat(document.getElementById('slider-da').value);
-            const disputes = parseFloat(document.getElementById('slider-disputes').value);
-
-            // Update UI value labels
-            document.getElementById('val-downloads').textContent = downloads.toLocaleString() + " / an";
-            document.getElementById('val-deposits').textContent = deposits + " €";
-            document.getElementById('val-da').textContent = da.toFixed(1) + " / 5";
-            document.getElementById('val-disputes').textContent = disputes.toFixed(1) + " %";
-
-            // Diagnostic logic
-            const diagCard = document.getElementById('diagnostic-card');
-            const diagTitle = document.getElementById('diagnostic-title');
-            const diagMsg = document.getElementById('diagnostic-message');
-            const actionBox = document.getElementById('diagnostic-action-box');
-            const actionDesc = document.getElementById('diagnostic-action-desc');
-
-            // Reset class list
-            diagCard.className = 'sim-status-card';
-            
-            let issues = [];
-            let actions = [];
-
-            // Check KRI 1: Data breaches (Critical)
-            if (currentBreaches > 0) {
-                issues.push("Fuite de données détectée");
-                actions.push("<strong>[CYBER]</strong> Protocole d'isolation réseau activé. Révocation immédiate des clés d'API AWS/Stripe compromises. Signalement en cours auprès de la CNIL par Romain A. (Juriste RGPD).");
-            }
-
-            // Check KRI 2: Disputes (Operational Risk)
-            if (disputes > 2.5) {
-                issues.push(`Taux de litiges élevé (${disputes.toFixed(1)}%)`);
-                actions.push("<strong>[SUPPORT]</strong> Suspension temporaire des débits sur validation automatique. Autorisation de la validation par screenshot manuel sous 24h. Alex (Lead Dev) enquête sur les logs API de synchronisation.");
-            }
-
-            // Check KPI 1: Downloads (Underperforming)
-            if (downloads < 36000) { // 3k/month * 12 months = 36k/year
-                issues.push(`Traction faible (${downloads.toLocaleString()} téléchargements)`);
-                actions.push("<strong>[MARKETING]</strong> Bilal doit réorienter le budget Ads vers du reciblage (retargeting) et solliciter nos partenaires d'affiliation.");
-            }
-
-            // Check KPI 2: Deposits (Engagement volume)
-            if (deposits < 50) {
-                issues.push(`Caution moyenne faible (${deposits} €)`);
-                actions.push("<strong>[FINANCES/PO]</strong> Romain Bottero doit introduire un onboarding incitant à des défis à plus forte caution ou proposer des cagnottes de groupe.");
-            }
-
-            // Check OCRI: DA Rating (Satisfaction)
-            if (da < 4.0) {
-                issues.push(`Satisfaction DA insuffisante (${da.toFixed(1)}/5)`);
-                actions.push("<strong>[DESIGN]</strong> Bilal doit réévaluer les flux UX de l'onboarding pour corriger la perte de rétention visuelle.");
-            }
-
-            // Determine State
-            if (currentBreaches > 0) {
-                // Critical state
-                diagCard.classList.add('status-red');
-                diagTitle.textContent = "CRITIQUE - DANGER SÉCURITÉ";
-                diagMsg.innerHTML = `L'application fait face à une fuite de données active ou non corrigée. <strong>La confiance des utilisateurs est en péril immédiat.</strong>`;
-                
-                actionBox.style.display = 'flex';
-                actionDesc.innerHTML = actions.join("<br><br>");
-            } else if (issues.length > 0) {
-                // Warning state
-                diagCard.classList.add('status-orange');
-                diagTitle.textContent = "ALERTE - ENQUÊTE NÉCESSAIRE";
-                diagMsg.innerHTML = `Plusieurs alertes ont été déclenchées : <br>• ${issues.join('<br>• ')}`;
-                
-                actionBox.style.display = 'flex';
-                actionDesc.innerHTML = actions.join("<br><br>");
-            } else {
-                // Nominal state
-                diagCard.classList.add('status-green');
-                diagTitle.textContent = "NOMINAL";
-                diagMsg.textContent = "Tous les indicateurs clés de performance et de risque sont au vert. La direction artistique est bien adoptée, la sécurité est optimale et la traction commerciale est saine.";
-                actionBox.style.display = 'none';
-            }
-        }
-
         // Initialize table selection on load
         document.addEventListener('DOMContentLoaded', () => {
             const firstRow = document.querySelector('#indicatorTable tbody tr');
             if (firstRow) {
                 selectRow('downloads', firstRow);
             }
-            updateSimulation();
         });
     </script>
 </body>
