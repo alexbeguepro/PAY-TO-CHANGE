@@ -19,8 +19,16 @@ const navigation = [
   { id: "tracking", label: "Suivi objectifs", icon: HeartPulse },
   { id: "funds", label: "Caution & securite", icon: WalletCards },
   { id: "arbitration", label: "Arbitrage", icon: Scale },
-  { id: "privacy", label: "Profil & donnees", icon: UserRound },
 ];
+
+const mobileLabels = {
+  dashboard: "Bord",
+  create: "Créer",
+  tracking: "Suivi",
+  funds: "Fonds",
+  arbitration: "Arbitrage",
+  privacy: "Profil",
+};
 
 export function AppShell({ currentPage, onNavigate, children }) {
   return (
@@ -74,6 +82,14 @@ export function AppShell({ currentPage, onNavigate, children }) {
 
       <div className="workspace">
         <header className="topbar">
+          <a
+            href="../index.html"
+            className="mobile-back-link"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <ArrowLeft size={18} aria-hidden="true" />
+            <span>Retour</span>
+          </a>
           <div className="product-context">
             <LockKeyhole size={18} aria-hidden="true" />
             <span>Fonds references chez partenaire financier</span>
@@ -98,6 +114,24 @@ export function AppShell({ currentPage, onNavigate, children }) {
         </header>
 
         <main className="page-surface">{children}</main>
+
+        <nav className="mobile-nav" aria-label="Navigation Mobile PTC">
+          {navigation.map((item) => {
+            const Icon = item.icon;
+            const active = item.id === currentPage;
+            return (
+              <button
+                className={active ? "mobile-nav-item mobile-nav-item--active" : "mobile-nav-item"}
+                key={item.id}
+                onClick={() => onNavigate(item.id)}
+                type="button"
+              >
+                <Icon size={18} aria-hidden="true" />
+                <span>{mobileLabels[item.id]}</span>
+              </button>
+            );
+          })}
+        </nav>
       </div>
     </div>
   );
