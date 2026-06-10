@@ -45,18 +45,24 @@ export function Arbitration() {
           <div className="review-paths">
             <div>
               <CheckCircle2 size={18} aria-hidden="true" />
-              <strong>Succes</strong>
-              <span>Refund automatique de la caution.</span>
+              <div>
+                <strong>Succes</strong>
+                <span>Refund automatique de la caution.</span>
+              </div>
             </div>
             <div>
               <AlertTriangle size={18} aria-hidden="true" />
-              <strong>Echec</strong>
-              <span>Transfert vers epargne partenaire.</span>
+              <div>
+                <strong>Echec</strong>
+                <span>Transfert vers epargne partenaire.</span>
+              </div>
             </div>
             <div>
               <ShieldAlert size={18} aria-hidden="true" />
-              <strong>Revue manuelle</strong>
-              <span>Gel temporaire si preuve insuffisante.</span>
+              <div>
+                <strong>Revue manuelle</strong>
+                <span>Gel temporaire si preuve insuffisante.</span>
+              </div>
             </div>
           </div>
         </article>

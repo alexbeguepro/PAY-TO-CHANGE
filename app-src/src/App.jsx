@@ -31,13 +31,22 @@ export default function App() {
     const inIframe = window.self !== window.top || window.location.search.includes("iframe=true");
     setIsIframeMode(inIframe);
 
+    if (inIframe) {
+      document.body.classList.add("iframe-mode");
+    } else {
+      document.body.classList.remove("iframe-mode");
+    }
+
     // Detect screen width
     const handleResize = () => {
       setIsDesktop(window.innerWidth > 768);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      document.body.classList.remove("iframe-mode");
+    };
   }, []);
 
   // Hash syncing and state updates

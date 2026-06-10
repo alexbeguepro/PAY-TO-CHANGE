@@ -101,7 +101,7 @@ export function AppShell({ currentPage, onNavigate, children }) {
             </button>
             <button className="sync-pill" type="button">
               <Database size={16} aria-hidden="true" />
-              Sync sandbox
+              <span>Sync sandbox</span>
             </button>
             <div className="user-chip">
               <span>{user.name.charAt(0)}</span>

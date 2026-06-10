@@ -41,18 +41,24 @@ export function PrivacyProfile() {
           <span className="section-label">Consentements</span>
           <div className="consent-table">
             <div>
-              <ShieldCheck size={18} aria-hidden="true" />
-              <strong>CGU v2026.06</strong>
+              <div className="consent-item-info">
+                <ShieldCheck size={18} aria-hidden="true" />
+                <strong>CGU v2026.06</strong>
+              </div>
               <StatusBadge tone="success">Accepte</StatusBadge>
             </div>
             <div>
-              <LockKeyhole size={18} aria-hidden="true" />
-              <strong>Politique de confidentialite</strong>
+              <div className="consent-item-info">
+                <LockKeyhole size={18} aria-hidden="true" />
+                <strong>Politique de confidentialite</strong>
+              </div>
               <StatusBadge tone="success">Accepte</StatusBadge>
             </div>
             <div>
-              <HeartPulse size={18} aria-hidden="true" />
-              <strong>Donnees d'activite</strong>
+              <div className="consent-item-info">
+                <HeartPulse size={18} aria-hidden="true" />
+                <strong>Donnees d'activite</strong>
+              </div>
               <StatusBadge tone="success">Specifique</StatusBadge>
             </div>
           </div>

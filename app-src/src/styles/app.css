@@ -1413,15 +1413,6 @@ button:not(:disabled) {
   z-index: 100;
 }
 
-/* MOBILE VIEWPORT REACTION & OVERRIDES */
-.mobile-nav {
-  display: none; /* Hidden on desktop */
-}
-
-.mobile-back-link {
-  display: none; /* Hidden on desktop */
-}
-
 @media (max-width: 768px) {
   /* Reset body min-width so it can adapt to small screen */
   body {
@@ -1450,10 +1441,11 @@ button:not(:disabled) {
 
   .topbar {
     padding: 0 16px;
-    min-height: 64px;
+    min-height: 60px;
     position: sticky;
     top: 0;
     width: 100%;
+    background: rgba(2, 4, 21, 0.9);
   }
 
   .product-context {
@@ -1464,10 +1456,10 @@ button:not(:disabled) {
     display: flex !important;
     align-items: center;
     gap: 6px;
-    font-size: 13.5px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--muted) !important;
-    padding: 6px 12px;
+    padding: 5px 10px;
     border-radius: 6px;
     border: 1px solid var(--border);
     background: rgba(225, 226, 232, 0.03);
@@ -1481,11 +1473,34 @@ button:not(:disabled) {
 
   .topbar-actions {
     gap: 8px;
+    align-items: center;
+  }
+
+  /* Shrink header elements to standard circular 32px buttons */
+  .topbar-actions .icon-button {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+  }
+  
+  .topbar-actions .icon-button span {
+    top: 6px !important;
+    right: 6px !important;
+    width: 6px !important;
+    height: 6px !important;
   }
 
   .topbar-actions .sync-pill {
-    padding: 6px 10px;
-    font-size: 11.5px;
+    padding: 0 !important;
+    width: 32px !important;
+    height: 32px !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+    border-radius: 50% !important;
+  }
+
+  .topbar-actions .sync-pill span {
+    display: none !important; /* Hide long text on mobile header */
   }
   
   .topbar-actions .user-chip {
@@ -1494,6 +1509,7 @@ button:not(:disabled) {
     padding: 0;
     justify-content: center;
     border-radius: 50%;
+    min-width: 0 !important; /* Override desktop min-width */
   }
   
   .topbar-actions .user-chip span {
@@ -1509,9 +1525,39 @@ button:not(:disabled) {
     padding: 16px !important;
   }
 
+  /* Page headers stack vertically */
+  .page-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    min-height: auto !important;
+    padding: 16px !important;
+    gap: 16px !important;
+  }
+
+  .page-header div p:not(.eyebrow) {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    margin-top: 6px !important;
+  }
+
+  .page-actions {
+    width: 100% !important;
+    display: flex !important;
+    gap: 8px !important;
+  }
+
+  .page-actions .button {
+    flex: 1 !important;
+    justify-content: center !important;
+    padding: 10px !important;
+    font-size: 12.5px !important;
+  }
+
   /* Grid adaptations - Force 1 column on mobile screen */
   .dashboard-grid, 
-  .content-grid, 
+  .content-grid,
+  .content-grid--wide-left,
+  .content-grid--wide-right,
   .principle-grid, 
   .grid-2col, 
   .grid-3col, 
@@ -1525,8 +1571,55 @@ button:not(:disabled) {
     grid-template-columns: repeat(2, 1fr) !important; /* Keep metrics compact on 2 columns */
     gap: 10px !important;
   }
+
+  /* Shrink metrics text to prevent truncation */
+  .metric-card {
+    padding: 12px 10px !important;
+    min-height: 108px !important;
+  }
+
+  .metric-card span {
+    font-size: 10px !important;
+  }
+
+  .metric-card strong {
+    font-size: 22px !important;
+    margin-top: 8px !important;
+  }
+
+  .metric-card p {
+    font-size: 11px !important;
+    margin-top: 6px !important;
+  }
   
-  /* Goal builder stacking */
+  /* Goal builder stacking layout */
+  .builder-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .control-grid, .template-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .control-field {
+    min-height: auto !important;
+    padding: 14px !important;
+  }
+
+  .template-card {
+    min-height: auto !important;
+    padding: 14px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+
+  .template-card strong {
+    margin-top: 10px !important;
+  }
+  
+  /* Goal builder stacking (legacy selector support) */
   .goal-builder-layout {
     grid-template-columns: 1fr !important;
   }
@@ -1538,6 +1631,66 @@ button:not(:disabled) {
     grid-template-columns: 1fr !important;
   }
 
+  /* Consent table row styling */
+  .consent-item-info {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .consent-table div {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+  }
+
+  /* Rule list layout column stacking (prevents split words) */
+  .rule-list div {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+
+  /* Make data tables scrollable horizontally to prevent compression */
+  .data-table {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .data-row {
+    min-width: 520px !important;
+    padding: 0 12px !important;
+    gap: 8px !important;
+  }
+
+  .data-table--transactions .data-row {
+    min-width: 440px !important;
+  }
+
+  /* Shrink week activity bar chart gaps to keep all 7 columns inside screen boundary */
+  .bar-chart {
+    gap: 6px !important;
+    height: 190px !important;
+    padding-top: 16px !important;
+  }
+
+  .bar-value span {
+    font-size: 8px !important;
+    bottom: calc(100% + 4px) !important;
+  }
+
+  /* Shrink platform status lines */
+  .status-line span:first-child {
+    font-size: 12.5px !important;
+  }
+
+  .status-badge {
+    font-size: 10.5px !important;
+    padding: 0 8px !important;
+    min-height: 24px !important;
+  }
+
   /* Bottom Navigation Tab Bar */
   .mobile-nav {
     display: flex !important;
@@ -1546,7 +1699,7 @@ button:not(:disabled) {
     left: 0;
     width: 100%;
     height: 68px;
-    background: rgba(13, 17, 32, 0.94);
+    background: rgba(13, 17, 32, 0.96);
     backdrop-filter: blur(20px);
     border-top: 1px solid var(--border);
     justify-content: space-around;
@@ -1583,22 +1736,59 @@ button:not(:disabled) {
   
   /* Scaling of visual elements for readability */
   h1 {
-    font-size: 24px !important;
+    font-size: 20px !important;
   }
   
   h2 {
-    font-size: 20px !important;
+    font-size: 18px !important;
   }
 
   .hero-card {
-    padding: 20px !important;
+    display: flex !important;
     flex-direction: column-reverse !important;
+    padding: 20px !important;
     gap: 16px !important;
-    align-items: flex-start !important;
+    align-items: center !important;
+    text-align: center !important;
+    min-height: auto !important;
   }
   
   .hero-card__copy {
     width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .hero-card__copy h2 {
+    font-size: 18px !important;
+    margin-top: 8px !important;
+  }
+
+  .hero-card__copy p {
+    font-size: 13px !important;
+    margin: 8px 0 !important;
+  }
+
+  .panel {
+    padding: 16px !important;
+  }
+
+  .panel h3 {
+    font-size: 16px !important;
+  }
+  
+  /* Specific form fixes for GoalBuilder */
+  .builder-main, .builder-sidebar {
+    width: 100% !important;
+  }
+
+  .field-group {
+    gap: 8px !important;
+  }
+
+  /* List items padding */
+  .task-item, .status-line, .insight-item {
+    padding: 12px !important;
   }
 }
-
