@@ -1414,10 +1414,11 @@ button:not(:disabled) {
 }
 
 @media (max-width: 768px) {
-  /* Reset body min-width so it can adapt to small screen */
-  body {
+  /* Prevent horizontal layout shifts and scrolling */
+  html, body, .app-shell, .workspace {
     min-width: 100% !important;
-    overflow-x: hidden;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
   }
   
   .app-shell {
@@ -1678,6 +1679,8 @@ button:not(:disabled) {
   /* Make data tables scrollable horizontally to prevent compression */
   .data-table {
     overflow-x: auto !important;
+    max-width: 100% !important;
+    width: 100% !important;
     -webkit-overflow-scrolling: touch;
   }
 
