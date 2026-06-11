@@ -1564,8 +1564,7 @@ button:not(:disabled) {
   .grid-3col, 
   .metric-grid,
   .signal-grid,
-  .evidence-timeline,
-  .tracking-hero {
+  .evidence-timeline {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
   }
@@ -1636,11 +1635,23 @@ button:not(:disabled) {
   }
 
   /* Specific vertical stack overrides for center aligned cards */
+  .tracking-hero {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
   .tracking-summary {
+    grid-column: span 2 !important;
     grid-template-columns: 1fr !important;
     text-align: center !important;
     justify-items: center !important;
     padding: 20px !important;
+  }
+
+  /* Keep the third tracking metric card centered at full width */
+  .tracking-hero .metric-card:last-of-type {
+    grid-column: span 2 !important;
   }
 
   .decision-score {
@@ -1685,13 +1696,23 @@ button:not(:disabled) {
   }
 
   .data-row {
-    min-width: 520px !important;
+    min-width: auto !important; /* Allow rows to adapt to screen width */
     padding: 0 12px !important;
     gap: 8px !important;
   }
 
+  /* Hide 'Source' column on Tracking page table to fit columns on mobile */
+  .data-table:not(.data-table--transactions) .data-row {
+    grid-template-columns: 1.5fr 1fr 0.8fr 1fr !important;
+  }
+  
+  .data-table:not(.data-table--transactions) .data-row > *:nth-child(5) {
+    display: none !important;
+  }
+
   .data-table--transactions .data-row {
-    min-width: 440px !important;
+    grid-template-columns: 0.8fr 1.2fr 0.8fr 1fr !important;
+    min-width: auto !important;
   }
 
   /* Shrink week activity bar chart gaps to keep all 7 columns inside screen boundary */

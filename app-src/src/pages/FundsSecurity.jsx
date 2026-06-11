@@ -84,16 +84,23 @@ export function FundsSecurity() {
               <span>Montant</span>
               <span>Statut</span>
             </div>
-            {transactions.map((transaction) => (
-              <div className="data-row" key={transaction.id}>
-                <span>{transaction.id}</span>
-                <strong>{transaction.label}</strong>
-                <span>{transaction.amount}</span>
-                <StatusBadge tone={transaction.status === "Rembourse" ? "success" : transaction.status === "Epargne longue" ? "info" : "warning"}>
-                  {transaction.status}
-                </StatusBadge>
-              </div>
-            ))}
+            {transactions.map((transaction) => {
+              const statusLabels = {
+                "Sequestre partenaire": "Séquestre",
+                "Rembourse": "Remboursé",
+                "Epargne longue": "Épargne",
+              };
+              return (
+                <div className="data-row" key={transaction.id}>
+                  <span>{transaction.id}</span>
+                  <strong>{transaction.label}</strong>
+                  <span>{transaction.amount}</span>
+                  <StatusBadge tone={transaction.status === "Rembourse" ? "success" : transaction.status === "Epargne longue" ? "info" : "warning"}>
+                    {statusLabels[transaction.status] ?? transaction.status}
+                  </StatusBadge>
+                </div>
+              );
+            })}
           </div>
         </article>
       </section>
