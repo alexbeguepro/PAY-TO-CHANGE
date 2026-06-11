@@ -1561,7 +1561,10 @@ button:not(:disabled) {
   .principle-grid, 
   .grid-2col, 
   .grid-3col, 
-  .metric-grid {
+  .metric-grid,
+  .signal-grid,
+  .evidence-timeline,
+  .tracking-hero {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
   }
@@ -1624,11 +1627,31 @@ button:not(:disabled) {
     grid-template-columns: 1fr !important;
   }
   
-  /* Arbitration layouts stacking */
+  /* Arbitration, Profile, and Finance layouts stacking on mobile */
   .arbitration-layout, 
-  .privacy-layout,
-  .funds-layout {
+  .profile-layout,
+  .finance-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  /* Specific vertical stack overrides for center aligned cards */
+  .tracking-summary {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    justify-items: center !important;
+    padding: 20px !important;
+  }
+
+  .decision-score {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    justify-items: center !important;
+    gap: 16px !important;
+  }
+  
+  .evidence-timeline div {
+    min-height: auto !important;
+    padding: 14px !important;
   }
 
   /* Consent table row styling */
