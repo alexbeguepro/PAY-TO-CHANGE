@@ -10,6 +10,7 @@ import {
   UserRound,
   WalletCards,
   ArrowLeft,
+  Presentation,
 } from "lucide-react";
 import { user } from "../data/mockData.js";
 
@@ -19,6 +20,7 @@ const navigation = [
   { id: "tracking", label: "Suivi objectifs", icon: HeartPulse },
   { id: "funds", label: "Caution & securite", icon: WalletCards },
   { id: "arbitration", label: "Arbitrage", icon: Scale },
+  { id: "pitch", label: "Pitch & Vision", icon: Presentation },
 ];
 
 const mobileLabels = {
@@ -27,6 +29,7 @@ const mobileLabels = {
   tracking: "Suivi",
   funds: "Fonds",
   arbitration: "Arbitrage",
+  pitch: "Pitch",
   privacy: "Profil",
 };
 

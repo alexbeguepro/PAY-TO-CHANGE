@@ -6,6 +6,7 @@ import { FundsSecurity } from "./pages/FundsSecurity.jsx";
 import { GoalBuilder } from "./pages/GoalBuilder.jsx";
 import { PrivacyProfile } from "./pages/PrivacyProfile.jsx";
 import { ObjectiveTracking } from "./pages/ObjectiveTracking.jsx";
+import { PitchDeck } from "./pages/PitchDeck.jsx";
 
 const pages = {
   dashboard: Dashboard,
@@ -14,6 +15,7 @@ const pages = {
   funds: FundsSecurity,
   arbitration: Arbitration,
   privacy: PrivacyProfile,
+  pitch: PitchDeck,
 };
 
 function getInitialPage() {

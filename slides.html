@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PAY TO CHANGE - Présentation Stratégique Multi-Profils. Diaporama interactif.">
+    <title>PTC - Présentation Stratégique & Alignement</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-darker: #020415;
+            --bg-dark: #080916;
+            --surface: #0d1120;
+            --surface-hover: #12172a;
+            --border: rgba(176, 180, 198, 0.16);
+            --border-hover: rgba(255, 255, 255, 0.12);
+            --primary: #86C1A7; /* Mint Green */
+            --primary-glow: rgba(134, 193, 167, 0.15);
+            --secondary: #F7B731; /* Soft Amber */
+            --accent-lavender: #C0B7E1; /* Soft Lavender */
+            --blue-horizon: #4C7DFF; /* Blue */
+            --danger: #E5484D; /* Red */
+            --text-main: #F5F5F5;
+            --text-muted: #8FA0B5;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --font-display: 'Playfair Display', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-sans);
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            font-size: 15px;
+        }
+
+        /* AMBIENT GLOWS */
+        .ambient-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(200px);
+            opacity: 0.08;
+        }
+
+        .glow-1 {
+            top: -200px;
+            right: 5%;
+            background: var(--blue-horizon);
+        }
+
+        .glow-2 {
+            bottom: -200px;
+            left: 5%;
+            background: var(--primary);
+        }
+
+        /* HEADER */
+        .header {
+            padding: 16px 48px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background-color: rgba(2, 4, 21, 0.85);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .brand-title h1 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .brand-title span {
+            font-size: 9px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            display: block;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-action {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-action:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .btn-action-primary {
+            background: var(--blue-horizon);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-action-primary:hover {
+            background: #608cff;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* FILTERS BAR */
+        .filters-bar {
+            max-width: 1100px;
+            width: 100%;
+            margin: 30px auto 10px auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-pill {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-pill:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .filter-pill.active {
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+        }
+
+        .filter-pill.active[data-role="all"] { border-color: var(--accent-lavender); background: rgba(192, 183, 225, 0.1); }
+        .filter-pill.active[data-role="sponsor"] { border-color: var(--primary); background: rgba(134, 193, 167, 0.1); }
+        .filter-pill.active[data-role="client"] { border-color: var(--blue-horizon); background: rgba(76, 125, 255, 0.1); }
+        .filter-pill.active[data-role="dsi"] { border-color: var(--danger); background: rgba(229, 72, 77, 0.1); }
+        .filter-pill.active[data-role="exploitant"] { border-color: var(--secondary); background: rgba(247, 183, 49, 0.1); }
+
+        /* SLIDESHOW CONTAINER */
+        .presentation-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-frame {
+            max-width: 1000px;
+            width: 100%;
+            min-height: 520px;
+            background: linear-gradient(135deg, rgba(13, 17, 32, 0.75), rgba(8, 9, 22, 0.95));
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 50px;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            backdrop-filter: blur(15px);
+        }
+
+        .slide-frame.active {
+            display: flex;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-top-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+
+        .slide-frame[data-role="all"] .slide-top-line { background: var(--accent-lavender); }
+        .slide-frame[data-role="sponsor"] .slide-top-line { background: var(--primary); }
+        .slide-frame[data-role="client"] .slide-top-line { background: var(--blue-horizon); }
+        .slide-frame[data-role="dsi"] .slide-top-line { background: var(--danger); }
+        .slide-frame[data-role="exploitant"] .slide-top-line { background: var(--secondary); }
+
+        .slide-header {
+            margin-bottom: 30px;
+        }
+
+        .slide-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .slide-badge {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .slide-frame[data-role="all"] .slide-badge { border-color: rgba(192, 183, 225, 0.25); color: var(--accent-lavender); background: rgba(192, 183, 225, 0.05); }
+        .slide-frame[data-role="sponsor"] .slide-badge { border-color: rgba(134, 193, 167, 0.25); color: var(--primary); background: rgba(134, 193, 167, 0.05); }
+        .slide-frame[data-role="client"] .slide-badge { border-color: rgba(76, 125, 255, 0.25); color: var(--blue-horizon); background: rgba(76, 125, 255, 0.05); }
+        .slide-frame[data-role="dsi"] .slide-badge { border-color: rgba(229, 72, 77, 0.25); color: var(--danger); background: rgba(229, 72, 77, 0.05); }
+        .slide-frame[data-role="exploitant"] .slide-badge { border-color: rgba(247, 183, 49, 0.25); color: var(--secondary); background: rgba(247, 183, 49, 0.05); }
+
+        .slide-index {
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+        }
+
+        .slide-title {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 400;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: -0.019em;
+        }
+
+        .slide-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* SLIDE BODY LAYOUTS */
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .slide-grid-2col {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .slide-grid-2col {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+
+        .card-panel {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: var(--transition);
+        }
+
+        .card-panel:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: var(--border-hover);
+        }
+
+        .card-panel h3 {
+            font-family: var(--font-display);
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 12px;
+            font-weight: 400;
+        }
+
+        .card-panel p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .text-accent-lavender { color: var(--accent-lavender); }
+        .text-primary { color: var(--primary); }
+        .text-blue-horizon { color: var(--blue-horizon); }
+        .text-danger { color: var(--danger); }
+        .text-secondary { color: var(--secondary); }
+
+        .bullets-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .bullets-list li {
+            position: relative;
+            padding-left: 24px;
+            font-size: 14.5px;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        .bullets-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-lavender);
+            font-weight: bold;
+        }
+
+        .slide-frame[data-role="sponsor"] .bullets-list li::before { color: var(--primary); }
+        .slide-frame[data-role="client"] .bullets-list li::before { color: var(--blue-horizon); }
+        .slide-frame[data-role="dsi"] .bullets-list li::before { color: var(--danger); }
+        .slide-frame[data-role="exploitant"] .bullets-list li::before { color: var(--secondary); }
+
+        /* KPI NUMBERS */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .metric-box {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .slide-frame[data-role="sponsor"] .metric-value { color: var(--primary); }
+        .slide-frame[data-role="client"] .metric-value { color: var(--blue-horizon); }
+
+        .metric-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        /* TIMELINE (RECETTE) */
+        .timeline-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 0;
+        }
+
+        .timeline-step {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .timeline-step:hover {
+            border-color: var(--danger);
+            transform: translateY(-2px);
+        }
+
+        .step-prio {
+            display: inline-block;
+            font-size: 9px;
+            text-transform: uppercase;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(229, 72, 77, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(229, 72, 77, 0.25);
+            margin-bottom: 6px;
+        }
+
+        .step-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .step-desc {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* CALLOUT BOX */
+        .callout-box {
+            background: rgba(76, 125, 255, 0.04);
+            border-left: 4px solid var(--blue-horizon);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 16px;
+        }
+
+        .slide-frame[data-role="exploitant"] .callout-box {
+            background: rgba(247, 183, 49, 0.03);
+            border-left-color: var(--secondary);
+        }
+
+        .callout-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .callout-text {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* SLIDE CONTROLS */
+        .controls-bar {
+            max-width: 1000px;
+            width: 100%;
+            margin: 20px auto 40px auto;
+            padding: 0 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .slide-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active {
+            background: var(--accent-lavender);
+            width: 24px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--accent-lavender);
+        }
+
+        .slide-frame[data-role="sponsor"].active ~ .controls-bar .dot.active { background: var(--primary); box-shadow: 0 0 10px var(--primary); }
+        .slide-frame[data-role="client"].active ~ .controls-bar .dot.active { background: var(--blue-horizon); box-shadow: 0 0 10px var(--blue-horizon); }
+        .slide-frame[data-role="dsi"].active ~ .controls-bar .dot.active { background: var(--danger); box-shadow: 0 0 10px var(--danger); }
+        .slide-frame[data-role="exploitant"].active ~ .controls-bar .dot.active { background: var(--secondary); box-shadow: 0 0 10px var(--secondary); }
+
+        .keyboard-tip {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-dark);
+            margin-top: 10px;
+        }
+
+        /* PRINT STYLES FOR PDF GENERATION */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .header, .filters-bar, .controls-bar, .keyboard-tip, .ambient-glow {
+                display: none !important;
+            }
+            .presentation-container {
+                padding: 0 !important;
+                display: block !important;
+            }
+            .slide-frame {
+                display: flex !important;
+                page-break-after: always !important;
+                border: none !important;
+                background: white !important;
+                color: black !important;
+                box-shadow: none !important;
+                min-height: auto !important;
+                padding: 20px !important;
+                margin-bottom: 50px !important;
+                opacity: 1 !important;
+            }
+            .slide-title, .card-panel h3, .step-title, .callout-title, strong {
+                color: #0A0F1E !important;
+            }
+            .slide-subtitle, .card-panel p, .step-desc, .callout-text, .bullets-list li, .slide-index {
+                color: #334155 !important;
+            }
+            .card-panel, .timeline-step, .metric-box {
+                border: 1px solid #cbd5e1 !important;
+                background: #f8fafc !important;
+            }
+            .callout-box {
+                background: #f1f5f9 !important;
+                border-left: 4px solid #3b82f6 !important;
+            }
+            .slide-top-line {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Glows -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="index.html" class="brand">
+            <img src="savelock_ptc_pay_logo.jpg" alt="Logo PTC">
+            <div class="brand-title">
+                <h1>PAY TO CHANGE</h1>
+                <span>Pitch Stratégique Multi-Profils</span>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="btn-action" onclick="window.print()">
+                <i class="fa-solid fa-file-pdf"></i> Générer / Imprimer PDF
+            </button>
+            <a href="index.html" class="btn-action">
+                <i class="fa-solid fa-arrow-left"></i> Retour Accueil
+            </a>
+            <a href="app/index.html" class="btn-action btn-action-primary">
+                <i class="fa-solid fa-mobile-screen-button"></i> Ouvrir l'Application
+            </a>
+        </div>
+    </header>
+
+    <!-- FILTERS BAR -->
+    <section class="filters-bar">
+        <span class="filter-label">Cibler un profil d'interlocuteur :</span>
+        <div class="filter-buttons">
+            <button class="filter-pill active" data-role="all">Vue Générale</button>
+            <button class="filter-pill" data-role="sponsor">Sponsor / Investisseur</button>
+            <button class="filter-pill" data-role="client">Client / Utilisateur</button>
+            <button class="filter-pill" data-role="dsi">DSI / Tech</button>
+            <button class="filter-pill" data-role="exploitant">Exploitant / RUN</button>
+        </div>
+    </section>
+
+    <!-- SLIDESHOW -->
+    <main class="presentation-container">
+        <!-- Slide 1: Introduction -->
+        <div class="slide-frame active" data-role="all" id="slide-0">
+            <div class="slide-top-line"></div>
+            <div class="slide-header">
+                <div class="slide-meta">
+                    <span class="slide-badge">Présentation Générale</span>
+                    <span class="slide-index">Slide 1 / 5</span>
+                </div>
+                <h2 class="slide-title">PAY TO CHANGE (PTC) — Révolution Comportementale</h2>
+                <p class="slide-subtitle">Comment aligner la finance et la psychologie pour atteindre ses objectifs</p>
+            </div>
+            <div class="slide-body">
+                <div class="slide-grid-2col">
+                    <div class="card-panel">
+                        <h3 class="text-accent-lavender"><i class="fa-solid fa-sparkles"></i> Le levier de l'Aversion à la perte</h3>
+                        <p>Plutôt que de culpabiliser l'utilisateur avec des messages inefficaces, PTC applique une caution financière sur ses promesses d'activité. S'il réussit, il récupère sa caution. S'il échoue, elle est épargnée.</p>
+                        <div style="font-family: Georgia, serif; font-style: italic; border-left: 3px solid var(--accent-lavender); padding-left: 12px; margin-top: 14px; color: var(--secondary);">
+                            « Toutes les excuses ont un prix. »
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; margin-bottom: 12px;">4 Perspectives Stratégiques :</h4>
+                        <ul class="bullets-list">
+                            <li><strong>Sponsor :</strong> Valider le ROI et le business model auto-suffisant.</li>
+                            <li><strong>Client :</strong> Offrir une UX valorisante sans stress d'amende financière.</li>
+                            <li><strong>DSI / Tech :</strong> Garantir la sécurité bancaire et la conformité RGPD.</li>
+                            <li><strong>Exploitant :</strong> Faciliter le RUN via des logs fiables et la console support.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Sponsor -->
+        <div class="slide-frame" data-role="sponsor" id="slide-1">
+            <div class="slide-top-line"></div>
+            <div class="slide-header">
+                <div class="slide-meta">
+                    <span class="slide-badge">Profil Sponsor &amp; Investissement</span>
+                    <span class="slide-index">Slide 2 / 5</span>
+                </div>
+                <h2 class="slide-title">Sponsor : Rétention Client &amp; ROI Bancaire</h2>
+                <p class="slide-subtitle">Sécuriser l'investissement par un business model robuste et une friction comportementale positive</p>
+            </div>
+            <div class="slide-body">
+                <div class="slide-grid-2col">
+                    <div class="card-panel">
+                        <h3 class="text-primary"><i class="fa-solid fa-arrow-trend-up"></i> Taux de Churn divisé par 3</h3>
+                        <p>L'engagement financier direct (la caution bloquée sur séquestre) incite fortement l'utilisateur à se connecter quotidiennement. La rétention client à 30 jours est estimée 3 fois supérieure aux standards du marché.</p>
+                    </div>
+                    <div class="card-panel">
+                        <h3 class="text-primary"><i class="fa-solid fa-piggy-bank"></i> Le business de l'Échec Utile</h3>
+                        <p>En cas d'échec de l'utilisateur, la caution est placée sur un produit d'épargne de long terme auprès de notre banque partenaire. PTC perçoit des commissions de gestion récurrentes sur l'encours global bloqué.</p>
+                    </div>
+                </div>
+                <div class="metrics-row">
+                    <div class="metric-box">
+                        <div class="metric-value">3.5x</div>
+                        <div class="metric-label">LTV / CAC attendu</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">-40%</div>
+                        <div class="metric-label">Coût d'Acquisition Client</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">1.2 M€</div>
+                        <div class="metric-label">Objectif d'Épargne Bloquée (Y1)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Client -->
+        <div class="slide-frame" data-role="client" id="slide-2">
+            <div class="slide-top-line"></div>
+            <div class="slide-header">
+                <div class="slide-meta">
+                    <span class="slide-badge">Profil Client &amp; Expérience Utilisateur</span>
+                    <span class="slide-index">Slide 3 / 5</span>
+                </div>
+                <h2 class="slide-title">Client : Réassurance &amp; Ergonomie Premium</h2>
+                <p class="slide-subtitle">Accompagner le changement d'habitudes avec bienveillance, sans friction technique</p>
+            </div>
+            <div class="slide-body">
+                <div class="slide-grid-2col">
+                    <div class="card-panel">
+                        <h3 class="text-blue-horizon"><i class="fa-solid fa-palette"></i> Design Mode Sombre Spatiaux</h3>
+                        <p>Gradients fluides, typographies épurées (Inter & Plus Jakarta Sans) et animations discrètes pour offrir un univers premium rassurant et valorisant. Les concepts de réassurance et d'argent sécurisé sont omniprésents.</p>
+                    </div>
+                    <div class="card-panel">
+                        <h3 class="fa-solid fa-arrows-rotate text-blue-horizon"> Synchronisation Automatique</h3>
+                        <p>Aucune saisie manuelle n'est requise. L'application récupère directement les indicateurs via Apple Health et Google Fit en bruit de fond. Aucun risque de triche, aucun effort de saisie rébarbatif.</p>
+                    </div>
+                </div>
+                <div class="callout-box">
+                    <div class="callout-title"><i class="fa-solid fa-shield-heart text-blue-horizon"></i> Zéro perte financière réelle</div>
+                    <div class="callout-text">Le client ne perd jamais son argent : il est soit conservé à court terme (réussite), soit mis de côté sur son propre compte d'épargne bloqué de long terme (échec). C'est un transfert interne motivant.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: DSI / Tech -->
+        <div class="slide-frame" data-role="dsi" id="slide-3">
+            <div class="slide-top-line"></div>
+            <div class="slide-header">
+                <div class="slide-meta">
+                    <span class="slide-badge">Profil DSI / Cybersécurité &amp; IT</span>
+                    <span class="slide-index">Slide 4 / 5</span>
+                </div>
+                <h2 class="slide-title">DSI : Sécurité, RGPD &amp; Plan de Recette</h2>
+                <p class="slide-subtitle">Assurer le respect strict de la vie privée et la robustesse logique des calculs</p>
+            </div>
+            <div class="slide-body">
+                <div class="slide-grid-2col">
+                    <div class="card-panel">
+                        <h3 class="text-danger"><i class="fa-solid fa-user-lock"></i> RGPD: Privacy By Design</h3>
+                        <p>Les données d'activité précises (historique de pas détaillé, GPS) sont analysées localement sur le téléphone, puis purgées. Seuls les résultats d'arbitrage journaliers sont conservés pour l'audit.</p>
+                    </div>
+                    <div class="card-panel">
+                        <h3 class="text-danger"><i class="fa-solid fa-network-wired"></i> APIs Bancaires Sécurisées</h3>
+                        <p>Intégration via Stripe &amp; MangoPay. La caution et l'identité client (KYC) sont gérées de bout en bout par notre partenaire BaaS agréé. Aucun stockage local de cartes.</p>
+                    </div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <h4 style="font-size: 12px; text-transform: uppercase; color: #fff; margin-bottom: 8px;">Priorités de Test &amp; Recette Multi-Niveaux :</h4>
+                    <div class="timeline-container">
+                        <div class="timeline-step">
+                            <span class="step-prio">Prio 1</span>
+                            <div class="step-title">Cybersécurité</div>
+                            <div class="step-desc">Audit infrastructure &amp; OWASP</div>
+                        </div>
+                        <div class="timeline-step">
+                            <span class="step-prio">Prio 2</span>
+                            <div class="step-title">Calculs</div>
+                            <div class="step-desc">Formules unitaires de seuils</div>
+                        </div>
+                        <div class="timeline-step">
+                            <span class="step-prio">Prio 3</span>
+                            <div class="step-title">UI &amp; E2E</div>
+                            <div class="step-desc">Scripts Playwright (Romain)</div>
+                        </div>
+                        <div class="timeline-step">
+                            <span class="step-prio">Prio 4</span>
+                            <div class="step-title">CRUD DB</div>
+                            <div class="step-desc">Validations requêtes (Alex)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Exploitant -->
+        <div class="slide-frame" data-role="exploitant" id="slide-4">
+            <div class="slide-top-line"></div>
+            <div class="slide-header">
+                <div class="slide-meta">
+                    <span class="slide-badge">Profil Exploitant &amp; RUN Ops</span>
+                    <span class="slide-index">Slide 5 / 5</span>
+                </div>
+                <h2 class="slide-title">Exploitant : Tracabilité &amp; Gestion du Run</h2>
+                <p class="slide-subtitle">Simplifier la maintenance et le support client grâce à des outils et indicateurs clairs</p>
+            </div>
+            <div class="slide-body">
+                <div class="slide-grid-2col">
+                    <div class="card-panel">
+                        <h3 class="text-secondary"><i class="fa-solid fa-clock-rotate-left"></i> Journal de Preuves de Pas</h3>
+                        <p>Chaque arbitrage automatique repose sur un log horodaté et des preuves d'activité lues. L'exploitant dispose d'une piste d'audit claire en cas de réclamation de l'utilisateur.</p>
+                    </div>
+                    <div class="card-panel">
+                        <h3 class="text-secondary"><i class="fa-solid fa-hand-holding-dollar"></i> Console d'Arbitrage Support</h3>
+                        <p>En cas de problème légitime (maladie de l'utilisateur, panne matérielle), le support client dispose d'une console lui permettant de geler une caution ou d'effectuer un remboursement manuel d'un clic.</p>
+                    </div>
+                </div>
+                <div class="callout-box">
+                    <div class="callout-title"><i class="fa-solid fa-circle-exclamation text-secondary"></i> Indicateurs de Risques Métiers (KRIs)</div>
+                    <div class="callout-text">Surveillance active des taux d'erreurs bancaires et de défaillance des APIs de synchronisation (seuil d'alerte configuré à 1.5% d'appels en échec).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="controls-bar">
+            <button class="nav-btn" id="btn-prev">
+                <i class="fa-solid fa-chevron-left"></i> Précédent
+            </button>
+            <div class="slide-dots" id="dots-container"></div>
+            <button class="nav-btn" id="btn-next">
+                Suivant <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- KEYBOARD NAVIGATION HELP -->
+    <div class="keyboard-tip">
+        <p><i class="fa-solid fa-keyboard"></i> Astuce : Naviguez avec les touches <strong>flèche gauche</strong> et <strong>flèche droite</strong> de votre clavier.</p>
+    </div>
+
+    <script>
+        // Setup Slide variables
+        const slides = Array.from(document.querySelectorAll('.slide-frame'));
+        const filterBtns = Array.from(document.querySelectorAll('.filter-pill'));
+        const prevBtn = document.getElementById('btn-prev');
+        const nextBtn = document.getElementById('btn-next');
+        const dotsContainer = document.getElementById('dots-container');
+        
+        let currentRole = 'all';
+        let filteredSlides = [...slides];
+        let activeIdx = 0;
+
+        function updateFilter(role) {
+            currentRole = role;
+            
+            // Update buttons active state
+            filterBtns.forEach(btn => {
+                if (btn.getAttribute('data-role') === role) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Filter slides
+            if (role === 'all') {
+                filteredSlides = [...slides];
+            } else {
+                filteredSlides = slides.filter(slide => slide.getAttribute('data-role') === role || slide.getAttribute('data-role') === 'all');
+            }
+
+            // Adjust active index
+            activeIdx = 0;
+            renderSlides();
+            buildDots();
+        }
+
+        function renderSlides() {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (filteredSlides[activeIdx]) {
+                filteredSlides[activeIdx].classList.add('active');
+            }
+
+            // Update slide index text dynamically
+            filteredSlides.forEach((slide, idx) => {
+                const indexSpan = slide.querySelector('.slide-index');
+                if (indexSpan) {
+                    indexSpan.textContent = `Slide ${idx + 1} / ${filteredSlides.length}`;
+                }
+            });
+        }
+
+        function buildDots() {
+            dotsContainer.innerHTML = '';
+            filteredSlides.forEach((slide, idx) => {
+                const dot = document.createElement('div');
+                dot.className = `dot ${idx === activeIdx ? 'active' : ''}`;
+                dot.onclick = () => {
+                    activeIdx = idx;
+                    renderSlides();
+                    updateDotsActive();
+                };
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updateDotsActive() {
+            const dots = Array.from(dotsContainer.querySelectorAll('.dot'));
+            dots.forEach((dot, idx) => {
+                if (idx === activeIdx) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function navigateNext() {
+            if (filteredSlides.length <= 1) return;
+            activeIdx = (activeIdx + 1) % filteredSlides.length;
+            renderSlides();
+            updateDotsActive();
+        }
+
+        function navigatePrev() {
+            if (filteredSlides.length <= 1) return;
+            activeIdx = (activeIdx - 1 + filteredSlides.length) % filteredSlides.length;
+            renderSlides();
+            updateDotsActive();
+        }
+
+        // Add filter button click handlers
+        filterBtns.forEach(btn => {
+            btn.onclick = () => {
+                updateFilter(btn.getAttribute('data-role'));
+            };
+        });
+
+        // Navigation click handlers
+        nextBtn.onclick = navigateNext;
+        prevBtn.onclick = navigatePrev;
+
+        // Keyboard navigation
+        window.onkeydown = (e) => {
+            if (e.key === 'ArrowRight') {
+                navigateNext();
+            } else if (e.key === 'ArrowLeft') {
+                navigatePrev();
+            }
+        };
+
+        // Initial rendering
+        buildDots();
+    </script>
+</body>
+</html>
